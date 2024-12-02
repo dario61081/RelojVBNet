@@ -1,4 +1,5 @@
-﻿Imports System.Threading
+﻿Imports System.IO
+Imports System.Threading
 Imports RelojVBNET.Models
 
 
@@ -222,6 +223,18 @@ Public Class Form1
 
 		Next
 
+
+		Dim timestamp As DateTime = DateTime.UtcNow
+		Dim tag As String = timestamp.ToString("yyyy-mm-dd hhmmss")
+		Dim dump_directory = Path.Combine(Directory.GetCurrentDirectory, "dumps")
+		If Not Directory.Exists(dump_directory) Then
+			Directory.CreateDirectory(dump_directory)
+		End If
+
+		Dim save_filename As String = Path.Combine(dump_directory, $"db_{record.DireccionIp }_{tag}.json")
+
+		ObjectReaderWriter(Of AttendanceRecord).SaveToJson(lista_registro, save_filename)
+
 		log("(OK) Lectura finalizada", True)
 	End Sub
 
@@ -232,6 +245,8 @@ Public Class Form1
 
 	Private Sub Relojes_OnClearlogs(record As DispositivoModel) Handles Relojes.OnClearlogs
 		log($"Limpiando todos los logs de {record.DireccionIp }")
+
+		lvLog.Items.Clear()
 	End Sub
 
 	Private Sub Relojes_OnConnecting(record As DispositivoModel) Handles Relojes.OnConnecting

@@ -106,7 +106,12 @@ Public Class RelojesComponente
 
 	Private Sub BorrarEventosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BorrarEventosToolStripMenuItem.Click
 		Dim obj = DirectCast(lvdispositivos.SelectedItems(0).Tag, DispositivoModel)
-		RaiseEvent OnClearlogs(obj)
+
+
+		Dim result As DialogResult = MessageBox.Show("¿Quieres ejecutar esta acción?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+		If result = DialogResult.Yes Then
+			RaiseEvent OnClearlogs(obj)
+		End If
 
 	End Sub
 End Class

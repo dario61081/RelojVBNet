@@ -73,8 +73,17 @@ Public Class Form1
 
 
 	Public Sub log(message As String, Optional allowMessage As Boolean = False)
-		lbmessages.Items.Add($"{DateTime.Now } - {message}")
-		lbmessages.TopIndex = lbmessages.Items.Count - 1
+
+		Dim item As New ListViewItem With {
+			.Text = $"{DateTime.Now().GetDateTimeFormats()(0)}"
+		}
+		item.SubItems.Add(message)
+		lvEventos.Items.Add(item)
+
+		If lvEventos.Items.Count > 0 Then
+			lvEventos.Items(lvEventos.Items.Count - 1).EnsureVisible()
+		End If
+
 		If allowMessage Then
 			With NotifyIcon1
 				.BalloonTipTitle = "Mensaje"
@@ -211,7 +220,7 @@ Public Class Form1
 
 	End Sub
 
-	Private Sub ActualizarListaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ActualizarListaToolStripMenuItem.Click
+	Private Sub ActualizarListaToolStripMenuItem_Click(sender As Object, e As EventArgs)
 
 		Relojes.RefreshList()
 		log("(ok) Registro de relojes actualizado", True)
@@ -226,6 +235,10 @@ Public Class Form1
 
 		log($"(selected) {record.Descripcion }")
 
+
+	End Sub
+
+	Private Sub ListView1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvEventos.SelectedIndexChanged
 
 	End Sub
 End Class

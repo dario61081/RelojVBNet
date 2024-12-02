@@ -23,6 +23,8 @@ Partial Class FichaReloj
 	<System.Diagnostics.DebuggerStepThrough()> _
 	Private Sub InitializeComponent()
 		GroupBox1 = New GroupBox()
+		ComboBox2 = New ComboBox()
+		Label8 = New Label()
 		edtPassword = New TextBox()
 		Label7 = New Label()
 		TextBox1 = New TextBox()
@@ -38,9 +40,11 @@ Partial Class FichaReloj
 		Label2 = New Label()
 		ComboBox1 = New ComboBox()
 		Label1 = New Label()
-		Label8 = New Label()
-		ComboBox2 = New ComboBox()
+		GroupBox2 = New GroupBox()
+		Button1 = New Button()
+		CheckBox1 = New CheckBox()
 		GroupBox1.SuspendLayout()
+		GroupBox2.SuspendLayout()
 		SuspendLayout()
 		' 
 		' GroupBox1
@@ -65,10 +69,29 @@ Partial Class FichaReloj
 		GroupBox1.Dock = DockStyle.Top
 		GroupBox1.Location = New Point(0, 0)
 		GroupBox1.Name = "GroupBox1"
-		GroupBox1.Size = New Size(498, 272)
+		GroupBox1.Size = New Size(498, 192)
 		GroupBox1.TabIndex = 0
 		GroupBox1.TabStop = False
 		GroupBox1.Text = "Conexión info"
+		' 
+		' ComboBox2
+		' 
+		ComboBox2.FormattingEnabled = True
+		ComboBox2.Items.AddRange(New Object() {"TCP/IP"})
+		ComboBox2.Location = New Point(336, 128)
+		ComboBox2.Name = "ComboBox2"
+		ComboBox2.Size = New Size(143, 23)
+		ComboBox2.TabIndex = 16
+		ComboBox2.Text = "Habilitado"
+		' 
+		' Label8
+		' 
+		Label8.AutoSize = True
+		Label8.Location = New Point(256, 128)
+		Label8.Name = "Label8"
+		Label8.Size = New Size(42, 15)
+		Label8.TabIndex = 15
+		Label8.Text = "Estado"
 		' 
 		' edtPassword
 		' 
@@ -108,7 +131,7 @@ Partial Class FichaReloj
 		' 
 		' btnProbarConexion
 		' 
-		btnProbarConexion.Location = New Point(336, 240)
+		btnProbarConexion.Location = New Point(336, 160)
 		btnProbarConexion.Name = "btnProbarConexion"
 		btnProbarConexion.Size = New Size(144, 23)
 		btnProbarConexion.TabIndex = 10
@@ -202,34 +225,49 @@ Partial Class FichaReloj
 		Label1.TabIndex = 0
 		Label1.Text = "Modo"
 		' 
-		' Label8
+		' GroupBox2
 		' 
-		Label8.AutoSize = True
-		Label8.Location = New Point(256, 128)
-		Label8.Name = "Label8"
-		Label8.Size = New Size(42, 15)
-		Label8.TabIndex = 15
-		Label8.Text = "Estado"
+		GroupBox2.Controls.Add(CheckBox1)
+		GroupBox2.Controls.Add(Button1)
+		GroupBox2.Dock = DockStyle.Top
+		GroupBox2.Location = New Point(0, 192)
+		GroupBox2.Name = "GroupBox2"
+		GroupBox2.Size = New Size(498, 128)
+		GroupBox2.TabIndex = 1
+		GroupBox2.TabStop = False
+		GroupBox2.Text = "Gestión de datos"
 		' 
-		' ComboBox2
+		' Button1
 		' 
-		ComboBox2.FormattingEnabled = True
-		ComboBox2.Items.AddRange(New Object() {"TCP/IP"})
-		ComboBox2.Location = New Point(336, 128)
-		ComboBox2.Name = "ComboBox2"
-		ComboBox2.Size = New Size(143, 23)
-		ComboBox2.TabIndex = 16
-		ComboBox2.Text = "Habilitado"
+		Button1.Location = New Point(16, 32)
+		Button1.Name = "Button1"
+		Button1.Size = New Size(224, 23)
+		Button1.TabIndex = 0
+		Button1.Text = "Sincronizar fecha y hora"
+		Button1.UseVisualStyleBackColor = True
+		' 
+		' CheckBox1
+		' 
+		CheckBox1.AutoSize = True
+		CheckBox1.Location = New Point(16, 96)
+		CheckBox1.Name = "CheckBox1"
+		CheckBox1.Size = New Size(213, 19)
+		CheckBox1.TabIndex = 1
+		CheckBox1.Text = "Borrar eventos luego de la descarga"
+		CheckBox1.UseVisualStyleBackColor = True
 		' 
 		' FichaReloj
 		' 
 		AutoScaleDimensions = New SizeF(7F, 15F)
 		AutoScaleMode = AutoScaleMode.Font
+		Controls.Add(GroupBox2)
 		Controls.Add(GroupBox1)
 		Name = "FichaReloj"
 		Size = New Size(498, 394)
 		GroupBox1.ResumeLayout(False)
 		GroupBox1.PerformLayout()
+		GroupBox2.ResumeLayout(False)
+		GroupBox2.PerformLayout()
 		ResumeLayout(False)
 	End Sub
 
@@ -251,5 +289,8 @@ Partial Class FichaReloj
 	Friend WithEvents Label6 As Label
 	Friend WithEvents Label8 As Label
 	Friend WithEvents ComboBox2 As ComboBox
+	Friend WithEvents GroupBox2 As GroupBox
+	Friend WithEvents Button1 As Button
+	Friend WithEvents CheckBox1 As CheckBox
 
 End Class

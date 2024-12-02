@@ -13,13 +13,23 @@ Public Class FichaReloj
 		dispositivo = New DispositivoModel()
 	End Sub
 
-	Private Sub FichaReloj_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+	Public Sub RefreshData()
+
+		If dispositivo Is Nothing Then
+			Return
+
+		End If
+
+		edtDireccionIp.Text = dispositivo.DireccionIp
+		edtNombre.Text = dispositivo.Descripcion
+
+
 
 
 
 	End Sub
 
-	Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
 
-	End Sub
+
+
 End Class

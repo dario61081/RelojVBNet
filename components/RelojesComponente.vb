@@ -48,4 +48,13 @@ Public Class RelojesComponente
 		End If
 
 	End Sub
+
+	Private Sub lvdispositivos_Click(sender As Object, e As EventArgs) Handles lvdispositivos.Click
+
+
+
+
+
+
+	End Sub
 End Class

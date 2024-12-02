@@ -76,7 +76,8 @@ Public Class ZKBiometricDevice
                         .EnrollNumber = dwEnrollNumber,
                         .VerifyMode = dwVerifyMode,
                         .InOutMode = dwInOutMode,
-                        .DateTime = New DateTime(dwYear, dwMonth, dwDay, dwHour, dwMinute, dwSecond)
+                        .DateTime = New DateTime(dwYear, dwMonth, dwDay, dwHour, dwMinute, dwSecond),
+                        .WorkMode = dwWorkMode
                     }
                     records.Add(record)
                 End While
@@ -129,5 +130,7 @@ Public Class AttendanceRecord
     Public Property VerifyMode As Integer
     Public Property InOutMode As Integer
     Public Property DateTime As DateTime
+    Public Property WorkMode As Integer
+
 End Class
 

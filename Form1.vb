@@ -2,12 +2,20 @@
 Imports System.Threading
 Imports RelojVBNET.Models
 
+Public Enum EventoTipo
+    INFO = 0
+    SUCCESS = 10
+    WARN = 20
+    DANGER = 30
+End Enum
 
 Public Class Form1
 
     Public WithEvents Device As ZKBiometricDevice
 
     Private Sub Conectar(ipaddress As String)
+
+
 
         Me.Cursor = Cursors.WaitCursor
 
@@ -67,7 +75,7 @@ Public Class Form1
     End Sub
 
 
-    Public Sub log(message As String, Optional allowMessage As Boolean = False)
+    Public Sub log(message As String, Optional Level As EventoTipo = EventoTipo.INFO, Optional allowMessage As Boolean = False)
 
         Dim item As New ListViewItem With {
             .Text = $"{DateTime.Now().GetDateTimeFormats()(0)}"
@@ -113,13 +121,13 @@ Public Class Form1
 
     Private Sub Button3_Click(sender As Object, e As EventArgs)
         If Device Is Nothing Then
-            log("(fail) dispositivo no ha sido conectado", True)
+            log("(fail) dispositivo no ha sido conectado", allowMessage:=True)
             Return
         End If
 
         If Device.Connected Then
             Device.Disconnect()
-            log("(ok) dispositivo desconectado", True)
+            log("(ok) dispositivo desconectado", allowMessage:=True)
         End If
     End Sub
 
@@ -156,7 +164,7 @@ Public Class Form1
     Private Sub ActualizarListaToolStripMenuItem_Click(sender As Object, e As EventArgs)
 
         Relojes.RefreshList()
-        log("(ok) Registro de relojes actualizado", True)
+        log("(ok) Registro de relojes actualizado", allowMessage:=True)
     End Sub
 
     Private Sub Relojes_OnSelectedItem(record As DispositivoModel) Handles Relojes.OnSelectedItem
@@ -184,12 +192,14 @@ Public Class Form1
         Dim thread As New Thread(Sub() lista_registro = LeerLogs())
         ' actualizar el indice
         TabControl1.SelectedTab = TabPage2
+        StatusPB.Visible = True
 
-        log("(espere) leyendo datos del reloj...", True)
+        log("(espere) leyendo datos del reloj...", allowMessage:=True)
         thread.Start()
         thread.Join()
 
         lvLog.Items.Clear()
+
         For Each row In lista_registro
             log($"{row.DateTime } {row.EnrollNumber } {row.InOutMode }")
 
@@ -199,6 +209,7 @@ Public Class Form1
             nitem.SubItems.Add(row.VerifyMode)
             nitem.SubItems.Add(row.InOutMode)
             nitem.SubItems.Add(row.EnrollNumber)
+            nitem.SubItems.Add(row.WorkMode)
 
             lvLog.Items.Add(nitem)
 
@@ -210,8 +221,8 @@ Public Class Form1
         Dim save_filename As String = Path.Combine(dumps_directory, $"db_{record.DireccionIp}_{base_filename}")
 
         ObjectReaderWriter(Of AttendanceRecord).SaveToJson(lista_registro, save_filename)
-
-        log("(OK) Lectura finalizada", True)
+        StatusPB.Visible = False
+        log("(OK) Lectura finalizada", allowMessage:=True)
     End Sub
 
     Private Sub Relojes_OnDisconnecting(record As DispositivoModel) Handles Relojes.OnDisconnecting

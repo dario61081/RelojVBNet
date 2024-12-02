@@ -29,6 +29,7 @@ Partial Class Form1
         StatusStrip1 = New StatusStrip()
         ToolStripStatusLabel1 = New ToolStripStatusLabel()
         ToolStripStatusLabel2 = New ToolStripStatusLabel()
+        StatusPB = New ToolStripProgressBar()
         Panel1 = New Panel()
         TabControl1 = New TabControl()
         TabPage1 = New TabPage()
@@ -47,6 +48,7 @@ Partial Class Form1
         MenuStrip1 = New MenuStrip()
         SistemaToolStripMenuItem = New ToolStripMenuItem()
         CerrarToolStripMenuItem = New ToolStripMenuItem()
+        ColumnHeader7 = New ColumnHeader()
         StatusStrip1.SuspendLayout()
         Panel1.SuspendLayout()
         TabControl1.SuspendLayout()
@@ -75,7 +77,7 @@ Partial Class Form1
         ' 
         ' StatusStrip1
         ' 
-        StatusStrip1.Items.AddRange(New ToolStripItem() {ToolStripStatusLabel1, ToolStripStatusLabel2})
+        StatusStrip1.Items.AddRange(New ToolStripItem() {ToolStripStatusLabel1, ToolStripStatusLabel2, StatusPB})
         StatusStrip1.Location = New Point(0, 539)
         StatusStrip1.Name = "StatusStrip1"
         StatusStrip1.Size = New Size(784, 22)
@@ -93,6 +95,13 @@ Partial Class Form1
         ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
         ToolStripStatusLabel2.Size = New Size(72, 17)
         ToolStripStatusLabel2.Text = "Versión: 1.01"
+        ' 
+        ' StatusPB
+        ' 
+        StatusPB.Name = "StatusPB"
+        StatusPB.Size = New Size(100, 16)
+        StatusPB.Style = ProgressBarStyle.Marquee
+        StatusPB.Visible = False
         ' 
         ' Panel1
         ' 
@@ -143,18 +152,18 @@ Partial Class Form1
         TabPage2.Location = New Point(4, 24)
         TabPage2.Name = "TabPage2"
         TabPage2.Padding = New Padding(3)
-        TabPage2.Size = New Size(621, 440)
+        TabPage2.Size = New Size(500, 460)
         TabPage2.TabIndex = 1
         TabPage2.Text = "Eventos"
         TabPage2.UseVisualStyleBackColor = True
         ' 
         ' lvLog
         ' 
-        lvLog.Columns.AddRange(New ColumnHeader() {ColumnHeader3, ColumnHeader4, ColumnHeader5, ColumnHeader6})
+        lvLog.Columns.AddRange(New ColumnHeader() {ColumnHeader3, ColumnHeader4, ColumnHeader5, ColumnHeader6, ColumnHeader7})
         lvLog.Dock = DockStyle.Fill
         lvLog.Location = New Point(3, 3)
         lvLog.Name = "lvLog"
-        lvLog.Size = New Size(615, 434)
+        lvLog.Size = New Size(494, 454)
         lvLog.TabIndex = 1
         lvLog.UseCompatibleStateImageBehavior = False
         lvLog.View = View.Details
@@ -185,7 +194,7 @@ Partial Class Form1
         TabPage3.Location = New Point(4, 24)
         TabPage3.Name = "TabPage3"
         TabPage3.Padding = New Padding(3)
-        TabPage3.Size = New Size(621, 440)
+        TabPage3.Size = New Size(500, 460)
         TabPage3.TabIndex = 2
         TabPage3.Text = "Eventos del sistema"
         TabPage3.UseVisualStyleBackColor = True
@@ -196,7 +205,7 @@ Partial Class Form1
         lvEventos.Dock = DockStyle.Fill
         lvEventos.Location = New Point(3, 3)
         lvEventos.Name = "lvEventos"
-        lvEventos.Size = New Size(615, 434)
+        lvEventos.Size = New Size(494, 454)
         lvEventos.TabIndex = 0
         lvEventos.UseCompatibleStateImageBehavior = False
         lvEventos.View = View.Details
@@ -214,7 +223,7 @@ Partial Class Form1
         ' Relojes
         ' 
         Relojes.Dock = DockStyle.Left
-        Relojes.ListaBloqueada = False
+        Relojes.ListaBloqueada = True
         Relojes.Location = New Point(12, 12)
         Relojes.Name = "Relojes"
         Relojes.Size = New Size(243, 491)
@@ -239,8 +248,12 @@ Partial Class Form1
         ' CerrarToolStripMenuItem
         ' 
         CerrarToolStripMenuItem.Name = "CerrarToolStripMenuItem"
-        CerrarToolStripMenuItem.Size = New Size(180, 22)
+        CerrarToolStripMenuItem.Size = New Size(106, 22)
         CerrarToolStripMenuItem.Text = "&Cerrar"
+        ' 
+        ' ColumnHeader7
+        ' 
+        ColumnHeader7.Text = "Modo"
         ' 
         ' Form1
         ' 
@@ -291,5 +304,7 @@ Partial Class Form1
 	Friend WithEvents MenuStrip1 As MenuStrip
 	Friend WithEvents SistemaToolStripMenuItem As ToolStripMenuItem
 	Friend WithEvents CerrarToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents StatusPB As ToolStripProgressBar
+    Friend WithEvents ColumnHeader7 As ColumnHeader
 
 End Class

@@ -158,20 +158,7 @@ Public Class Form1
 	End Sub
 
 	Private Sub Button2_Click(sender As Object, e As EventArgs)
-		Dim lista_registro As List(Of AttendanceRecord) = Nothing
-		Dim thread As New Thread(Sub() lista_registro = LeerLogs())
 
-
-
-		log("(espere) leyendo datos del reloj...", True)
-		thread.Start()
-		thread.Join()
-
-		For Each row In lista_registro
-			log($"{row.DateTime } {row.EnrollNumber } {row.InOutMode }")
-		Next
-
-		log("(OK) Lectura finalizada", True)
 
 
 
@@ -235,10 +222,45 @@ Public Class Form1
 
 		log($"(selected) {record.Descripcion }")
 
+		FichaReloj1.MostrarFicha(record)
+
 
 	End Sub
 
 	Private Sub ListView1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvEventos.SelectedIndexChanged
+
+	End Sub
+
+	Private Sub Relojes_OnReadLogs(record As DispositivoModel) Handles Relojes.OnReadLogs
+
+
+		Dim lista_registro As List(Of AttendanceRecord) = Nothing
+		Dim thread As New Thread(Sub() lista_registro = LeerLogs())
+
+		log("(espere) leyendo datos del reloj...", True)
+		thread.Start()
+		thread.Join()
+
+		For Each row In lista_registro
+			log($"{row.DateTime } {row.EnrollNumber } {row.InOutMode }")
+		Next
+
+		log("(OK) Lectura finalizada", True)
+	End Sub
+
+	Private Sub Relojes_OnDisconnecting(record As DispositivoModel) Handles Relojes.OnDisconnecting
+		log($"Desconectar reloj {record.DireccionIp }")
+		Desconectar()
+	End Sub
+
+	Private Sub Relojes_OnClearlogs(record As DispositivoModel) Handles Relojes.OnClearlogs
+		log($"Limpiando todos los logs de {record.DireccionIp }")
+	End Sub
+
+	Private Sub Relojes_OnConnecting(record As DispositivoModel) Handles Relojes.OnConnecting
+		log($"iniciar Conexion a {record.DireccionIp }")
+		Conectar(record.DireccionIp)
+		Relojes.ListaBloqueada = True
 
 	End Sub
 End Class

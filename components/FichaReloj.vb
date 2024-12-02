@@ -10,22 +10,20 @@ Public Class FichaReloj
 		InitializeComponent()
 
 		' Agregue cualquier inicialización después de la llamada a InitializeComponent().
-		dispositivo = New DispositivoModel()
+
 	End Sub
 
-	Public Sub RefreshData()
 
-		If dispositivo Is Nothing Then
+
+	Public Sub MostrarFicha(data As DispositivoModel)
+
+		If data Is Nothing Then
 			Return
-
 		End If
 
-		edtDireccionIp.Text = dispositivo.DireccionIp
-		edtNombre.Text = dispositivo.Descripcion
-
-
-
-
+		edtDireccionIp.Text = data.DireccionIp
+		edtNombre.Text = data.Descripcion
+		edtTerminalNumber.Text = data.IdDispositivo
 
 	End Sub
 

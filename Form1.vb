@@ -104,44 +104,8 @@ Public Class Form1
 			New DispositivoModel With {
 				.Descripcion = "Local",
 				.DireccionIp = "192.168.0.201"
-			},
-			New DispositivoModel With {
-				.Descripcion = "Cocina 1",
-				.DireccionIp = "192.168.0.202"
-			},
-			New DispositivoModel With {
-				.Descripcion = "Cocina 2",
-				.DireccionIp = "192.168.0.203"
-			},
-			 New DispositivoModel With {
-				.Descripcion = "Cocina 3",
-				.DireccionIp = "192.168.0.204"
-			},
-			 New DispositivoModel With {
-				.Descripcion = "Cocina 5",
-				.DireccionIp = "192.168.0.205"
-			},
-			 New DispositivoModel With {
-				.Descripcion = "Cocina 6",
-				.DireccionIp = "192.168.0.206"
-			},
-			 New DispositivoModel With {
-				.Descripcion = "Cocina 7",
-				.DireccionIp = "192.168.0.207"
-			},
-			 New DispositivoModel With {
-				.Descripcion = "Cocina 8",
-				.DireccionIp = "192.168.0.208"
-			},
-			 New DispositivoModel With {
-				.Descripcion = "Cocina 9",
-				.DireccionIp = "192.168.0.209"
-			},
-			 New DispositivoModel With {
-				.Descripcion = "Cocina 10",
-				.DireccionIp = "192.168.0.210"
 			}
-					}
+		}
 
 		' lista de relojes
 		For Each row As DispositivoModel In lista_dispositivos
@@ -236,13 +200,26 @@ Public Class Form1
 
 		Dim lista_registro As List(Of AttendanceRecord) = Nothing
 		Dim thread As New Thread(Sub() lista_registro = LeerLogs())
+		' actualizar el indice
+		TabControl1.SelectedTab = TabPage2
 
 		log("(espere) leyendo datos del reloj...", True)
 		thread.Start()
 		thread.Join()
 
+		lvLog.Items.Clear()
 		For Each row In lista_registro
 			log($"{row.DateTime } {row.EnrollNumber } {row.InOutMode }")
+
+			Dim nitem As New ListViewItem With {
+				.Text = row.DateTime
+			}
+			nitem.SubItems.Add(row.VerifyMode)
+			nitem.SubItems.Add(row.InOutMode)
+			nitem.SubItems.Add(row.EnrollNumber)
+
+			lvLog.Items.Add(nitem)
+
 		Next
 
 		log("(OK) Lectura finalizada", True)

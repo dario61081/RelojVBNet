@@ -191,7 +191,7 @@ Public Class Form1
 
         TabControl1.SelectedTab = TabPage2
         StatusPB.Visible = True
-        log($"(espere) leyendo datos del reloj {Mode};{DateFrom};{DateTo }", allowMessage:=True)
+        log($"(espere) leyendo datos del reloj {Mode};{DateFrom.Date};{DateTo.Date }", allowMessage:=True)
 
         ' Leer los registros en segundo plano
         Await Task.Run(Sub() lista_registro = LeerLogs())
@@ -200,22 +200,11 @@ Public Class Form1
         lvLog.BeginUpdate()
 
         ' Procesar registros
-        Dim format As String = "dd/MM/yyyy"
-        Dim culture As CultureInfo = CultureInfo.InvariantCulture
-
         For Each row In lista_registro
-            Dim rowDateTime, dateFromParsed, dateToParsed As Date
 
-            If Not Date.TryParseExact(row.DateTime, format, culture, DateTimeStyles.None, rowDateTime) OrElse
-           Not Date.TryParseExact(DateFrom.ToString(format), format, culture, DateTimeStyles.None, dateFromParsed) OrElse
-           Not Date.TryParseExact(DateTo.ToString(format), format, culture, DateTimeStyles.None, dateToParsed) Then
-                log($"Formato inválido en fechas: {row.DateTime}, {DateFrom}, {DateTo}")
-                Continue For
-            End If
+            If Mode = 1 AndAlso (row.DateTime.Date < DateFrom.Date OrElse row.DateTime.Date > DateTo.Date) Then Continue For
 
-            If Mode = 1 AndAlso (rowDateTime < dateFromParsed OrElse rowDateTime > dateToParsed) Then Continue For
-
-            Dim nitem As New ListViewItem With {.Text = rowDateTime.ToString(format)}
+            Dim nitem As New ListViewItem With {.Text = row.DateTime}
             nitem.SubItems.Add(row.EnrollNumber)
             nitem.SubItems.Add(row.InOutMode)
             nitem.SubItems.Add(row.VerifyMode)
@@ -224,17 +213,23 @@ Public Class Form1
         Next
 
         lvLog.EndUpdate()
-
-        ' Exportar los datos
-        Dim base_filename As String = Utiles.GetTempFilename()
-        Dim dumps_directory = Utiles.GetDirectory("dumps")
-        Dim save_filename As String = Path.Combine(dumps_directory, $"db_{record.DireccionIp}_{base_filename}")
-
-        Await Task.Run(Sub() ObjectReaderWriter(Of AttendanceRecord).SaveToJson(lista_registro, save_filename))
+        exportar_logs(lista_registro, $"db_{record.DireccionIp}.json")
 
         StatusPB.Visible = False
         Cursor = Cursors.Default
         log("(OK) Lectura finalizada", allowMessage:=True)
+    End Sub
+
+    Private Async Sub exportar_logs(lista_registro As List(Of AttendanceRecord), filename As String)
+
+        ' Exportar los datos
+        Dim base_filename As String = Utiles.GetTempFilename()
+        Dim dumps_directory = Utiles.GetDirectory("dumps")
+        Dim save_filename As String = Path.Combine(dumps_directory, filename)
+
+        Await Task.Run(Sub() ObjectReaderWriter(Of AttendanceRecord).SaveToJson(lista_registro, save_filename))
+
+
     End Sub
 
 

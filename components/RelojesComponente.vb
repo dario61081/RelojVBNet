@@ -17,7 +17,7 @@ Public Class RelojesComponente
 	Public Event OnSelectedItem(record As DispositivoModel)
 	Public Event OnConnecting(record As DispositivoModel)
 	Public Event OnDisconnecting(record As DispositivoModel)
-	Public Event OnReadLogs(record As DispositivoModel)
+	Public Event OnReadLogs(record As DispositivoModel, Mode As Integer, DateFrom As Date, DateTo As Date)
 	Public Event OnClearlogs(record As DispositivoModel)
 
 	Public Sub New()
@@ -73,9 +73,6 @@ Public Class RelojesComponente
 
 
 
-
-
-
 	End Sub
 
 	Private Sub ContextMenuStrip1_Opening(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles ContextMenuStrip1.Opening
@@ -100,7 +97,17 @@ Public Class RelojesComponente
 	Private Sub LeerEventosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LeerEventosToolStripMenuItem.Click
 
 		Dim obj = DirectCast(lvdispositivos.SelectedItems(0).Tag, DispositivoModel)
-		RaiseEvent OnReadLogs(obj)
+		RaiseEvent OnConnecting(obj)
+		Dim dialog As New ImportarFecha()
+		Dim resultado As DialogResult = dialog.ShowDialog()
+
+		If resultado = DialogResult.OK Then
+			Console.Write($"{dialog.Modo } {dialog.FechaDesde } {dialog.FechaHasta }")
+			RaiseEvent OnReadLogs(obj, dialog.Modo, dialog.FechaDesde, dialog.FechaHasta)
+		End If
+
+
+
 
 	End Sub
 

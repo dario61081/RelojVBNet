@@ -37,9 +37,10 @@ Partial Class Form1
         TabPage2 = New TabPage()
         lvLog = New ListView()
         ColumnHeader3 = New ColumnHeader()
-        ColumnHeader4 = New ColumnHeader()
         ColumnHeader5 = New ColumnHeader()
+        ColumnHeader4 = New ColumnHeader()
         ColumnHeader6 = New ColumnHeader()
+        ColumnHeader7 = New ColumnHeader()
         TabPage3 = New TabPage()
         lvEventos = New ListView()
         ColumnHeader1 = New ColumnHeader()
@@ -48,7 +49,6 @@ Partial Class Form1
         MenuStrip1 = New MenuStrip()
         SistemaToolStripMenuItem = New ToolStripMenuItem()
         CerrarToolStripMenuItem = New ToolStripMenuItem()
-        ColumnHeader7 = New ColumnHeader()
         StatusStrip1.SuspendLayout()
         Panel1.SuspendLayout()
         TabControl1.SuspendLayout()
@@ -159,7 +159,7 @@ Partial Class Form1
         ' 
         ' lvLog
         ' 
-        lvLog.Columns.AddRange(New ColumnHeader() {ColumnHeader3, ColumnHeader4, ColumnHeader5, ColumnHeader6, ColumnHeader7})
+        lvLog.Columns.AddRange(New ColumnHeader() {ColumnHeader3, ColumnHeader5, ColumnHeader4, ColumnHeader6, ColumnHeader7})
         lvLog.Dock = DockStyle.Fill
         lvLog.Location = New Point(3, 3)
         lvLog.Name = "lvLog"
@@ -173,20 +173,24 @@ Partial Class Form1
         ColumnHeader3.Text = "Fecha/Hora"
         ColumnHeader3.Width = 120
         ' 
+        ' ColumnHeader5
+        ' 
+        ColumnHeader5.Text = "Legajo #"
+        ColumnHeader5.Width = 80
+        ' 
         ' ColumnHeader4
         ' 
         ColumnHeader4.Text = "Entrada/Salida"
         ColumnHeader4.Width = 80
         ' 
-        ' ColumnHeader5
-        ' 
-        ColumnHeader5.Text = "Numero Id"
-        ColumnHeader5.Width = 80
-        ' 
         ' ColumnHeader6
         ' 
         ColumnHeader6.Text = "Verificación"
         ColumnHeader6.Width = 80
+        ' 
+        ' ColumnHeader7
+        ' 
+        ColumnHeader7.Text = "Modo"
         ' 
         ' TabPage3
         ' 
@@ -250,10 +254,6 @@ Partial Class Form1
         CerrarToolStripMenuItem.Name = "CerrarToolStripMenuItem"
         CerrarToolStripMenuItem.Size = New Size(106, 22)
         CerrarToolStripMenuItem.Text = "&Cerrar"
-        ' 
-        ' ColumnHeader7
-        ' 
-        ColumnHeader7.Text = "Modo"
         ' 
         ' Form1
         ' 

@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿Imports System.Globalization
+Imports System.IO
 Imports System.Threading
 Imports RelojVBNET.Models
 
@@ -185,45 +186,57 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Relojes_OnReadLogs(record As DispositivoModel) Handles Relojes.OnReadLogs
-
-
+    Private Async Sub Relojes_OnReadLogs(record As DispositivoModel, Mode As Integer, DateFrom As Date, DateTo As Date) Handles Relojes.OnReadLogs
         Dim lista_registro As List(Of AttendanceRecord) = Nothing
-        Dim thread As New Thread(Sub() lista_registro = LeerLogs())
-        ' actualizar el indice
+
         TabControl1.SelectedTab = TabPage2
         StatusPB.Visible = True
+        log($"(espere) leyendo datos del reloj {Mode};{DateFrom};{DateTo }", allowMessage:=True)
 
-        log("(espere) leyendo datos del reloj...", allowMessage:=True)
-        thread.Start()
-        thread.Join()
+        ' Leer los registros en segundo plano
+        Await Task.Run(Sub() lista_registro = LeerLogs())
 
         lvLog.Items.Clear()
+        lvLog.BeginUpdate()
+
+        ' Procesar registros
+        Dim format As String = "dd/MM/yyyy"
+        Dim culture As CultureInfo = CultureInfo.InvariantCulture
 
         For Each row In lista_registro
-            log($"{row.DateTime } {row.EnrollNumber } {row.InOutMode }")
+            Dim rowDateTime, dateFromParsed, dateToParsed As Date
 
-            Dim nitem As New ListViewItem With {
-                .Text = row.DateTime
-            }
-            nitem.SubItems.Add(row.VerifyMode)
-            nitem.SubItems.Add(row.InOutMode)
+            If Not Date.TryParseExact(row.DateTime, format, culture, DateTimeStyles.None, rowDateTime) OrElse
+           Not Date.TryParseExact(DateFrom.ToString(format), format, culture, DateTimeStyles.None, dateFromParsed) OrElse
+           Not Date.TryParseExact(DateTo.ToString(format), format, culture, DateTimeStyles.None, dateToParsed) Then
+                log($"Formato inválido en fechas: {row.DateTime}, {DateFrom}, {DateTo}")
+                Continue For
+            End If
+
+            If Mode = 1 AndAlso (rowDateTime < dateFromParsed OrElse rowDateTime > dateToParsed) Then Continue For
+
+            Dim nitem As New ListViewItem With {.Text = rowDateTime.ToString(format)}
             nitem.SubItems.Add(row.EnrollNumber)
+            nitem.SubItems.Add(row.InOutMode)
+            nitem.SubItems.Add(row.VerifyMode)
             nitem.SubItems.Add(row.WorkMode)
-
             lvLog.Items.Add(nitem)
-
         Next
 
-        'exportar los datos
+        lvLog.EndUpdate()
+
+        ' Exportar los datos
         Dim base_filename As String = Utiles.GetTempFilename()
         Dim dumps_directory = Utiles.GetDirectory("dumps")
         Dim save_filename As String = Path.Combine(dumps_directory, $"db_{record.DireccionIp}_{base_filename}")
 
-        ObjectReaderWriter(Of AttendanceRecord).SaveToJson(lista_registro, save_filename)
+        Await Task.Run(Sub() ObjectReaderWriter(Of AttendanceRecord).SaveToJson(lista_registro, save_filename))
+
         StatusPB.Visible = False
+        Cursor = Cursors.Default
         log("(OK) Lectura finalizada", allowMessage:=True)
     End Sub
+
 
     Private Sub Relojes_OnDisconnecting(record As DispositivoModel) Handles Relojes.OnDisconnecting
         log($"Desconectar reloj {record.DireccionIp }")

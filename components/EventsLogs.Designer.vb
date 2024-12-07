@@ -24,19 +24,18 @@ Partial Class EventsLogs
     Private Sub InitializeComponent()
         components = New ComponentModel.Container()
         lvLog = New ListView()
-        ColumnHeader3 = New ColumnHeader()
-        ColumnHeader4 = New ColumnHeader()
-        ColumnHeader5 = New ColumnHeader()
-        ColumnHeader6 = New ColumnHeader()
-        ColumnHeader7 = New ColumnHeader()
         ContextMenuStrip1 = New ContextMenuStrip(components)
         ExportarToolStripMenuItem = New ToolStripMenuItem()
+        ColumnHeader1 = New ColumnHeader()
+        ColumnHeader2 = New ColumnHeader()
+        ColumnHeader8 = New ColumnHeader()
+        ColumnHeader9 = New ColumnHeader()
         ContextMenuStrip1.SuspendLayout()
         SuspendLayout()
         ' 
         ' lvLog
         ' 
-        lvLog.Columns.AddRange(New ColumnHeader() {ColumnHeader3, ColumnHeader4, ColumnHeader5, ColumnHeader6, ColumnHeader7})
+        lvLog.Columns.AddRange(New ColumnHeader() {ColumnHeader1, ColumnHeader2, ColumnHeader8, ColumnHeader9})
         lvLog.Dock = DockStyle.Fill
         lvLog.Location = New Point(0, 0)
         lvLog.Name = "lvLog"
@@ -45,41 +44,37 @@ Partial Class EventsLogs
         lvLog.UseCompatibleStateImageBehavior = False
         lvLog.View = View.Details
         ' 
-        ' ColumnHeader3
-        ' 
-        ColumnHeader3.Text = "Fecha/Hora"
-        ColumnHeader3.Width = 120
-        ' 
-        ' ColumnHeader4
-        ' 
-        ColumnHeader4.Text = "Entrada/Salida"
-        ColumnHeader4.Width = 80
-        ' 
-        ' ColumnHeader5
-        ' 
-        ColumnHeader5.Text = "Numero Id"
-        ColumnHeader5.Width = 80
-        ' 
-        ' ColumnHeader6
-        ' 
-        ColumnHeader6.Text = "Verificación"
-        ColumnHeader6.Width = 80
-        ' 
-        ' ColumnHeader7
-        ' 
-        ColumnHeader7.Text = "Modo"
-        ' 
         ' ContextMenuStrip1
         ' 
         ContextMenuStrip1.Items.AddRange(New ToolStripItem() {ExportarToolStripMenuItem})
         ContextMenuStrip1.Name = "ContextMenuStrip1"
-        ContextMenuStrip1.Size = New Size(181, 48)
+        ContextMenuStrip1.Size = New Size(128, 26)
         ' 
         ' ExportarToolStripMenuItem
         ' 
         ExportarToolStripMenuItem.Name = "ExportarToolStripMenuItem"
-        ExportarToolStripMenuItem.Size = New Size(180, 22)
+        ExportarToolStripMenuItem.Size = New Size(127, 22)
         ExportarToolStripMenuItem.Text = "Exportar..."
+        ' 
+        ' ColumnHeader1
+        ' 
+        ColumnHeader1.Text = "Fecha Evento"
+        ColumnHeader1.Width = 120
+        ' 
+        ' ColumnHeader2
+        ' 
+        ColumnHeader2.Text = "IdDispositivo"
+        ColumnHeader2.Width = 120
+        ' 
+        ' ColumnHeader8
+        ' 
+        ColumnHeader8.Text = "TipoEvento"
+        ColumnHeader8.Width = 120
+        ' 
+        ' ColumnHeader9
+        ' 
+        ColumnHeader9.Text = "Descripción"
+        ColumnHeader9.Width = 300
         ' 
         ' EventsLogs
         ' 
@@ -93,12 +88,11 @@ Partial Class EventsLogs
     End Sub
 
     Friend WithEvents lvLog As ListView
-    Friend WithEvents ColumnHeader3 As ColumnHeader
-    Friend WithEvents ColumnHeader4 As ColumnHeader
-    Friend WithEvents ColumnHeader5 As ColumnHeader
-    Friend WithEvents ColumnHeader6 As ColumnHeader
-    Friend WithEvents ColumnHeader7 As ColumnHeader
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents ExportarToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ColumnHeader1 As ColumnHeader
+    Friend WithEvents ColumnHeader2 As ColumnHeader
+    Friend WithEvents ColumnHeader8 As ColumnHeader
+    Friend WithEvents ColumnHeader9 As ColumnHeader
 
 End Class

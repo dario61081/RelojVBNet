@@ -41,17 +41,24 @@ Public Class RelojesList
     End Sub
 
     Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
+        SeleccionarTodo()
+    End Sub
+
+    Private Sub SeleccionarTodo()
         For Each item As ListViewItem In LvDispositivos.Items
             item.Checked = True
         Next
     End Sub
 
     Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
+        DeseleccionarTodos()
+    End Sub
+
+    Private Sub DeseleccionarTodos()
         For Each item As ListViewItem In LvDispositivos.Items
             item.Checked = False
         Next
     End Sub
-
 
     ''' <summary>
     ''' Ejecutar lectura de dispositivos
@@ -105,5 +112,15 @@ Public Class RelojesList
 
     Private Sub LeerEventosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LeerEventosToolStripMenuItem.Click
         LecturaMarcaciones()
+    End Sub
+
+    Private Sub SeleccionarTodosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SeleccionarTodosToolStripMenuItem.Click
+        'seleccionar todos
+        SeleccionarTodo()
+    End Sub
+
+    Private Sub DeseleccionarTodosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeseleccionarTodosToolStripMenuItem.Click
+        'deseleccionar todos
+        DeseleccionarTodos()
     End Sub
 End Class

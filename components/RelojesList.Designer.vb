@@ -26,6 +26,9 @@ Partial Class RelojesList
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RelojesList))
         ContextMenuStrip1 = New ContextMenuStrip(components)
         LeerEventosToolStripMenuItem = New ToolStripMenuItem()
+        ToolStripSeparator1 = New ToolStripSeparator()
+        SeleccionarTodosToolStripMenuItem = New ToolStripMenuItem()
+        DeseleccionarTodosToolStripMenuItem = New ToolStripMenuItem()
         ImageList1 = New ImageList(components)
         ToolStripContainer1 = New ToolStripContainer()
         LvDispositivos = New ListView()
@@ -45,9 +48,9 @@ Partial Class RelojesList
         ' 
         ' ContextMenuStrip1
         ' 
-        ContextMenuStrip1.Items.AddRange(New ToolStripItem() {LeerEventosToolStripMenuItem})
+        ContextMenuStrip1.Items.AddRange(New ToolStripItem() {LeerEventosToolStripMenuItem, ToolStripSeparator1, SeleccionarTodosToolStripMenuItem, DeseleccionarTodosToolStripMenuItem})
         ContextMenuStrip1.Name = "ContextMenuStrip1"
-        ContextMenuStrip1.Size = New Size(269, 26)
+        ContextMenuStrip1.Size = New Size(269, 76)
         ' 
         ' LeerEventosToolStripMenuItem
         ' 
@@ -55,6 +58,25 @@ Partial Class RelojesList
         LeerEventosToolStripMenuItem.Name = "LeerEventosToolStripMenuItem"
         LeerEventosToolStripMenuItem.Size = New Size(268, 22)
         LeerEventosToolStripMenuItem.Text = "Leer marcaciones de seleccionados..."
+        ' 
+        ' ToolStripSeparator1
+        ' 
+        ToolStripSeparator1.Name = "ToolStripSeparator1"
+        ToolStripSeparator1.Size = New Size(265, 6)
+        ' 
+        ' SeleccionarTodosToolStripMenuItem
+        ' 
+        SeleccionarTodosToolStripMenuItem.Image = My.Resources.Resources.icons8_marque_todas_las_16
+        SeleccionarTodosToolStripMenuItem.Name = "SeleccionarTodosToolStripMenuItem"
+        SeleccionarTodosToolStripMenuItem.Size = New Size(268, 22)
+        SeleccionarTodosToolStripMenuItem.Text = "Seleccionar todos"
+        ' 
+        ' DeseleccionarTodosToolStripMenuItem
+        ' 
+        DeseleccionarTodosToolStripMenuItem.Image = My.Resources.Resources.icons8_desactive_todas_16
+        DeseleccionarTodosToolStripMenuItem.Name = "DeseleccionarTodosToolStripMenuItem"
+        DeseleccionarTodosToolStripMenuItem.Size = New Size(268, 22)
+        DeseleccionarTodosToolStripMenuItem.Text = "Deseleccionar todos"
         ' 
         ' ImageList1
         ' 
@@ -183,5 +205,8 @@ Partial Class RelojesList
     Friend WithEvents ToolStripButton2 As ToolStripButton
     Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
     Friend WithEvents ToolStripButton3 As ToolStripButton
+    Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
+    Friend WithEvents SeleccionarTodosToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents DeseleccionarTodosToolStripMenuItem As ToolStripMenuItem
 
 End Class

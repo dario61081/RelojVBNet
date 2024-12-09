@@ -2,6 +2,8 @@
     Public FechaDesde As Date
     Public Property FechaHasta As Date
     Public Property Modo As Integer = 0
+    Public Property SapUsername As String
+    Public Property SapPassword As String
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
 
@@ -14,6 +16,8 @@
         'datos del rango de fecha
         FechaDesde = dtpFechaDesde.Value
         FechaHasta = dtpFechaHasta.Value
+        SapUsername = TextBox1.Text
+        SapPassword = TextBox2.Text
         DialogResult = DialogResult.OK
         Close()
 

@@ -43,6 +43,7 @@ Partial Class RelojesList
         ToolStripButton2 = New ToolStripButton()
         ToolStripSeparator2 = New ToolStripSeparator()
         ToolStripButton3 = New ToolStripButton()
+        ColumnHeader3 = New ColumnHeader()
         ContextMenuStrip1.SuspendLayout()
         ToolStripContainer1.ContentPanel.SuspendLayout()
         ToolStripContainer1.TopToolStripPanel.SuspendLayout()
@@ -120,7 +121,7 @@ Partial Class RelojesList
         ' 
         LvDispositivos.Activation = ItemActivation.OneClick
         LvDispositivos.CheckBoxes = True
-        LvDispositivos.Columns.AddRange(New ColumnHeader() {ColumnHeader1, ColumnHeader2})
+        LvDispositivos.Columns.AddRange(New ColumnHeader() {ColumnHeader1, ColumnHeader2, ColumnHeader3})
         LvDispositivos.ContextMenuStrip = ContextMenuStrip1
         LvDispositivos.Dock = DockStyle.Fill
         LvDispositivos.FullRowSelect = True
@@ -150,7 +151,7 @@ Partial Class RelojesList
         ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripDropDownButton1, ToolStripButton4, ToolStripSeparator3, ToolStripButton1, ToolStripButton2, ToolStripSeparator2, ToolStripButton3})
         ToolStrip1.Location = New Point(3, 0)
         ToolStrip1.Name = "ToolStrip1"
-        ToolStrip1.Size = New Size(176, 25)
+        ToolStrip1.Size = New Size(145, 25)
         ToolStrip1.TabIndex = 0
         ' 
         ' ToolStripDropDownButton1
@@ -217,6 +218,10 @@ Partial Class RelojesList
         ToolStripButton3.Size = New Size(23, 22)
         ToolStripButton3.Text = "Descargar eventos de marcación"
         ' 
+        ' ColumnHeader3
+        ' 
+        ColumnHeader3.Text = "Dispositivo #"
+        ' 
         ' RelojesList
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -253,5 +258,6 @@ Partial Class RelojesList
     Friend WithEvents BorrarMarcacionesToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
     Friend WithEvents ToolStripButton4 As ToolStripButton
+    Friend WithEvents ColumnHeader3 As ColumnHeader
 
 End Class

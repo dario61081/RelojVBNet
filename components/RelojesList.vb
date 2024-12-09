@@ -26,6 +26,7 @@ Public Class RelojesList
             .ImageIndex = 0
         }
         node.SubItems.Add(data.Descripcion)
+        node.SubItems.Add(data.IdDispositivo)
         node.Tag = data
         LvDispositivos.Items.Add(node)
     End Sub

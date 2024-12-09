@@ -1,12 +1,17 @@
-﻿Public Class MarcacionesLogs
+﻿Imports RelojVBNET.Models
+
+Public Class MarcacionesLogs
 
 
-    Public Sub RegistrarMarcacion(Record As AttendanceRecord)
+    Public Sub RegistrarMarcacion(Record As AttendanceRecord, Optional Dispositivo As DispositivoModel = Nothing)
+        Dim DispositivoID As Integer = If(Dispositivo?.IdDispositivo, 0)
+
         Dim row As New ListViewItem With {
             .Text = Record.DateTime
         }
         row.SubItems.Add(Record.EnrollNumber)
         row.SubItems.Add(Record.VerifyMode)
+        row.SubItems.Add(DispositivoID)
         row.SubItems.Add(Record.WorkMode)
 
         ListView1.Items.Add(row)

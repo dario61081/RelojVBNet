@@ -45,7 +45,7 @@ Partial Class Form1
         lvEventos = New ListView()
         ColumnHeader1 = New ColumnHeader()
         ColumnHeader2 = New ColumnHeader()
-        Relojes = New RelojesComponente()
+        Relojes = New RelojesList()
         MenuStrip1 = New MenuStrip()
         SistemaToolStripMenuItem = New ToolStripMenuItem()
         CerrarToolStripMenuItem = New ToolStripMenuItem()
@@ -227,7 +227,7 @@ Partial Class Form1
         ' Relojes
         ' 
         Relojes.Dock = DockStyle.Left
-        Relojes.ListaBloqueada = True
+
         Relojes.Location = New Point(12, 12)
         Relojes.Name = "Relojes"
         Relojes.Size = New Size(243, 491)
@@ -286,7 +286,7 @@ Partial Class Form1
     Friend WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents Relojes As RelojesComponente
+    Friend WithEvents Relojes As RelojesList
     Friend WithEvents TabControl1 As TabControl
     Friend WithEvents TabPage1 As TabPage
     Friend WithEvents TabPage2 As TabPage

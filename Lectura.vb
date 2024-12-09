@@ -86,6 +86,15 @@ Public Class Lectura
                 .Estado = 0,
                 .FechaCreacion = Nothing,
                 .IdDispositivo = 1
+            },
+             New DispositivoModel() With {
+                .DireccionIp = "127.0.0.1",
+                .Puerto = 12345,
+                .ClaveAdmin = "",
+                .Descripcion = "Reloj de prueba local",
+                .Estado = 0,
+                .FechaCreacion = Nothing,
+                .IdDispositivo = 2
             }
         }
 

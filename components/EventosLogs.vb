@@ -19,6 +19,10 @@
         row.SubItems.Add(message)
 
         lvLog.Items.Add(row)
+        'hacer visible el ultimo renglon
+        If lvLog.Items.Count > 0 Then
+            lvLog.Items(lvLog.Items.Count - 1).EnsureVisible()
+        End If
     End Sub
 
 

@@ -40,7 +40,9 @@ Partial Class RelojesList
         ToolStripButton2 = New ToolStripButton()
         ToolStripSeparator2 = New ToolStripSeparator()
         ToolStripButton3 = New ToolStripButton()
+        StatusStrip1 = New StatusStrip()
         ContextMenuStrip1.SuspendLayout()
+        ToolStripContainer1.BottomToolStripPanel.SuspendLayout()
         ToolStripContainer1.ContentPanel.SuspendLayout()
         ToolStripContainer1.TopToolStripPanel.SuspendLayout()
         ToolStripContainer1.SuspendLayout()
@@ -96,10 +98,14 @@ Partial Class RelojesList
         ' ToolStripContainer1
         ' 
         ' 
+        ' ToolStripContainer1.BottomToolStripPanel
+        ' 
+        ToolStripContainer1.BottomToolStripPanel.Controls.Add(StatusStrip1)
+        ' 
         ' ToolStripContainer1.ContentPanel
         ' 
         ToolStripContainer1.ContentPanel.Controls.Add(LvDispositivos)
-        ToolStripContainer1.ContentPanel.Size = New Size(224, 402)
+        ToolStripContainer1.ContentPanel.Size = New Size(224, 380)
         ToolStripContainer1.Dock = DockStyle.Fill
         ToolStripContainer1.Location = New Point(0, 0)
         ToolStripContainer1.Name = "ToolStripContainer1"
@@ -123,7 +129,7 @@ Partial Class RelojesList
         LvDispositivos.HoverSelection = True
         LvDispositivos.Location = New Point(0, 0)
         LvDispositivos.Name = "LvDispositivos"
-        LvDispositivos.Size = New Size(224, 402)
+        LvDispositivos.Size = New Size(224, 380)
         LvDispositivos.SmallImageList = ImageList1
         LvDispositivos.TabIndex = 2
         LvDispositivos.UseCompatibleStateImageBehavior = False
@@ -155,7 +161,7 @@ Partial Class RelojesList
         ToolStripButton1.ImageTransparentColor = Color.Magenta
         ToolStripButton1.Name = "ToolStripButton1"
         ToolStripButton1.Size = New Size(23, 22)
-        ToolStripButton1.Text = "ToolStripButton1"
+        ToolStripButton1.Text = "Seleccionar todos"
         ' 
         ' ToolStripButton2
         ' 
@@ -164,7 +170,7 @@ Partial Class RelojesList
         ToolStripButton2.ImageTransparentColor = Color.Magenta
         ToolStripButton2.Name = "ToolStripButton2"
         ToolStripButton2.Size = New Size(23, 22)
-        ToolStripButton2.Text = "ToolStripButton2"
+        ToolStripButton2.Text = "Deseleccionar todos"
         ' 
         ' ToolStripSeparator2
         ' 
@@ -178,7 +184,15 @@ Partial Class RelojesList
         ToolStripButton3.ImageTransparentColor = Color.Magenta
         ToolStripButton3.Name = "ToolStripButton3"
         ToolStripButton3.Size = New Size(23, 22)
-        ToolStripButton3.Text = "ToolStripButton3"
+        ToolStripButton3.Text = "Descargar eventos de marcación"
+        ' 
+        ' StatusStrip1
+        ' 
+        StatusStrip1.Dock = DockStyle.None
+        StatusStrip1.Location = New Point(0, 0)
+        StatusStrip1.Name = "StatusStrip1"
+        StatusStrip1.Size = New Size(224, 22)
+        StatusStrip1.TabIndex = 0
         ' 
         ' RelojesList
         ' 
@@ -188,6 +202,8 @@ Partial Class RelojesList
         Name = "RelojesList"
         Size = New Size(224, 427)
         ContextMenuStrip1.ResumeLayout(False)
+        ToolStripContainer1.BottomToolStripPanel.ResumeLayout(False)
+        ToolStripContainer1.BottomToolStripPanel.PerformLayout()
         ToolStripContainer1.ContentPanel.ResumeLayout(False)
         ToolStripContainer1.TopToolStripPanel.ResumeLayout(False)
         ToolStripContainer1.TopToolStripPanel.PerformLayout()
@@ -213,5 +229,6 @@ Partial Class RelojesList
     Friend WithEvents ToolStripButton2 As ToolStripButton
     Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
     Friend WithEvents ToolStripButton3 As ToolStripButton
+    Friend WithEvents StatusStrip1 As StatusStrip
 
 End Class

@@ -36,7 +36,7 @@ Public Class Lectura
 
     Public Function CargarDispositivosBBDD() As List(Of DispositivoModel)
 
-        Dim local As List(Of DispositivoModel) = New List(Of DispositivoModel) From {
+        Dim Local As List(Of DispositivoModel) = New List(Of DispositivoModel) From {
             New DispositivoModel() With {
                 .DireccionIp = "192.168.0.201",
                 .Puerto = 4370,
@@ -48,7 +48,7 @@ Public Class Lectura
             },
             New DispositivoModel() With {
                 .DireccionIp = "127.0.0.1",
-                .Puerto = 4370,
+                .Puerto = 12345,
                 .ClaveAdmin = "",
                 .Descripcion = "Reloj local de prueba",
                 .Estado = 0,
@@ -57,7 +57,7 @@ Public Class Lectura
             }
         }
 
-        Return local
+        Return Local
     End Function
 
 End Class

@@ -27,6 +27,7 @@ Public Class RelojesList
         }
         node.SubItems.Add(data.Descripcion)
         node.SubItems.Add(data.IdDispositivo)
+        node.SubItems.Add("") ' estado
         node.Tag = data
         LvDispositivos.Items.Add(node)
     End Sub
@@ -149,11 +150,11 @@ Public Class RelojesList
                           If resultado Then
                               row.ImageIndex = 6
                               row.ForeColor = Color.DarkGreen
-                              row.SubItems(2).Text = "Online"
+                              row.SubItems(3).Text = "Online"
                           Else
                               row.ImageIndex = 7
                               row.ForeColor = Color.DarkRed
-                              row.SubItems(2).Text = "Offline"
+                              row.SubItems(3).Text = "Offline"
                           End If
                       Next
                   End Sub)

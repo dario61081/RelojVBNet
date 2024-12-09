@@ -4,6 +4,9 @@ Public Class Lectura
     Private Dispositivos As Relojes
     Private WithEvents Device As New ZKBiometricDevice()
 
+
+
+
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -26,17 +29,39 @@ Public Class Lectura
         Next
 
         RelojesList1.RegistrarTodo(relojes)
+    End Sub
+
+    Private Sub RelojesList1_LeerDispostivos(Lista As List(Of DispositivoModel), Parametros As LecturaParametros) Handles RelojesList1.LeerDispostivos
+
+
+
+
 
 
     End Sub
 
-    Public Sub LeerDispositivos()
+
+    Private Sub LeerAttendances(dispositivo As DispositivoModel, params As LecturaParametros)
+
+        Dim _device As New ZKBiometricDevice()
+        _device.Connect(dispositivo.DireccionIp, dispositivo.Puerto)
+        Dim lista = _device.GetAttendanceLogs()
+
+
+        For Each record As AttendanceRecord In lista
+            MarcacionesLogs1.RegistrarMarcacion(record)
+        Next
+
+
+
 
     End Sub
+
+
 
     Public Function CargarDispositivosBBDD() As List(Of DispositivoModel)
 
-        Dim Local As List(Of DispositivoModel) = New List(Of DispositivoModel) From {
+        Dim Local As New List(Of DispositivoModel) From {
             New DispositivoModel() With {
                 .DireccionIp = "192.168.0.201",
                 .Puerto = 4370,
@@ -45,15 +70,6 @@ Public Class Lectura
                 .Estado = 0,
                 .FechaCreacion = Nothing,
                 .IdDispositivo = 1
-            },
-            New DispositivoModel() With {
-                .DireccionIp = "127.0.0.1",
-                .Puerto = 12345,
-                .ClaveAdmin = "",
-                .Descripcion = "Reloj local de prueba",
-                .Estado = 0,
-                .FechaCreacion = Nothing,
-                .IdDispositivo = 2
             }
         }
 

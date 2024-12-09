@@ -71,6 +71,23 @@ Public Class RelojesList
 
         If resultado = DialogResult.OK Then
 
+            'preparar los parametros
+            Dim result As New LecturaParametros With {
+                .FechaDesde = panel.FechaDesde,
+                .FechaHasta = panel.FechaHasta,
+                .SapUsuario = panel.SapUsername,
+                .SapPassword = panel.SapPassword,
+                .Modo = panel.Modo
+            }
+            'filtrar los checkeados
+            Dim relojesSeleccionados As New List(Of DispositivoModel)
+            For Each row As ListViewItem In LvDispositivos.CheckedItems
+                relojesSeleccionados.Add(DirectCast(row.Tag, DispositivoModel))
+
+            Next
+            'enviar listado a lectura
+            RaiseEvent LeerDispostivos(relojesSeleccionados, result)
+
         End If
 
 

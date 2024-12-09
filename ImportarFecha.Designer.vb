@@ -22,6 +22,7 @@ Partial Class ImportarFecha
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ImportarFecha))
         Button1 = New Button()
         Button2 = New Button()
         GroupBox1 = New GroupBox()
@@ -32,10 +33,10 @@ Partial Class ImportarFecha
         Label1 = New Label()
         dtpFechaDesde = New DateTimePicker()
         GroupBox2 = New GroupBox()
-        Label3 = New Label()
-        Label4 = New Label()
-        TextBox1 = New TextBox()
         TextBox2 = New TextBox()
+        TextBox1 = New TextBox()
+        Label4 = New Label()
+        Label3 = New Label()
         GroupBox1.SuspendLayout()
         GroupBox2.SuspendLayout()
         SuspendLayout()
@@ -146,14 +147,20 @@ Partial Class ImportarFecha
         GroupBox2.TabStop = False
         GroupBox2.Text = "SAP Credenciales"
         ' 
-        ' Label3
+        ' TextBox2
         ' 
-        Label3.AutoSize = True
-        Label3.Location = New Point(16, 16)
-        Label3.Name = "Label3"
-        Label3.Size = New Size(47, 15)
-        Label3.TabIndex = 0
-        Label3.Text = "Usuario"
+        TextBox2.Location = New Point(112, 48)
+        TextBox2.Name = "TextBox2"
+        TextBox2.PasswordChar = "*"c
+        TextBox2.Size = New Size(144, 23)
+        TextBox2.TabIndex = 3
+        ' 
+        ' TextBox1
+        ' 
+        TextBox1.Location = New Point(112, 16)
+        TextBox1.Name = "TextBox1"
+        TextBox1.Size = New Size(144, 23)
+        TextBox1.TabIndex = 2
         ' 
         ' Label4
         ' 
@@ -164,20 +171,14 @@ Partial Class ImportarFecha
         Label4.TabIndex = 1
         Label4.Text = "Password"
         ' 
-        ' TextBox1
+        ' Label3
         ' 
-        TextBox1.Location = New Point(112, 16)
-        TextBox1.Name = "TextBox1"
-        TextBox1.Size = New Size(144, 23)
-        TextBox1.TabIndex = 2
-        ' 
-        ' TextBox2
-        ' 
-        TextBox2.Location = New Point(112, 48)
-        TextBox2.Name = "TextBox2"
-        TextBox2.PasswordChar = "*"c
-        TextBox2.Size = New Size(144, 23)
-        TextBox2.TabIndex = 3
+        Label3.AutoSize = True
+        Label3.Location = New Point(16, 16)
+        Label3.Name = "Label3"
+        Label3.Size = New Size(47, 15)
+        Label3.TabIndex = 0
+        Label3.Text = "Usuario"
         ' 
         ' ImportarFecha
         ' 
@@ -188,7 +189,8 @@ Partial Class ImportarFecha
         Controls.Add(GroupBox1)
         Controls.Add(Button2)
         Controls.Add(Button1)
-        FormBorderStyle = FormBorderStyle.FixedToolWindow
+        FormBorderStyle = FormBorderStyle.FixedSingle
+        Icon = CType(resources.GetObject("$this.Icon"), Icon)
         MaximizeBox = False
         MinimizeBox = False
         Name = "ImportarFecha"

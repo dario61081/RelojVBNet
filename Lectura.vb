@@ -58,8 +58,8 @@ Public Class Lectura
 
         For Each record As AttendanceRecord In lista
 
-            If params.Modo = 1 And record.DateTime.Date < params.FechaDesde.Date And record.DateTime.Date > params.FechaHasta.Date Then
-                Continue For
+            If params.Modo = 1 AndAlso (record.DateTime.Date >= params.FechaDesde.Date AndAlso record.DateTime.Date <= params.FechaHasta.Date) Then
+                MarcacionesLogs1.RegistrarMarcacion(record)
             End If
 
 

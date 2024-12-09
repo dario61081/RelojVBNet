@@ -32,5 +32,9 @@
     Private Sub ImportarFecha_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         dtpFechaDesde.MaxDate = DateTime.Now
         dtpFechaHasta.MaxDate = DateTime.Now
+
+        dtpFechaDesde.Value = Utiles.getFirstDayOfMonth()
+        dtpFechaHasta.Value = DateTime.Now
+
     End Sub
 End Class

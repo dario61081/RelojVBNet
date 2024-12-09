@@ -1,4 +1,8 @@
-﻿Public Class ImportarFecha
+﻿Option Explicit On
+
+
+
+Public Class ImportarFecha
     Public FechaDesde As Date
     Public Property FechaHasta As Date
     Public Property Modo As Integer = 0
@@ -33,7 +37,7 @@
         dtpFechaDesde.MaxDate = DateTime.Now
         dtpFechaHasta.MaxDate = DateTime.Now
 
-        dtpFechaDesde.Value = Utiles.getFirstDayOfMonth()
+        dtpFechaDesde.Value = GetFirstDayOfMonth()
         dtpFechaHasta.Value = DateTime.Now
 
     End Sub

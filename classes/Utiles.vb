@@ -22,7 +22,7 @@ Module Utiles
     End Function
 
 
-    Public Function getFirstDayOfMonth() As DateTime
+    Public Function GetFirstDayOfMonth() As DateTime
         Dim fecha = DateTime.Now
         Dim firstDayOfMonth = New DateTime(fecha.Year, fecha.Month, 1)
         Return firstDayOfMonth

@@ -60,12 +60,16 @@ Public Class RelojesList
     ''' <param name="e"></param>
     Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
 
+        If LvDispositivos.SelectedItems.Count = 0 Then
+            MessageBox.Show("No hay relojes seleccionados", "Importar")
+            Return
+        End If
+
+
         Dim panel As New ImportarFecha()
         Dim resultado = panel.ShowDialog()
 
         If resultado = DialogResult.OK Then
-
-
 
         End If
 

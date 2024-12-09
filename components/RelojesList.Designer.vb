@@ -161,7 +161,7 @@ Partial Class RelojesList
         ToolStripDropDownButton1.ImageTransparentColor = Color.Magenta
         ToolStripDropDownButton1.Name = "ToolStripDropDownButton1"
         ToolStripDropDownButton1.Size = New Size(29, 22)
-        ToolStripDropDownButton1.Text = "ToolStripDropDownButton1"
+        ToolStripDropDownButton1.Text = "Configuraciones extras"
         ' 
         ' BorrarMarcacionesToolStripMenuItem
         ' 

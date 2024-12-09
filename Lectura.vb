@@ -46,14 +46,16 @@ Public Class Lectura
     End Sub
 
 
-    Private Sub LeerAttendances(dispositivo As DispositivoModel, params As LecturaParametros)
+    Private Async Sub LeerAttendances(dispositivo As DispositivoModel, params As LecturaParametros)
 
         MarcacionesLogs1.Clear()
         Log($"Leyendo datos del reloj {dispositivo.Descripcion }")
         Log($"Parametros {params.Modo } - {params.FechaDesde } - {params.FechaHasta }")
         Dim _device As New ZKBiometricDevice()
         _device.Connect(dispositivo.DireccionIp, dispositivo.Puerto)
-        Dim lista = _device.GetAttendanceLogs()
+        Dim lista As List(Of AttendanceRecord)
+
+        Await Task.Run(Sub() lista = _device.GetAttendanceLogs())
 
 
         For Each record As AttendanceRecord In lista
@@ -62,7 +64,6 @@ Public Class Lectura
                 MarcacionesLogs1.RegistrarMarcacion(record)
                 Continue For
             End If
-
 
             MarcacionesLogs1.RegistrarMarcacion(record)
         Next
@@ -100,4 +101,7 @@ Public Class Lectura
         EventsLogs1.RegistrarEvento(message)
     End Sub
 
+    Private Sub CerrarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CerrarToolStripMenuItem.Click
+        Close()
+    End Sub
 End Class

@@ -262,7 +262,7 @@ Partial Class Lectura
         ' 
         CerrarToolStripMenuItem.Name = "CerrarToolStripMenuItem"
         CerrarToolStripMenuItem.ShortcutKeys = Keys.Alt Or Keys.F4
-        CerrarToolStripMenuItem.Size = New Size(148, 22)
+        CerrarToolStripMenuItem.Size = New Size(180, 22)
         CerrarToolStripMenuItem.Text = "&Cerrar"
         ' 
         ' ToolStripContainer2

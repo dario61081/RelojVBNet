@@ -4,6 +4,8 @@ Public Class RelojesList
 
     Public Dispositivos As List(Of DispositivoModel)
 
+    Public Event LeerDispostivos(Lista As List(Of DispositivoModel), Parametros As LecturaParametros)
+
     ''' <summary>
     ''' Representa un arbol de relojes
     ''' </summary>
@@ -38,5 +40,15 @@ Public Class RelojesList
         Next
     End Sub
 
+    Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
+        For Each item As ListViewItem In LvDispositivos.Items
+            item.Checked = True
+        Next
+    End Sub
 
+    Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
+        For Each item As ListViewItem In LvDispositivos.Items
+            item.Checked = False
+        Next
+    End Sub
 End Class

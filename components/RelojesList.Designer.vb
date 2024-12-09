@@ -145,7 +145,7 @@ Partial Class RelojesList
         ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripButton2, ToolStripSeparator2, ToolStripButton3})
         ToolStrip1.Location = New Point(3, 0)
         ToolStrip1.Name = "ToolStrip1"
-        ToolStrip1.Size = New Size(87, 25)
+        ToolStrip1.Size = New Size(118, 25)
         ToolStrip1.TabIndex = 0
         ' 
         ' ToolStripButton1

@@ -20,7 +20,8 @@ Public Class RelojesList
     ''' <param name="data"></param>
     Public Sub RegisterDevice(data As DispositivoModel)
         Dim node As New ListViewItem() With {
-            .Text = data.DireccionIp
+            .Text = data.DireccionIp,
+            .ImageIndex = 0
         }
         node.SubItems.Add(data.Descripcion)
         node.Tag = data

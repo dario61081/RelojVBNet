@@ -33,6 +33,7 @@ Partial Class Lectura
         SplitContainer2 = New SplitContainer()
         TabControl2 = New TabControl()
         TabPage4 = New TabPage()
+        MarcacionesLogs1 = New MarcacionesLogs()
         TabControl1 = New TabControl()
         TabPage1 = New TabPage()
         EventsLogs1 = New EventsLogs()
@@ -40,7 +41,6 @@ Partial Class Lectura
         SistemaToolStripMenuItem = New ToolStripMenuItem()
         CerrarToolStripMenuItem = New ToolStripMenuItem()
         ToolStripContainer2 = New ToolStripContainer()
-        MarcacionesLogs1 = New MarcacionesLogs()
         ToolStripContainer1.BottomToolStripPanel.SuspendLayout()
         ToolStripContainer1.ContentPanel.SuspendLayout()
         ToolStripContainer1.TopToolStripPanel.SuspendLayout()
@@ -178,6 +178,14 @@ Partial Class Lectura
         TabPage4.Text = "Marcaciones"
         TabPage4.UseVisualStyleBackColor = True
         ' 
+        ' MarcacionesLogs1
+        ' 
+        MarcacionesLogs1.Dock = DockStyle.Fill
+        MarcacionesLogs1.Location = New Point(3, 3)
+        MarcacionesLogs1.Name = "MarcacionesLogs1"
+        MarcacionesLogs1.Size = New Size(536, 271)
+        MarcacionesLogs1.TabIndex = 0
+        ' 
         ' TabControl1
         ' 
         TabControl1.Controls.Add(TabPage1)
@@ -243,14 +251,6 @@ Partial Class Lectura
         ToolStripContainer2.Size = New Size(784, 561)
         ToolStripContainer2.TabIndex = 0
         ToolStripContainer2.Text = "ToolStripContainer2"
-        ' 
-        ' MarcacionesLogs1
-        ' 
-        MarcacionesLogs1.Dock = DockStyle.Fill
-        MarcacionesLogs1.Location = New Point(3, 3)
-        MarcacionesLogs1.Name = "MarcacionesLogs1"
-        MarcacionesLogs1.Size = New Size(536, 271)
-        MarcacionesLogs1.TabIndex = 0
         ' 
         ' Lectura
         ' 

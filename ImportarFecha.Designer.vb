@@ -44,9 +44,9 @@ Partial Class ImportarFecha
         ' Button1
         ' 
         Button1.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
-        Button1.Location = New Point(334, 266)
+        Button1.Location = New Point(258, 246)
         Button1.Name = "Button1"
-        Button1.Size = New Size(75, 39)
+        Button1.Size = New Size(75, 33)
         Button1.TabIndex = 6
         Button1.Text = "Aceptar"
         Button1.UseVisualStyleBackColor = True
@@ -54,9 +54,9 @@ Partial Class ImportarFecha
         ' Button2
         ' 
         Button2.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
-        Button2.Location = New Point(255, 266)
+        Button2.Location = New Point(179, 246)
         Button2.Name = "Button2"
-        Button2.Size = New Size(75, 39)
+        Button2.Size = New Size(75, 33)
         Button2.TabIndex = 7
         Button2.Text = "Cancelar"
         Button2.UseVisualStyleBackColor = True
@@ -72,7 +72,7 @@ Partial Class ImportarFecha
         GroupBox1.Dock = DockStyle.Top
         GroupBox1.Location = New Point(6, 6)
         GroupBox1.Name = "GroupBox1"
-        GroupBox1.Size = New Size(403, 144)
+        GroupBox1.Size = New Size(327, 144)
         GroupBox1.TabIndex = 8
         GroupBox1.TabStop = False
         GroupBox1.Text = "Periodo"
@@ -81,7 +81,7 @@ Partial Class ImportarFecha
         ' 
         rdTodos.AutoSize = True
         rdTodos.Checked = True
-        rdTodos.Location = New Point(16, 16)
+        rdTodos.Location = New Point(16, 24)
         rdTodos.Name = "rdTodos"
         rdTodos.Size = New Size(56, 19)
         rdTodos.TabIndex = 11
@@ -102,7 +102,7 @@ Partial Class ImportarFecha
         ' dtpFechaHasta
         ' 
         dtpFechaHasta.Format = DateTimePickerFormat.Custom
-        dtpFechaHasta.Location = New Point(112, 112)
+        dtpFechaHasta.Location = New Point(136, 112)
         dtpFechaHasta.Name = "dtpFechaHasta"
         dtpFechaHasta.Size = New Size(144, 23)
         dtpFechaHasta.TabIndex = 9
@@ -110,7 +110,7 @@ Partial Class ImportarFecha
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Location = New Point(32, 112)
+        Label2.Location = New Point(56, 112)
         Label2.Name = "Label2"
         Label2.Size = New Size(69, 15)
         Label2.TabIndex = 8
@@ -119,7 +119,7 @@ Partial Class ImportarFecha
         ' Label1
         ' 
         Label1.AutoSize = True
-        Label1.Location = New Point(32, 80)
+        Label1.Location = New Point(56, 80)
         Label1.Name = "Label1"
         Label1.Size = New Size(72, 15)
         Label1.TabIndex = 7
@@ -128,7 +128,7 @@ Partial Class ImportarFecha
         ' dtpFechaDesde
         ' 
         dtpFechaDesde.Format = DateTimePickerFormat.Custom
-        dtpFechaDesde.Location = New Point(112, 80)
+        dtpFechaDesde.Location = New Point(136, 80)
         dtpFechaDesde.Name = "dtpFechaDesde"
         dtpFechaDesde.Size = New Size(144, 23)
         dtpFechaDesde.TabIndex = 6
@@ -142,30 +142,32 @@ Partial Class ImportarFecha
         GroupBox2.Dock = DockStyle.Top
         GroupBox2.Location = New Point(6, 150)
         GroupBox2.Name = "GroupBox2"
-        GroupBox2.Size = New Size(403, 80)
+        GroupBox2.Size = New Size(327, 90)
         GroupBox2.TabIndex = 9
         GroupBox2.TabStop = False
         GroupBox2.Text = "SAP Credenciales"
         ' 
         ' TextBox2
         ' 
-        TextBox2.Location = New Point(112, 48)
+        TextBox2.Location = New Point(136, 56)
         TextBox2.Name = "TextBox2"
         TextBox2.PasswordChar = "*"c
+        TextBox2.PlaceholderText = "Password"
         TextBox2.Size = New Size(144, 23)
         TextBox2.TabIndex = 3
         ' 
         ' TextBox1
         ' 
-        TextBox1.Location = New Point(112, 16)
+        TextBox1.Location = New Point(136, 24)
         TextBox1.Name = "TextBox1"
+        TextBox1.PlaceholderText = "Usuario"
         TextBox1.Size = New Size(144, 23)
         TextBox1.TabIndex = 2
         ' 
         ' Label4
         ' 
         Label4.AutoSize = True
-        Label4.Location = New Point(16, 48)
+        Label4.Location = New Point(16, 56)
         Label4.Name = "Label4"
         Label4.Size = New Size(57, 15)
         Label4.TabIndex = 1
@@ -174,7 +176,7 @@ Partial Class ImportarFecha
         ' Label3
         ' 
         Label3.AutoSize = True
-        Label3.Location = New Point(16, 16)
+        Label3.Location = New Point(16, 24)
         Label3.Name = "Label3"
         Label3.Size = New Size(47, 15)
         Label3.TabIndex = 0
@@ -184,7 +186,7 @@ Partial Class ImportarFecha
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(415, 310)
+        ClientSize = New Size(339, 284)
         Controls.Add(GroupBox2)
         Controls.Add(GroupBox1)
         Controls.Add(Button2)

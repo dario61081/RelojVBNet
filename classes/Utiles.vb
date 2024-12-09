@@ -28,5 +28,14 @@ Module Utiles
         Return firstDayOfMonth
     End Function
 
+    Public Function Ping(host As String) As Boolean
+        Try
+            Dim reply = New System.Net.NetworkInformation.Ping().Send(host)
+            Return reply.Status = Global.System.Net.NetworkInformation.IPStatus.Success
+        Catch ex As Exception
+            Return False
+
+        End Try
+    End Function
 
 End Module

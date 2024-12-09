@@ -35,13 +35,14 @@ Partial Class RelojesList
         ColumnHeader1 = New ColumnHeader()
         ColumnHeader2 = New ColumnHeader()
         ToolStrip1 = New ToolStrip()
+        ToolStripDropDownButton1 = New ToolStripDropDownButton()
+        BorrarMarcacionesToolStripMenuItem = New ToolStripMenuItem()
+        ToolStripButton4 = New ToolStripButton()
+        ToolStripSeparator3 = New ToolStripSeparator()
         ToolStripButton1 = New ToolStripButton()
         ToolStripButton2 = New ToolStripButton()
         ToolStripSeparator2 = New ToolStripSeparator()
         ToolStripButton3 = New ToolStripButton()
-        ToolStripDropDownButton1 = New ToolStripDropDownButton()
-        BorrarMarcacionesToolStripMenuItem = New ToolStripMenuItem()
-        ToolStripSeparator3 = New ToolStripSeparator()
         ContextMenuStrip1.SuspendLayout()
         ToolStripContainer1.ContentPanel.SuspendLayout()
         ToolStripContainer1.TopToolStripPanel.SuspendLayout()
@@ -87,11 +88,14 @@ Partial Class RelojesList
         ImageList1.ColorDepth = ColorDepth.Depth32Bit
         ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), ImageListStreamer)
         ImageList1.TransparentColor = Color.Transparent
-        ImageList1.Images.SetKeyName(0, "icons8-reloj-16.png")
-        ImageList1.Images.SetKeyName(1, "icons8-de-acuerdo-16.png")
-        ImageList1.Images.SetKeyName(2, "icons8-alta-importancia-16.png")
-        ImageList1.Images.SetKeyName(3, "icons8-cancelar-16.png")
-        ImageList1.Images.SetKeyName(4, "icons8-reproducir-en-círculo-16.png")
+        ImageList1.Images.SetKeyName(0, "icons8-reloj-16 (4).png")
+        ImageList1.Images.SetKeyName(1, "icons8-reloj-16.png")
+        ImageList1.Images.SetKeyName(2, "icons8-de-acuerdo-16.png")
+        ImageList1.Images.SetKeyName(3, "icons8-alta-importancia-16.png")
+        ImageList1.Images.SetKeyName(4, "icons8-cancelar-16.png")
+        ImageList1.Images.SetKeyName(5, "icons8-reproducir-en-círculo-16.png")
+        ImageList1.Images.SetKeyName(6, "icons8-reloj-16 (2).png")
+        ImageList1.Images.SetKeyName(7, "icons8-reloj-16 (3).png")
         ' 
         ' ToolStripContainer1
         ' 
@@ -143,11 +147,43 @@ Partial Class RelojesList
         ' ToolStrip1
         ' 
         ToolStrip1.Dock = DockStyle.None
-        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripDropDownButton1, ToolStripSeparator3, ToolStripButton1, ToolStripButton2, ToolStripSeparator2, ToolStripButton3})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripDropDownButton1, ToolStripButton4, ToolStripSeparator3, ToolStripButton1, ToolStripButton2, ToolStripSeparator2, ToolStripButton3})
         ToolStrip1.Location = New Point(3, 0)
         ToolStrip1.Name = "ToolStrip1"
-        ToolStrip1.Size = New Size(153, 25)
+        ToolStrip1.Size = New Size(176, 25)
         ToolStrip1.TabIndex = 0
+        ' 
+        ' ToolStripDropDownButton1
+        ' 
+        ToolStripDropDownButton1.DisplayStyle = ToolStripItemDisplayStyle.Image
+        ToolStripDropDownButton1.DropDownItems.AddRange(New ToolStripItem() {BorrarMarcacionesToolStripMenuItem})
+        ToolStripDropDownButton1.Image = My.Resources.Resources.icons8_ajustes_16
+        ToolStripDropDownButton1.ImageTransparentColor = Color.Magenta
+        ToolStripDropDownButton1.Name = "ToolStripDropDownButton1"
+        ToolStripDropDownButton1.Size = New Size(29, 22)
+        ToolStripDropDownButton1.Text = "ToolStripDropDownButton1"
+        ' 
+        ' BorrarMarcacionesToolStripMenuItem
+        ' 
+        BorrarMarcacionesToolStripMenuItem.Image = My.Resources.Resources.icons8_basura_16
+        BorrarMarcacionesToolStripMenuItem.Name = "BorrarMarcacionesToolStripMenuItem"
+        BorrarMarcacionesToolStripMenuItem.Size = New Size(185, 22)
+        BorrarMarcacionesToolStripMenuItem.Text = "Borrar marcaciones..."
+        ' 
+        ' ToolStripButton4
+        ' 
+        ToolStripButton4.DisplayStyle = ToolStripItemDisplayStyle.Image
+        ToolStripButton4.Image = My.Resources.Resources.icons8_reloj_16__2_
+        ToolStripButton4.ImageTransparentColor = Color.Magenta
+        ToolStripButton4.Name = "ToolStripButton4"
+        ToolStripButton4.Size = New Size(23, 22)
+        ToolStripButton4.Text = "Verificar"
+        ToolStripButton4.ToolTipText = "Verificar el estado de los relojes"
+        ' 
+        ' ToolStripSeparator3
+        ' 
+        ToolStripSeparator3.Name = "ToolStripSeparator3"
+        ToolStripSeparator3.Size = New Size(6, 25)
         ' 
         ' ToolStripButton1
         ' 
@@ -180,28 +216,6 @@ Partial Class RelojesList
         ToolStripButton3.Name = "ToolStripButton3"
         ToolStripButton3.Size = New Size(23, 22)
         ToolStripButton3.Text = "Descargar eventos de marcación"
-        ' 
-        ' ToolStripDropDownButton1
-        ' 
-        ToolStripDropDownButton1.DisplayStyle = ToolStripItemDisplayStyle.Image
-        ToolStripDropDownButton1.DropDownItems.AddRange(New ToolStripItem() {BorrarMarcacionesToolStripMenuItem})
-        ToolStripDropDownButton1.Image = My.Resources.Resources.icons8_ajustes_16
-        ToolStripDropDownButton1.ImageTransparentColor = Color.Magenta
-        ToolStripDropDownButton1.Name = "ToolStripDropDownButton1"
-        ToolStripDropDownButton1.Size = New Size(29, 22)
-        ToolStripDropDownButton1.Text = "ToolStripDropDownButton1"
-        ' 
-        ' BorrarMarcacionesToolStripMenuItem
-        ' 
-        BorrarMarcacionesToolStripMenuItem.Image = My.Resources.Resources.icons8_basura_16
-        BorrarMarcacionesToolStripMenuItem.Name = "BorrarMarcacionesToolStripMenuItem"
-        BorrarMarcacionesToolStripMenuItem.Size = New Size(185, 22)
-        BorrarMarcacionesToolStripMenuItem.Text = "Borrar marcaciones..."
-        ' 
-        ' ToolStripSeparator3
-        ' 
-        ToolStripSeparator3.Name = "ToolStripSeparator3"
-        ToolStripSeparator3.Size = New Size(6, 25)
         ' 
         ' RelojesList
         ' 
@@ -238,5 +252,6 @@ Partial Class RelojesList
     Friend WithEvents ToolStripDropDownButton1 As ToolStripDropDownButton
     Friend WithEvents BorrarMarcacionesToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
+    Friend WithEvents ToolStripButton4 As ToolStripButton
 
 End Class

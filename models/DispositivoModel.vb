@@ -1,5 +1,3 @@
-Imports System
-
 Namespace Models
     ''' <summary>
     ''' Representa un dispositivo de registro de tiempo
@@ -39,5 +37,8 @@ Namespace Models
         ''' Fecha de creación del dispositivo
         ''' </summary>
         Public Property FechaCreacion As DateTime
+
+
+
     End Class
 End Namespace

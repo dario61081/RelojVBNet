@@ -132,4 +132,29 @@ Public Class RelojesList
             'borrar
         End If
     End Sub
+
+    Private Async Sub ToolStripButton4_Click(sender As Object, e As EventArgs) Handles ToolStripButton4.Click
+        Dim listado As ListView.ListViewItemCollection = LvDispositivos.Items
+
+        Await Task.Run(Sub() VerificarRelojes(listado))
+
+    End Sub
+
+    Private Sub VerificarRelojes(listado As ListView.ListViewItemCollection)
+        'check ping de los relojes
+        Me.Invoke(Sub()
+                      For Each row As ListViewItem In listado
+                          Dim dispositivo As DispositivoModel = DirectCast(row.Tag, DispositivoModel)
+                          Dim resultado = Utiles.Ping(dispositivo.DireccionIp)
+
+                          If resultado Then
+                              row.ImageIndex = 6
+                              row.ForeColor = Color.DarkGreen
+                          Else
+                              row.ImageIndex = 7
+                              row.ForeColor = Color.DarkRed
+                          End If
+                      Next
+                  End Sub)
+    End Sub
 End Class

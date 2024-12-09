@@ -43,8 +43,8 @@ Public Class ImportarFecha
         dtpFechaDesde.MaxDate = DateTime.Now
         dtpFechaHasta.MaxDate = DateTime.Now
 
-        dtpFechaDesde.Value = GetFirstDayOfMonth()
-        dtpFechaHasta.Value = DateTime.Now
+        dtpFechaDesde.Value = GetFirstDayOfMonth().Date
+        dtpFechaHasta.Value = DateTime.Now.Date
 
     End Sub
 End Class

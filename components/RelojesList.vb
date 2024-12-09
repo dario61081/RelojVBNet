@@ -59,7 +59,11 @@ Public Class RelojesList
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
+        LecturaMarcaciones()
 
+    End Sub
+
+    Private Sub LecturaMarcaciones()
         If LvDispositivos.CheckedItems.Count = 0 Then
             MessageBox.Show("No hay relojes seleccionados", "Importar")
             Return
@@ -89,7 +93,17 @@ Public Class RelojesList
             RaiseEvent LeerDispostivos(relojesSeleccionados, result)
 
         End If
+    End Sub
 
+    Private Sub LecturaSeleccionados()
 
+    End Sub
+
+    Private Sub ContextMenuStrip1_Opening(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles ContextMenuStrip1.Opening
+
+    End Sub
+
+    Private Sub LeerEventosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LeerEventosToolStripMenuItem.Click
+        LecturaMarcaciones()
     End Sub
 End Class

@@ -25,11 +25,7 @@ Partial Class RelojesList
         components = New ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RelojesList))
         ContextMenuStrip1 = New ContextMenuStrip(components)
-        ConectarRelojToolStripMenuItem = New ToolStripMenuItem()
-        DesconectarRelojToolStripMenuItem = New ToolStripMenuItem()
-        ToolStripSeparator1 = New ToolStripSeparator()
         LeerEventosToolStripMenuItem = New ToolStripMenuItem()
-        BorrarEventosToolStripMenuItem = New ToolStripMenuItem()
         ImageList1 = New ImageList(components)
         ToolStripContainer1 = New ToolStripContainer()
         LvDispositivos = New ListView()
@@ -49,38 +45,15 @@ Partial Class RelojesList
         ' 
         ' ContextMenuStrip1
         ' 
-        ContextMenuStrip1.Items.AddRange(New ToolStripItem() {ConectarRelojToolStripMenuItem, DesconectarRelojToolStripMenuItem, ToolStripSeparator1, LeerEventosToolStripMenuItem, BorrarEventosToolStripMenuItem})
+        ContextMenuStrip1.Items.AddRange(New ToolStripItem() {LeerEventosToolStripMenuItem})
         ContextMenuStrip1.Name = "ContextMenuStrip1"
-        ContextMenuStrip1.Size = New Size(166, 98)
-        ' 
-        ' ConectarRelojToolStripMenuItem
-        ' 
-        ConectarRelojToolStripMenuItem.Name = "ConectarRelojToolStripMenuItem"
-        ConectarRelojToolStripMenuItem.Size = New Size(165, 22)
-        ConectarRelojToolStripMenuItem.Text = "Conectar reloj"
-        ' 
-        ' DesconectarRelojToolStripMenuItem
-        ' 
-        DesconectarRelojToolStripMenuItem.Name = "DesconectarRelojToolStripMenuItem"
-        DesconectarRelojToolStripMenuItem.Size = New Size(165, 22)
-        DesconectarRelojToolStripMenuItem.Text = "Desconectar reloj"
-        ' 
-        ' ToolStripSeparator1
-        ' 
-        ToolStripSeparator1.Name = "ToolStripSeparator1"
-        ToolStripSeparator1.Size = New Size(162, 6)
+        ContextMenuStrip1.Size = New Size(269, 48)
         ' 
         ' LeerEventosToolStripMenuItem
         ' 
         LeerEventosToolStripMenuItem.Name = "LeerEventosToolStripMenuItem"
-        LeerEventosToolStripMenuItem.Size = New Size(165, 22)
-        LeerEventosToolStripMenuItem.Text = "Leer eventos..."
-        ' 
-        ' BorrarEventosToolStripMenuItem
-        ' 
-        BorrarEventosToolStripMenuItem.Name = "BorrarEventosToolStripMenuItem"
-        BorrarEventosToolStripMenuItem.Size = New Size(165, 22)
-        BorrarEventosToolStripMenuItem.Text = "Borrar eventos..."
+        LeerEventosToolStripMenuItem.Size = New Size(268, 22)
+        LeerEventosToolStripMenuItem.Text = "Leer marcaciones de seleccionados..."
         ' 
         ' ImageList1
         ' 
@@ -145,7 +118,7 @@ Partial Class RelojesList
         ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripButton2, ToolStripSeparator2, ToolStripButton3})
         ToolStrip1.Location = New Point(3, 0)
         ToolStrip1.Name = "ToolStrip1"
-        ToolStrip1.Size = New Size(118, 25)
+        ToolStrip1.Size = New Size(87, 25)
         ToolStrip1.TabIndex = 0
         ' 
         ' ToolStripButton1
@@ -199,11 +172,7 @@ Partial Class RelojesList
     End Sub
     Friend WithEvents ImageList1 As ImageList
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
-    Friend WithEvents ConectarRelojToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents DesconectarRelojToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
     Friend WithEvents LeerEventosToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents BorrarEventosToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripContainer1 As ToolStripContainer
     Friend WithEvents LvDispositivos As ListView
     Friend WithEvents ColumnHeader1 As ColumnHeader

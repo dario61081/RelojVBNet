@@ -47,10 +47,11 @@ Partial Class RelojesList
         ' 
         ContextMenuStrip1.Items.AddRange(New ToolStripItem() {LeerEventosToolStripMenuItem})
         ContextMenuStrip1.Name = "ContextMenuStrip1"
-        ContextMenuStrip1.Size = New Size(269, 48)
+        ContextMenuStrip1.Size = New Size(269, 26)
         ' 
         ' LeerEventosToolStripMenuItem
         ' 
+        LeerEventosToolStripMenuItem.Image = My.Resources.Resources.icons8_descargar_16
         LeerEventosToolStripMenuItem.Name = "LeerEventosToolStripMenuItem"
         LeerEventosToolStripMenuItem.Size = New Size(268, 22)
         LeerEventosToolStripMenuItem.Text = "Leer marcaciones de seleccionados..."

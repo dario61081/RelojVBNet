@@ -14,6 +14,10 @@ Public Class RelojesList
 
     End Sub
 
+    ''' <summary>
+    ''' Registrar un dispositivo
+    ''' </summary>
+    ''' <param name="data"></param>
     Public Sub RegisterDevice(data As DispositivoModel)
         Dim node As New ListViewItem() With {
             .Text = data.DireccionIp
@@ -23,7 +27,15 @@ Public Class RelojesList
         LvDispositivos.Items.Add(node)
     End Sub
 
-
+    ''' <summary>
+    ''' Registrar la lista de dispositivos
+    ''' </summary>
+    ''' <param name="data"></param>
+    Public Sub RegistrarTodo(data As List(Of DispositivoModel))
+        For Each row As DispositivoModel In data
+            RegisterDevice(row)
+        Next
+    End Sub
 
 
 End Class

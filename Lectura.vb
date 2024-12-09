@@ -25,7 +25,7 @@ Public Class Lectura
             Dispositivos.RegistrarReloj(_reloj)
         Next
 
-
+        RelojesList1.RegistrarTodo(relojes)
 
 
     End Sub

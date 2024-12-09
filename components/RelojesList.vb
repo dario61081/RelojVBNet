@@ -123,4 +123,13 @@ Public Class RelojesList
         'deseleccionar todos
         DeseleccionarTodos()
     End Sub
+
+    Private Sub BorrarMarcacionesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BorrarMarcacionesToolStripMenuItem.Click
+        'pregunta a conciencia si quiere ejecutar el borrado de registro de attendance 
+        Dim resp = MessageBox.Show("Estas seguro de borrar los registros de marcaciones? Esta operación no es reversible y se aplicara de inmediato", "Borrar", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+
+        If resp = DialogResult.Yes Then
+            'borrar
+        End If
+    End Sub
 End Class

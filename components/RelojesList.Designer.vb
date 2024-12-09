@@ -39,6 +39,9 @@ Partial Class RelojesList
         ToolStripButton2 = New ToolStripButton()
         ToolStripSeparator2 = New ToolStripSeparator()
         ToolStripButton3 = New ToolStripButton()
+        ToolStripDropDownButton1 = New ToolStripDropDownButton()
+        BorrarMarcacionesToolStripMenuItem = New ToolStripMenuItem()
+        ToolStripSeparator3 = New ToolStripSeparator()
         ContextMenuStrip1.SuspendLayout()
         ToolStripContainer1.ContentPanel.SuspendLayout()
         ToolStripContainer1.TopToolStripPanel.SuspendLayout()
@@ -50,7 +53,7 @@ Partial Class RelojesList
         ' 
         ContextMenuStrip1.Items.AddRange(New ToolStripItem() {LeerEventosToolStripMenuItem, ToolStripSeparator1, SeleccionarTodosToolStripMenuItem, DeseleccionarTodosToolStripMenuItem})
         ContextMenuStrip1.Name = "ContextMenuStrip1"
-        ContextMenuStrip1.Size = New Size(246, 98)
+        ContextMenuStrip1.Size = New Size(246, 76)
         ' 
         ' LeerEventosToolStripMenuItem
         ' 
@@ -107,6 +110,7 @@ Partial Class RelojesList
         ' ToolStripContainer1.TopToolStripPanel
         ' 
         ToolStripContainer1.TopToolStripPanel.Controls.Add(ToolStrip1)
+        ToolStripContainer1.TopToolStripPanel.RenderMode = ToolStripRenderMode.Professional
         ' 
         ' LvDispositivos
         ' 
@@ -139,10 +143,10 @@ Partial Class RelojesList
         ' ToolStrip1
         ' 
         ToolStrip1.Dock = DockStyle.None
-        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripButton2, ToolStripSeparator2, ToolStripButton3})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripDropDownButton1, ToolStripSeparator3, ToolStripButton1, ToolStripButton2, ToolStripSeparator2, ToolStripButton3})
         ToolStrip1.Location = New Point(3, 0)
         ToolStrip1.Name = "ToolStrip1"
-        ToolStrip1.Size = New Size(87, 25)
+        ToolStrip1.Size = New Size(153, 25)
         ToolStrip1.TabIndex = 0
         ' 
         ' ToolStripButton1
@@ -177,6 +181,28 @@ Partial Class RelojesList
         ToolStripButton3.Size = New Size(23, 22)
         ToolStripButton3.Text = "Descargar eventos de marcación"
         ' 
+        ' ToolStripDropDownButton1
+        ' 
+        ToolStripDropDownButton1.DisplayStyle = ToolStripItemDisplayStyle.Image
+        ToolStripDropDownButton1.DropDownItems.AddRange(New ToolStripItem() {BorrarMarcacionesToolStripMenuItem})
+        ToolStripDropDownButton1.Image = My.Resources.Resources.icons8_ajustes_16
+        ToolStripDropDownButton1.ImageTransparentColor = Color.Magenta
+        ToolStripDropDownButton1.Name = "ToolStripDropDownButton1"
+        ToolStripDropDownButton1.Size = New Size(29, 22)
+        ToolStripDropDownButton1.Text = "ToolStripDropDownButton1"
+        ' 
+        ' BorrarMarcacionesToolStripMenuItem
+        ' 
+        BorrarMarcacionesToolStripMenuItem.Image = My.Resources.Resources.icons8_basura_16
+        BorrarMarcacionesToolStripMenuItem.Name = "BorrarMarcacionesToolStripMenuItem"
+        BorrarMarcacionesToolStripMenuItem.Size = New Size(185, 22)
+        BorrarMarcacionesToolStripMenuItem.Text = "Borrar marcaciones..."
+        ' 
+        ' ToolStripSeparator3
+        ' 
+        ToolStripSeparator3.Name = "ToolStripSeparator3"
+        ToolStripSeparator3.Size = New Size(6, 25)
+        ' 
         ' RelojesList
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -209,5 +235,8 @@ Partial Class RelojesList
     Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
     Friend WithEvents SeleccionarTodosToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DeseleccionarTodosToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripDropDownButton1 As ToolStripDropDownButton
+    Friend WithEvents BorrarMarcacionesToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
 
 End Class

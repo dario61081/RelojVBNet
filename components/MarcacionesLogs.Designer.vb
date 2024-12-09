@@ -55,10 +55,10 @@ Partial Class MarcacionesLogs
         ' ToolStripContainer1.TopToolStripPanel
         ' 
         ToolStripContainer1.TopToolStripPanel.Controls.Add(ToolStrip1)
+        ToolStripContainer1.TopToolStripPanel.RenderMode = ToolStripRenderMode.Professional
         ' 
         ' ListView1
         ' 
-        ListView1.CheckBoxes = True
         ListView1.Columns.AddRange(New ColumnHeader() {ColumnHeader1, ColumnHeader2, ColumnHeader3, ColumnHeader4})
         ListView1.Dock = DockStyle.Fill
         ListView1.FullRowSelect = True

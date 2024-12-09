@@ -35,24 +35,29 @@ Public Class Lectura
     End Sub
 
     Private Sub RelojesList1_LeerDispostivos(Lista As List(Of DispositivoModel), Parametros As LecturaParametros) Handles RelojesList1.LeerDispostivos
-
+        MarcacionesLogs1.Clear()
+        Log("Iniciando lectura datos, aguarde...")
         For Each row As DispositivoModel In Lista
             LeerAttendances(row, Parametros)
         Next
-
-        Log("Lectura finalizada")
-
+        Log("Finalizado lectura de datos")
 
     End Sub
 
 
     Private Async Sub LeerAttendances(dispositivo As DispositivoModel, params As LecturaParametros)
 
-        MarcacionesLogs1.Clear()
-        Log($"Leyendo datos del reloj {dispositivo.Descripcion }")
+
+        Log($"Leyendo datos del reloj {dispositivo.Descripcion } ({dispositivo.DireccionIp}:{dispositivo.Puerto})")
         Log($"Parametros {params.Modo } - {params.FechaDesde } - {params.FechaHasta }")
         Dim _device As New ZKBiometricDevice()
-        _device.Connect(dispositivo.DireccionIp, dispositivo.Puerto)
+        Dim estado = _device.Connect(dispositivo.DireccionIp, dispositivo.Puerto)
+        'preguntar si esta conectado, si no avisar y volver
+        If estado = False Then
+            Log($"No se pudo conectar al reloj {dispositivo.Descripcion } ({dispositivo.DireccionIp}:{dispositivo.Puerto})")
+            Return
+        End If
+
         Dim lista As List(Of AttendanceRecord)
 
         Await Task.Run(Sub() lista = _device.GetAttendanceLogs())
@@ -70,7 +75,7 @@ Public Class Lectura
 
 
         _device.Disconnect()
-        Log("Finalizado lectura de datos")
+
     End Sub
 
 
@@ -95,6 +100,15 @@ Public Class Lectura
                 .Estado = 0,
                 .FechaCreacion = Nothing,
                 .IdDispositivo = 2
+            },
+              New DispositivoModel() With {
+                .DireccionIp = "192.168.0.202",
+                .Puerto = 4370,
+                .ClaveAdmin = "",
+                .Descripcion = "Reloj de fallo",
+                .Estado = 0,
+                .FechaCreacion = Nothing,
+                .IdDispositivo = 3
             }
         }
 

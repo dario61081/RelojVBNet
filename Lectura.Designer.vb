@@ -29,7 +29,6 @@ Partial Class Lectura
         ToolStripStatusLabel2 = New ToolStripStatusLabel()
         ToolStripStatusLabel3 = New ToolStripStatusLabel()
         SplitContainer1 = New SplitContainer()
-        RelojesList1 = New RelojesList()
         SplitContainer2 = New SplitContainer()
         TabControl2 = New TabControl()
         TabPage4 = New TabPage()
@@ -41,6 +40,9 @@ Partial Class Lectura
         SistemaToolStripMenuItem = New ToolStripMenuItem()
         CerrarToolStripMenuItem = New ToolStripMenuItem()
         ToolStripContainer2 = New ToolStripContainer()
+        TabTree = New TabControl()
+        TabPage2 = New TabPage()
+        RelojesList1 = New RelojesList()
         ToolStripContainer1.BottomToolStripPanel.SuspendLayout()
         ToolStripContainer1.ContentPanel.SuspendLayout()
         ToolStripContainer1.TopToolStripPanel.SuspendLayout()
@@ -60,6 +62,8 @@ Partial Class Lectura
         TabPage1.SuspendLayout()
         MenuStrip1.SuspendLayout()
         ToolStripContainer2.SuspendLayout()
+        TabTree.SuspendLayout()
+        TabPage2.SuspendLayout()
         SuspendLayout()
         ' 
         ' ToolStripContainer1
@@ -122,7 +126,7 @@ Partial Class Lectura
         ' 
         ' SplitContainer1.Panel1
         ' 
-        SplitContainer1.Panel1.Controls.Add(RelojesList1)
+        SplitContainer1.Panel1.Controls.Add(TabTree)
         ' 
         ' SplitContainer1.Panel2
         ' 
@@ -130,14 +134,6 @@ Partial Class Lectura
         SplitContainer1.Size = New Size(784, 515)
         SplitContainer1.SplitterDistance = 230
         SplitContainer1.TabIndex = 0
-        ' 
-        ' RelojesList1
-        ' 
-        RelojesList1.Dock = DockStyle.Fill
-        RelojesList1.Location = New Point(0, 0)
-        RelojesList1.Name = "RelojesList1"
-        RelojesList1.Size = New Size(230, 515)
-        RelojesList1.TabIndex = 0
         ' 
         ' SplitContainer2
         ' 
@@ -252,6 +248,35 @@ Partial Class Lectura
         ToolStripContainer2.TabIndex = 0
         ToolStripContainer2.Text = "ToolStripContainer2"
         ' 
+        ' TabTree
+        ' 
+        TabTree.Controls.Add(TabPage2)
+        TabTree.Dock = DockStyle.Fill
+        TabTree.Location = New Point(0, 0)
+        TabTree.Name = "TabTree"
+        TabTree.SelectedIndex = 0
+        TabTree.Size = New Size(230, 515)
+        TabTree.TabIndex = 0
+        ' 
+        ' TabPage2
+        ' 
+        TabPage2.Controls.Add(RelojesList1)
+        TabPage2.Location = New Point(4, 24)
+        TabPage2.Name = "TabPage2"
+        TabPage2.Padding = New Padding(3)
+        TabPage2.Size = New Size(222, 487)
+        TabPage2.TabIndex = 0
+        TabPage2.Text = "Relojes"
+        TabPage2.UseVisualStyleBackColor = True
+        ' 
+        ' RelojesList1
+        ' 
+        RelojesList1.Dock = DockStyle.Fill
+        RelojesList1.Location = New Point(3, 3)
+        RelojesList1.Name = "RelojesList1"
+        RelojesList1.Size = New Size(216, 481)
+        RelojesList1.TabIndex = 1
+        ' 
         ' Lectura
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -289,6 +314,8 @@ Partial Class Lectura
         MenuStrip1.PerformLayout()
         ToolStripContainer2.ResumeLayout(False)
         ToolStripContainer2.PerformLayout()
+        TabTree.ResumeLayout(False)
+        TabPage2.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
 
@@ -309,7 +336,9 @@ Partial Class Lectura
     Friend WithEvents EventsLogs1 As EventsLogs
     Friend WithEvents TabPage4 As TabPage
     Friend WithEvents DataLogs1 As MarcacionesLogs
-    Friend WithEvents RelojesList1 As RelojesList
     Friend WithEvents ToolStripContainer2 As ToolStripContainer
     Friend WithEvents MarcacionesLogs1 As MarcacionesLogs
+    Friend WithEvents TabTree As TabControl
+    Friend WithEvents TabPage2 As TabPage
+    Friend WithEvents RelojesList1 As RelojesList
 End Class

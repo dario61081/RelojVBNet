@@ -32,6 +32,7 @@ Partial Class RelojesList
         BorrarEventosToolStripMenuItem = New ToolStripMenuItem()
         ImageList1 = New ImageList(components)
         ToolStripContainer1 = New ToolStripContainer()
+        StatusStrip1 = New StatusStrip()
         LvDispositivos = New ListView()
         ColumnHeader1 = New ColumnHeader()
         ColumnHeader2 = New ColumnHeader()
@@ -40,7 +41,6 @@ Partial Class RelojesList
         ToolStripButton2 = New ToolStripButton()
         ToolStripSeparator2 = New ToolStripSeparator()
         ToolStripButton3 = New ToolStripButton()
-        StatusStrip1 = New StatusStrip()
         ContextMenuStrip1.SuspendLayout()
         ToolStripContainer1.BottomToolStripPanel.SuspendLayout()
         ToolStripContainer1.ContentPanel.SuspendLayout()
@@ -117,6 +117,15 @@ Partial Class RelojesList
         ' 
         ToolStripContainer1.TopToolStripPanel.Controls.Add(ToolStrip1)
         ' 
+        ' StatusStrip1
+        ' 
+        StatusStrip1.Dock = DockStyle.None
+        StatusStrip1.Location = New Point(0, 0)
+        StatusStrip1.Name = "StatusStrip1"
+        StatusStrip1.Size = New Size(224, 22)
+        StatusStrip1.SizingGrip = False
+        StatusStrip1.TabIndex = 0
+        ' 
         ' LvDispositivos
         ' 
         LvDispositivos.Activation = ItemActivation.OneClick
@@ -185,14 +194,6 @@ Partial Class RelojesList
         ToolStripButton3.Name = "ToolStripButton3"
         ToolStripButton3.Size = New Size(23, 22)
         ToolStripButton3.Text = "Descargar eventos de marcación"
-        ' 
-        ' StatusStrip1
-        ' 
-        StatusStrip1.Dock = DockStyle.None
-        StatusStrip1.Location = New Point(0, 0)
-        StatusStrip1.Name = "StatusStrip1"
-        StatusStrip1.Size = New Size(224, 22)
-        StatusStrip1.TabIndex = 0
         ' 
         ' RelojesList
         ' 

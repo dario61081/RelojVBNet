@@ -4,25 +4,17 @@ Public Class MarcacionesLogs
 
 
     Public Sub RegistrarMarcacion(Record As AttendanceRecord, Optional Dispositivo As DispositivoModel = Nothing)
-        Dim DispositivoID As Integer = If(Dispositivo?.IdDispositivo, 0)
+        Dim dispositivoID As Integer = If(Dispositivo?.IdDispositivo, 0)
 
-        Dim row As New ListViewItem With {
-            .Text = Record.DateTime
-        }
-        row.SubItems.Add(Record.EnrollNumber)
-        row.SubItems.Add(Record.VerifyMode)
-        row.SubItems.Add(DispositivoID)
-        row.SubItems.Add(Record.WorkMode)
+        With ListView1.Items.Add(Record.DateTime)
+            .SubItems.Add(Record.EnrollNumber)
+            .SubItems.Add(Record.VerifyMode)
+            .SubItems.Add(dispositivoID)
+            .SubItems.Add(Record.WorkMode)
+        End With
 
-        ListView1.Items.Add(row)
-
-        ''mostrar siempre el ultimo item
-        If ListView1.Items.Count > 0 Then
-            ListView1.Items(ListView1.Items.Count - 1).EnsureVisible()
-        End If
-
+        If ListView1.Items.Count > 0 Then ListView1.Items(ListView1.Items.Count - 1).EnsureVisible()
         ContarEncontrados()
-
     End Sub
 
     Private Sub ContarEncontrados()

@@ -32,6 +32,7 @@ Partial Class MarcacionesLogs
         ToolStripButton1 = New ToolStripButton()
         ToolStripSeparator1 = New ToolStripSeparator()
         lblContador = New ToolStripLabel()
+        ColumnHeader5 = New ColumnHeader()
         ToolStripContainer1.ContentPanel.SuspendLayout()
         ToolStripContainer1.TopToolStripPanel.SuspendLayout()
         ToolStripContainer1.SuspendLayout()
@@ -59,7 +60,7 @@ Partial Class MarcacionesLogs
         ' 
         ' ListView1
         ' 
-        ListView1.Columns.AddRange(New ColumnHeader() {ColumnHeader1, ColumnHeader2, ColumnHeader3, ColumnHeader4})
+        ListView1.Columns.AddRange(New ColumnHeader() {ColumnHeader1, ColumnHeader2, ColumnHeader3, ColumnHeader4, ColumnHeader5})
         ListView1.Dock = DockStyle.Fill
         ListView1.FullRowSelect = True
         ListView1.GridLines = True
@@ -119,6 +120,11 @@ Partial Class MarcacionesLogs
         lblContador.Size = New Size(93, 22)
         lblContador.Text = "Encontrado(s): 0"
         ' 
+        ' ColumnHeader5
+        ' 
+        ColumnHeader5.Text = "WorkMode"
+        ColumnHeader5.Width = 80
+        ' 
         ' MarcacionesLogs
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -146,5 +152,6 @@ Partial Class MarcacionesLogs
     Friend WithEvents ToolStripButton1 As ToolStripButton
     Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
     Friend WithEvents lblContador As ToolStripLabel
+    Friend WithEvents ColumnHeader5 As ColumnHeader
 
 End Class

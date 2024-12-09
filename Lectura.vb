@@ -60,6 +60,7 @@ Public Class Lectura
 
             If params.Modo = 1 AndAlso (record.DateTime.Date >= params.FechaDesde.Date AndAlso record.DateTime.Date <= params.FechaHasta.Date) Then
                 MarcacionesLogs1.RegistrarMarcacion(record)
+                Continue For
             End If
 
 

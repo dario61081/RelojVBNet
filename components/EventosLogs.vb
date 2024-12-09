@@ -1,4 +1,6 @@
-﻿Public Class EventsLogs
+﻿Imports RelojVBNET.Models
+
+Public Class EventsLogs
 
 
 
@@ -11,10 +13,11 @@
 
     End Sub
 
-    Public Sub RegistrarEvento(message As String)
+    Public Sub RegistrarEvento(message As String, Optional Dispositivo As DispositivoModel = Nothing)
         Dim row As New ListViewItem
+        Dim dispositivoID As Integer = If(Dispositivo?.IdDispositivo, 0)
         row.Text = DateTime.Now
-        row.SubItems.Add(0)
+        row.SubItems.Add(dispositivoID)
         row.SubItems.Add(0)
         row.SubItems.Add(message)
 

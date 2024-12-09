@@ -141,10 +141,10 @@ Public Class Lectura
     ''' registrar eventos del sistema
     ''' </summary>
     ''' <param name="message"></param>
-    Public Sub Log(message As String)
+    Public Sub Log(message As String, Optional Dispositivo As DispositivoModel = Nothing)
         Debug.WriteLine(message)
         Me.Invoke(Sub()
-                      EventsLogs1.RegistrarEvento(message)
+                      EventsLogs1.RegistrarEvento(message, Dispositivo)
                   End Sub)
 
     End Sub

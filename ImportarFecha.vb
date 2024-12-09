@@ -28,4 +28,9 @@
         Close()
 
     End Sub
+
+    Private Sub ImportarFecha_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        dtpFechaDesde.MaxDate = DateTime.Now
+        dtpFechaHasta.MaxDate = DateTime.Now
+    End Sub
 End Class

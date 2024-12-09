@@ -47,7 +47,10 @@ Public Class Lectura
 
 
     Private Sub LeerAttendances(dispositivo As DispositivoModel, params As LecturaParametros)
+
+        MarcacionesLogs1.Clear()
         Log($"Leyendo datos del reloj {dispositivo.Descripcion }")
+        Log($"Parametros {params.Modo } - {params.FechaDesde } - {params.FechaHasta }")
         Dim _device As New ZKBiometricDevice()
         _device.Connect(dispositivo.DireccionIp, dispositivo.Puerto)
         Dim lista = _device.GetAttendanceLogs()

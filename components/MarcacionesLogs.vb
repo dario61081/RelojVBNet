@@ -13,5 +13,11 @@
 
 
     End Sub
+    ''' <summary>
+    ''' Limpia la lista
+    ''' </summary>
+    Public Sub Clear()
+        ListView1.Items.Clear()
+    End Sub
 
 End Class

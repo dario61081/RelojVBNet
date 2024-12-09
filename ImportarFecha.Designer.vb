@@ -33,8 +33,8 @@ Partial Class ImportarFecha
         Label1 = New Label()
         dtpFechaDesde = New DateTimePicker()
         GroupBox2 = New GroupBox()
-        TextBox2 = New TextBox()
-        TextBox1 = New TextBox()
+        edtSapPassword = New TextBox()
+        edtSapUsername = New TextBox()
         Label4 = New Label()
         Label3 = New Label()
         GroupBox1.SuspendLayout()
@@ -135,8 +135,8 @@ Partial Class ImportarFecha
         ' 
         ' GroupBox2
         ' 
-        GroupBox2.Controls.Add(TextBox2)
-        GroupBox2.Controls.Add(TextBox1)
+        GroupBox2.Controls.Add(edtSapPassword)
+        GroupBox2.Controls.Add(edtSapUsername)
         GroupBox2.Controls.Add(Label4)
         GroupBox2.Controls.Add(Label3)
         GroupBox2.Dock = DockStyle.Top
@@ -147,22 +147,22 @@ Partial Class ImportarFecha
         GroupBox2.TabStop = False
         GroupBox2.Text = "SAP Credenciales"
         ' 
-        ' TextBox2
+        ' edtSapPassword
         ' 
-        TextBox2.Location = New Point(136, 56)
-        TextBox2.Name = "TextBox2"
-        TextBox2.PasswordChar = "*"c
-        TextBox2.PlaceholderText = "Password"
-        TextBox2.Size = New Size(144, 23)
-        TextBox2.TabIndex = 3
+        edtSapPassword.Location = New Point(136, 56)
+        edtSapPassword.Name = "edtSapPassword"
+        edtSapPassword.PasswordChar = "*"c
+        edtSapPassword.PlaceholderText = "Password"
+        edtSapPassword.Size = New Size(144, 23)
+        edtSapPassword.TabIndex = 3
         ' 
-        ' TextBox1
+        ' edtSapUsername
         ' 
-        TextBox1.Location = New Point(136, 24)
-        TextBox1.Name = "TextBox1"
-        TextBox1.PlaceholderText = "Usuario"
-        TextBox1.Size = New Size(144, 23)
-        TextBox1.TabIndex = 2
+        edtSapUsername.Location = New Point(136, 24)
+        edtSapUsername.Name = "edtSapUsername"
+        edtSapUsername.PlaceholderText = "Usuario"
+        edtSapUsername.Size = New Size(144, 23)
+        edtSapUsername.TabIndex = 2
         ' 
         ' Label4
         ' 
@@ -215,8 +215,8 @@ Partial Class ImportarFecha
     Friend WithEvents Label1 As Label
     Friend WithEvents dtpFechaDesde As DateTimePicker
     Friend WithEvents GroupBox2 As GroupBox
-    Friend WithEvents TextBox2 As TextBox
-    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents edtSapPassword As TextBox
+    Friend WithEvents edtSapUsername As TextBox
     Friend WithEvents Label4 As Label
     Friend WithEvents Label3 As Label
 End Class

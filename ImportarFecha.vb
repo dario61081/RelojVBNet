@@ -10,6 +10,12 @@ Public Class ImportarFecha
     Public Property SapPassword As String
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        If String.IsNullOrEmpty(edtSapPassword.Text) Or String.IsNullOrEmpty(edtSapPassword.Text) Then
+            MessageBox.Show("Los campos de usuario y password son obligatorios", "Importar")
+            Return
+        End If
+
+
 
         'guardar info de todos o por fecha
         If rdTodos.Checked Then
@@ -20,8 +26,8 @@ Public Class ImportarFecha
         'datos del rango de fecha
         FechaDesde = dtpFechaDesde.Value
         FechaHasta = dtpFechaHasta.Value
-        SapUsername = TextBox1.Text
-        SapPassword = TextBox2.Text
+        SapUsername = edtSapUsername.Text
+        SapPassword = edtSapPassword.Text
         DialogResult = DialogResult.OK
         Close()
 

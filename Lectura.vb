@@ -185,11 +185,17 @@ Public Class Lectura
     ''' </summary>
     ''' <param name="message"></param>
     Public Sub Log(message As String, Optional Dispositivo As DispositivoModel = Nothing)
-        Debug.WriteLine(message)
+        Debug.WriteLine($"Log: {message}")
         Me.Invoke(Sub()
                       EventsLogs1.RegistrarEvento(message, Dispositivo)
                   End Sub)
 
+    End Sub
+    Public Sub LogError(message As String, Optional Dispositivo As DispositivoModel = Nothing)
+        Debug.WriteLine($"Error: {message}")
+        Me.Invoke(Sub()
+                      EventsLogs1.RegistrarError(message, Dispositivo)
+                  End Sub)
     End Sub
 
     Private Sub CerrarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CerrarToolStripMenuItem.Click

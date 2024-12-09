@@ -23,6 +23,7 @@ Partial Class EventsLogs
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         components = New ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EventsLogs))
         ContextMenuStrip1 = New ContextMenuStrip(components)
         ExportarToolStripMenuItem = New ToolStripMenuItem()
         ToolStripContainer1 = New ToolStripContainer()
@@ -37,6 +38,7 @@ Partial Class EventsLogs
         ToolStripButton2 = New ToolStripButton()
         ToolStripSeparator2 = New ToolStripSeparator()
         lblContador = New ToolStripLabel()
+        ImageList1 = New ImageList(components)
         ContextMenuStrip1.SuspendLayout()
         ToolStripContainer1.ContentPanel.SuspendLayout()
         ToolStripContainer1.TopToolStripPanel.SuspendLayout()
@@ -83,6 +85,7 @@ Partial Class EventsLogs
         lvLog.Location = New Point(0, 0)
         lvLog.Name = "lvLog"
         lvLog.Size = New Size(599, 261)
+        lvLog.SmallImageList = ImageList1
         lvLog.TabIndex = 3
         lvLog.UseCompatibleStateImageBehavior = False
         lvLog.View = View.Details
@@ -113,7 +116,7 @@ Partial Class EventsLogs
         ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripSeparator1, ToolStripButton2, ToolStripSeparator2, lblContador})
         ToolStrip1.Location = New Point(3, 0)
         ToolStrip1.Name = "ToolStrip1"
-        ToolStrip1.Size = New Size(194, 25)
+        ToolStrip1.Size = New Size(163, 25)
         ToolStrip1.TabIndex = 0
         ' 
         ' ToolStripButton1
@@ -150,6 +153,15 @@ Partial Class EventsLogs
         lblContador.Size = New Size(93, 22)
         lblContador.Text = "Encontrado(s): 0"
         ' 
+        ' ImageList1
+        ' 
+        ImageList1.ColorDepth = ColorDepth.Depth32Bit
+        ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), ImageListStreamer)
+        ImageList1.TransparentColor = Color.Transparent
+        ImageList1.Images.SetKeyName(0, "icons8-información-16.png")
+        ImageList1.Images.SetKeyName(1, "icons8-alta-importancia-16 (1).png")
+        ImageList1.Images.SetKeyName(2, "icons8-error-16.png")
+        ' 
         ' EventsLogs
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -181,5 +193,6 @@ Partial Class EventsLogs
     Friend WithEvents ToolStripButton2 As ToolStripButton
     Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
     Friend WithEvents lblContador As ToolStripLabel
+    Friend WithEvents ImageList1 As ImageList
 
 End Class

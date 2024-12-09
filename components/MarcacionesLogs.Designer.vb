@@ -22,6 +22,8 @@ Partial Class MarcacionesLogs
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        components = New ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MarcacionesLogs))
         ToolStripContainer1 = New ToolStripContainer()
         ListView1 = New ListView()
         ColumnHeader1 = New ColumnHeader()
@@ -33,6 +35,7 @@ Partial Class MarcacionesLogs
         ToolStripSeparator1 = New ToolStripSeparator()
         lblContador = New ToolStripLabel()
         ColumnHeader5 = New ColumnHeader()
+        ImageList1 = New ImageList(components)
         ToolStripContainer1.ContentPanel.SuspendLayout()
         ToolStripContainer1.TopToolStripPanel.SuspendLayout()
         ToolStripContainer1.SuspendLayout()
@@ -67,6 +70,7 @@ Partial Class MarcacionesLogs
         ListView1.Location = New Point(0, 0)
         ListView1.Name = "ListView1"
         ListView1.Size = New Size(570, 352)
+        ListView1.SmallImageList = ImageList1
         ListView1.TabIndex = 1
         ListView1.UseCompatibleStateImageBehavior = False
         ListView1.View = View.Details
@@ -125,6 +129,15 @@ Partial Class MarcacionesLogs
         ColumnHeader5.Text = "WorkMode"
         ColumnHeader5.Width = 80
         ' 
+        ' ImageList1
+        ' 
+        ImageList1.ColorDepth = ColorDepth.Depth32Bit
+        ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), ImageListStreamer)
+        ImageList1.TransparentColor = Color.Transparent
+        ImageList1.Images.SetKeyName(0, "icons8-información-16.png")
+        ImageList1.Images.SetKeyName(1, "icons8-alta-importancia-16 (1).png")
+        ImageList1.Images.SetKeyName(2, "icons8-error-16.png")
+        ' 
         ' MarcacionesLogs
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -153,5 +166,6 @@ Partial Class MarcacionesLogs
     Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
     Friend WithEvents lblContador As ToolStripLabel
     Friend WithEvents ColumnHeader5 As ColumnHeader
+    Friend WithEvents ImageList1 As ImageList
 
 End Class

@@ -12,6 +12,25 @@ Public Class EventsLogs
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
     End Sub
+    Public Sub RegistrarError(message As String, Optional Dispositivo As DispositivoModel = Nothing)
+        Dim row As New ListViewItem
+        Dim dispositivoID As Integer = If(Dispositivo?.IdDispositivo, 0)
+        row.Text = DateTime.Now
+
+        row.SubItems.Add(dispositivoID)
+        row.SubItems.Add(0)
+        row.SubItems.Add(message)
+        row.ImageIndex = 2
+        row.ForeColor = Color.DarkRed
+        lvLog.Items.Add(row)
+        'hacer visible el ultimo renglon
+        If lvLog.Items.Count > 0 Then
+            lvLog.Items(lvLog.Items.Count - 1).EnsureVisible()
+        End If
+
+        ContarEncontrados()
+    End Sub
+
 
     Public Sub RegistrarEvento(message As String, Optional Dispositivo As DispositivoModel = Nothing)
         Dim row As New ListViewItem
@@ -20,6 +39,8 @@ Public Class EventsLogs
         row.SubItems.Add(dispositivoID)
         row.SubItems.Add(0)
         row.SubItems.Add(message)
+        row.ImageIndex = 0
+        row.ForeColor = Color.DarkGreen
 
         lvLog.Items.Add(row)
         'hacer visible el ultimo renglon

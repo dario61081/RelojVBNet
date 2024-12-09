@@ -22,27 +22,32 @@ Public Class Lectura
 
         'leer relojes de la base de datos 
         Dim relojes As List(Of DispositivoModel) = CargarDispositivosBBDD()
+        Log("Cargando relojes de la base de datos")
         For Each row As DispositivoModel In relojes
             Dim _reloj As New Reloj()
             _reloj.Dispositivo = row
             Dispositivos.RegistrarReloj(_reloj)
         Next
 
+
         RelojesList1.RegistrarTodo(relojes)
+        Log("Listo")
     End Sub
 
     Private Sub RelojesList1_LeerDispostivos(Lista As List(Of DispositivoModel), Parametros As LecturaParametros) Handles RelojesList1.LeerDispostivos
 
+        For Each row As DispositivoModel In Lista
+            LeerAttendances(row, Parametros)
+        Next
 
-
-
+        Log("Lectura finalizada")
 
 
     End Sub
 
 
     Private Sub LeerAttendances(dispositivo As DispositivoModel, params As LecturaParametros)
-
+        Log($"Leyendo datos del reloj {dispositivo.Descripcion }")
         Dim _device As New ZKBiometricDevice()
         _device.Connect(dispositivo.DireccionIp, dispositivo.Puerto)
         Dim lista = _device.GetAttendanceLogs()
@@ -53,8 +58,8 @@ Public Class Lectura
         Next
 
 
-
-
+        _device.Disconnect()
+        Log("Finalizado lectura de datos")
     End Sub
 
 
@@ -75,5 +80,14 @@ Public Class Lectura
 
         Return Local
     End Function
+
+    ''' <summary>
+    ''' registrar eventos del sistema
+    ''' </summary>
+    ''' <param name="message"></param>
+    Public Sub Log(message As String)
+        Debug.WriteLine(message)
+        EventsLogs1.RegistrarEvento(message)
+    End Sub
 
 End Class

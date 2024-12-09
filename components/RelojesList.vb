@@ -149,9 +149,11 @@ Public Class RelojesList
                           If resultado Then
                               row.ImageIndex = 6
                               row.ForeColor = Color.DarkGreen
+                              row.SubItems(3).Text = "Online"
                           Else
                               row.ImageIndex = 7
                               row.ForeColor = Color.DarkRed
+                              row.SubItems(3).Text = "Offline"
                           End If
                       Next
                   End Sub)

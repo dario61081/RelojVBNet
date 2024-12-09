@@ -34,6 +34,7 @@ Partial Class RelojesList
         LvDispositivos = New ListView()
         ColumnHeader1 = New ColumnHeader()
         ColumnHeader2 = New ColumnHeader()
+        ColumnHeader3 = New ColumnHeader()
         ToolStrip1 = New ToolStrip()
         ToolStripDropDownButton1 = New ToolStripDropDownButton()
         BorrarMarcacionesToolStripMenuItem = New ToolStripMenuItem()
@@ -43,7 +44,7 @@ Partial Class RelojesList
         ToolStripButton2 = New ToolStripButton()
         ToolStripSeparator2 = New ToolStripSeparator()
         ToolStripButton3 = New ToolStripButton()
-        ColumnHeader3 = New ColumnHeader()
+        ColumnHeader4 = New ColumnHeader()
         ContextMenuStrip1.SuspendLayout()
         ToolStripContainer1.ContentPanel.SuspendLayout()
         ToolStripContainer1.TopToolStripPanel.SuspendLayout()
@@ -121,7 +122,7 @@ Partial Class RelojesList
         ' 
         LvDispositivos.Activation = ItemActivation.OneClick
         LvDispositivos.CheckBoxes = True
-        LvDispositivos.Columns.AddRange(New ColumnHeader() {ColumnHeader1, ColumnHeader2, ColumnHeader3})
+        LvDispositivos.Columns.AddRange(New ColumnHeader() {ColumnHeader1, ColumnHeader2, ColumnHeader3, ColumnHeader4})
         LvDispositivos.ContextMenuStrip = ContextMenuStrip1
         LvDispositivos.Dock = DockStyle.Fill
         LvDispositivos.FullRowSelect = True
@@ -144,6 +145,10 @@ Partial Class RelojesList
         ' 
         ColumnHeader2.Text = "Nombre"
         ColumnHeader2.Width = 80
+        ' 
+        ' ColumnHeader3
+        ' 
+        ColumnHeader3.Text = "Dispositivo #"
         ' 
         ' ToolStrip1
         ' 
@@ -218,9 +223,9 @@ Partial Class RelojesList
         ToolStripButton3.Size = New Size(23, 22)
         ToolStripButton3.Text = "Descargar eventos de marcación"
         ' 
-        ' ColumnHeader3
+        ' ColumnHeader4
         ' 
-        ColumnHeader3.Text = "Dispositivo #"
+        ColumnHeader4.Text = "Estado"
         ' 
         ' RelojesList
         ' 
@@ -259,5 +264,6 @@ Partial Class RelojesList
     Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
     Friend WithEvents ToolStripButton4 As ToolStripButton
     Friend WithEvents ColumnHeader3 As ColumnHeader
+    Friend WithEvents ColumnHeader4 As ColumnHeader
 
 End Class

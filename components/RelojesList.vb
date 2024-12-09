@@ -38,6 +38,7 @@ Public Class RelojesList
         For Each row As DispositivoModel In data
             RegisterDevice(row)
         Next
+
     End Sub
 
     Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
@@ -134,16 +135,13 @@ Public Class RelojesList
     End Sub
 
     Private Async Sub ToolStripButton4_Click(sender As Object, e As EventArgs) Handles ToolStripButton4.Click
-        Dim listado As ListView.ListViewItemCollection = LvDispositivos.Items
-
-        Await Task.Run(Sub() VerificarRelojes(listado))
-
+        Await Task.Run(Sub() VerificarRelojes())
     End Sub
 
-    Private Sub VerificarRelojes(listado As ListView.ListViewItemCollection)
+    Public Sub VerificarRelojes()
         'check ping de los relojes
         Me.Invoke(Sub()
-                      For Each row As ListViewItem In listado
+                      For Each row As ListViewItem In LvDispositivos.Items
                           Dim dispositivo As DispositivoModel = DirectCast(row.Tag, DispositivoModel)
                           Dim resultado = Utiles.Ping(dispositivo.DireccionIp)
 

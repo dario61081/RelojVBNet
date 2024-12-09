@@ -26,8 +26,9 @@ Partial Class Lectura
         ToolStripContainer1 = New ToolStripContainer()
         StatusStrip1 = New StatusStrip()
         ToolStripStatusLabel1 = New ToolStripStatusLabel()
-        ToolStripStatusLabel2 = New ToolStripStatusLabel()
+        lblversion = New ToolStripStatusLabel()
         ToolStripStatusLabel3 = New ToolStripStatusLabel()
+        progressbar1 = New ToolStripProgressBar()
         SplitContainer1 = New SplitContainer()
         TabTree = New TabControl()
         TabPage2 = New TabPage()
@@ -44,7 +45,6 @@ Partial Class Lectura
         CerrarToolStripMenuItem = New ToolStripMenuItem()
         ToolStripContainer2 = New ToolStripContainer()
         BackgroundWorker1 = New ComponentModel.BackgroundWorker()
-        progressbar1 = New ToolStripProgressBar()
         ToolStripContainer1.BottomToolStripPanel.SuspendLayout()
         ToolStripContainer1.ContentPanel.SuspendLayout()
         ToolStripContainer1.TopToolStripPanel.SuspendLayout()
@@ -93,7 +93,7 @@ Partial Class Lectura
         ' StatusStrip1
         ' 
         StatusStrip1.Dock = DockStyle.None
-        StatusStrip1.Items.AddRange(New ToolStripItem() {ToolStripStatusLabel1, ToolStripStatusLabel2, ToolStripStatusLabel3, progressbar1})
+        StatusStrip1.Items.AddRange(New ToolStripItem() {ToolStripStatusLabel1, lblversion, ToolStripStatusLabel3, progressbar1})
         StatusStrip1.Location = New Point(0, 0)
         StatusStrip1.Name = "StatusStrip1"
         StatusStrip1.RenderMode = ToolStripRenderMode.Professional
@@ -107,11 +107,11 @@ Partial Class Lectura
         ToolStripStatusLabel1.Size = New Size(52, 17)
         ToolStripStatusLabel1.Text = "NexTech"
         ' 
-        ' ToolStripStatusLabel2
+        ' lblversion
         ' 
-        ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
-        ToolStripStatusLabel2.Size = New Size(50, 17)
-        ToolStripStatusLabel2.Text = "Ver: 1.01"
+        lblversion.Name = "lblversion"
+        lblversion.Size = New Size(50, 17)
+        lblversion.Text = "Ver: 1.01"
         ' 
         ' ToolStripStatusLabel3
         ' 
@@ -120,6 +120,12 @@ Partial Class Lectura
         ToolStripStatusLabel3.Size = New Size(98, 17)
         ToolStripStatusLabel3.Text = "Desconectado"
         ToolStripStatusLabel3.Visible = False
+        ' 
+        ' progressbar1
+        ' 
+        progressbar1.Name = "progressbar1"
+        progressbar1.Size = New Size(100, 16)
+        progressbar1.Visible = False
         ' 
         ' SplitContainer1
         ' 
@@ -283,12 +289,6 @@ Partial Class Lectura
         ' BackgroundWorker1
         ' 
         ' 
-        ' progressbar1
-        ' 
-        progressbar1.Name = "progressbar1"
-        progressbar1.Size = New Size(100, 16)
-        progressbar1.Visible = False
-        ' 
         ' Lectura
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -339,7 +339,7 @@ Partial Class Lectura
     Friend WithEvents CerrarToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
-    Friend WithEvents ToolStripStatusLabel2 As ToolStripStatusLabel
+    Friend WithEvents lblversion As ToolStripStatusLabel
     Friend WithEvents ToolStripStatusLabel3 As ToolStripStatusLabel
     Friend WithEvents SplitContainer2 As SplitContainer
     Friend WithEvents TabControl2 As TabControl

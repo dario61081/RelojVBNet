@@ -1,5 +1,6 @@
 ﻿Imports RelojVBNET.Models
 
+
 Public Class Lectura
     Private Dispositivos As Relojes
     Private WithEvents Device As New ZKBiometricDevice()
@@ -19,7 +20,7 @@ Public Class Lectura
 
 
     Private Sub MarcacionesLogs1_Load(sender As Object, e As EventArgs) Handles MarcacionesLogs1.Load
-
+        Dim numeroBuild As String = AppInfo.ObtenerNumeroBuild()
         'leer relojes de la base de datos 
         Dim relojes As List(Of DispositivoModel) = CargarDispositivosBBDD()
         Log("Cargando relojes de la base de datos")
@@ -29,8 +30,11 @@ Public Class Lectura
             Dispositivos.RegistrarReloj(_reloj)
         Next
 
+        lblversion.Text = $"Ver: 1.0.{numeroBuild}"
+
 
         RelojesList1.RegistrarTodo(relojes)
+        RelojesList1.VerificarRelojes()
         Log("Listo")
     End Sub
 
@@ -76,21 +80,22 @@ Public Class Lectura
 
         Await Task.Run(Sub() lista = _device.GetAttendanceLogs())
 
+        If lista IsNot Nothing Then
 
-        For Each record As AttendanceRecord In lista
+            For Each record As AttendanceRecord In lista
 
-            If params.Modo = 1 AndAlso (record.DateTime.Date >= params.FechaDesde.Date AndAlso record.DateTime.Date <= params.FechaHasta.Date) Then
+                If params.Modo = 1 AndAlso (record.DateTime.Date >= params.FechaDesde.Date AndAlso record.DateTime.Date <= params.FechaHasta.Date) Then
+                    Me.Invoke(Sub()
+                                  MarcacionesLogs1.RegistrarMarcacion(record)
+                              End Sub)
+                    Continue For
+                End If
                 Me.Invoke(Sub()
                               MarcacionesLogs1.RegistrarMarcacion(record)
                           End Sub)
-                Continue For
-            End If
-            Me.Invoke(Sub()
-                          MarcacionesLogs1.RegistrarMarcacion(record)
-                      End Sub)
-        Next
+            Next
 
-
+        End If
         _device.Disconnect()
 
     End Sub

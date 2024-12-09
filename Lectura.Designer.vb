@@ -43,6 +43,8 @@ Partial Class Lectura
         SistemaToolStripMenuItem = New ToolStripMenuItem()
         CerrarToolStripMenuItem = New ToolStripMenuItem()
         ToolStripContainer2 = New ToolStripContainer()
+        BackgroundWorker1 = New ComponentModel.BackgroundWorker()
+        progressbar1 = New ToolStripProgressBar()
         ToolStripContainer1.BottomToolStripPanel.SuspendLayout()
         ToolStripContainer1.ContentPanel.SuspendLayout()
         ToolStripContainer1.TopToolStripPanel.SuspendLayout()
@@ -91,7 +93,7 @@ Partial Class Lectura
         ' StatusStrip1
         ' 
         StatusStrip1.Dock = DockStyle.None
-        StatusStrip1.Items.AddRange(New ToolStripItem() {ToolStripStatusLabel1, ToolStripStatusLabel2, ToolStripStatusLabel3})
+        StatusStrip1.Items.AddRange(New ToolStripItem() {ToolStripStatusLabel1, ToolStripStatusLabel2, ToolStripStatusLabel3, progressbar1})
         StatusStrip1.Location = New Point(0, 0)
         StatusStrip1.Name = "StatusStrip1"
         StatusStrip1.RenderMode = ToolStripRenderMode.Professional
@@ -262,7 +264,7 @@ Partial Class Lectura
         ' 
         CerrarToolStripMenuItem.Name = "CerrarToolStripMenuItem"
         CerrarToolStripMenuItem.ShortcutKeys = Keys.Alt Or Keys.F4
-        CerrarToolStripMenuItem.Size = New Size(180, 22)
+        CerrarToolStripMenuItem.Size = New Size(148, 22)
         CerrarToolStripMenuItem.Text = "&Cerrar"
         ' 
         ' ToolStripContainer2
@@ -277,6 +279,15 @@ Partial Class Lectura
         ToolStripContainer2.Size = New Size(784, 561)
         ToolStripContainer2.TabIndex = 0
         ToolStripContainer2.Text = "ToolStripContainer2"
+        ' 
+        ' BackgroundWorker1
+        ' 
+        ' 
+        ' progressbar1
+        ' 
+        progressbar1.Name = "progressbar1"
+        progressbar1.Size = New Size(100, 16)
+        progressbar1.Visible = False
         ' 
         ' Lectura
         ' 
@@ -342,4 +353,6 @@ Partial Class Lectura
     Friend WithEvents TabTree As TabControl
     Friend WithEvents TabPage2 As TabPage
     Friend WithEvents RelojesList1 As RelojesList
+    Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
+    Friend WithEvents progressbar1 As ToolStripProgressBar
 End Class

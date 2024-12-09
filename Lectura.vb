@@ -34,13 +34,27 @@ Public Class Lectura
         Log("Listo")
     End Sub
 
-    Private Sub RelojesList1_LeerDispostivos(Lista As List(Of DispositivoModel), Parametros As LecturaParametros) Handles RelojesList1.LeerDispostivos
+    Private Async Sub RelojesList1_LeerDispostivos(Lista As List(Of DispositivoModel), Parametros As LecturaParametros) Handles RelojesList1.LeerDispostivos
+        Me.Invoke(Sub()
+                      progressbar1.Visible = True
+                      progressbar1.Style = ProgressBarStyle.Marquee
+                  End Sub)
+
         MarcacionesLogs1.Clear()
         Log("Iniciando lectura datos, aguarde...")
         For Each row As DispositivoModel In Lista
-            LeerAttendances(row, Parametros)
+            Await Task.Run(Sub() LeerAttendances(row, Parametros))
         Next
         Log("Finalizado lectura de datos")
+        Me.Invoke(Sub()
+                      progressbar1.Visible = False
+                      progressbar1.Style = ProgressBarStyle.Marquee
+                  End Sub)
+
+        'avisar que la lectura ha terminado con un messagebox
+        Me.Invoke(Sub()
+                      MessageBox.Show("Lectura finalizada", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                  End Sub)
 
     End Sub
 
@@ -66,11 +80,14 @@ Public Class Lectura
         For Each record As AttendanceRecord In lista
 
             If params.Modo = 1 AndAlso (record.DateTime.Date >= params.FechaDesde.Date AndAlso record.DateTime.Date <= params.FechaHasta.Date) Then
-                MarcacionesLogs1.RegistrarMarcacion(record)
+                Me.Invoke(Sub()
+                              MarcacionesLogs1.RegistrarMarcacion(record)
+                          End Sub)
                 Continue For
             End If
-
-            MarcacionesLogs1.RegistrarMarcacion(record)
+            Me.Invoke(Sub()
+                          MarcacionesLogs1.RegistrarMarcacion(record)
+                      End Sub)
         Next
 
 
@@ -121,10 +138,17 @@ Public Class Lectura
     ''' <param name="message"></param>
     Public Sub Log(message As String)
         Debug.WriteLine(message)
-        EventsLogs1.RegistrarEvento(message)
+        Me.Invoke(Sub()
+                      EventsLogs1.RegistrarEvento(message)
+                  End Sub)
+
     End Sub
 
     Private Sub CerrarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CerrarToolStripMenuItem.Click
         Close()
+    End Sub
+
+    Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
+
     End Sub
 End Class

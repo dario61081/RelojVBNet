@@ -62,43 +62,86 @@ Public Class Lectura
 
     End Sub
 
-
     Private Async Sub LeerAttendances(dispositivo As DispositivoModel, params As LecturaParametros)
+        Log($"Leyendo datos del reloj {dispositivo.Descripcion} ({dispositivo.DireccionIp}:{dispositivo.Puerto})")
+        Log($"Parametros: Modo={params.Modo}, FechaDesde={params.FechaDesde}, FechaHasta={params.FechaHasta}")
 
-
-        Log($"Leyendo datos del reloj {dispositivo.Descripcion } ({dispositivo.DireccionIp}:{dispositivo.Puerto})")
-        Log($"Parametros {params.Modo } - {params.FechaDesde } - {params.FechaHasta }")
         Dim _device As New ZKBiometricDevice()
-        Dim estado = _device.Connect(dispositivo.DireccionIp, dispositivo.Puerto)
-        'preguntar si esta conectado, si no avisar y volver
-        If estado = False Then
-            Log($"No se pudo conectar al reloj {dispositivo.Descripcion } ({dispositivo.DireccionIp}:{dispositivo.Puerto})")
-            Return
-        End If
+        Dim estado As Boolean
 
-        Dim lista As List(Of AttendanceRecord)
+        Try
+            estado = _device.Connect(dispositivo.DireccionIp, dispositivo.Puerto)
+            If Not estado Then
+                Log($"No se pudo conectar al reloj {dispositivo.Descripcion} ({dispositivo.DireccionIp}:{dispositivo.Puerto})")
+                Return
+            End If
 
-        Await Task.Run(Sub() lista = _device.GetAttendanceLogs())
+            Dim lista As List(Of AttendanceRecord) = Nothing
+            Await Task.Run(Sub()
+                               lista = _device.GetAttendanceLogs()
+                           End Sub)
 
-        If lista IsNot Nothing Then
+            If lista IsNot Nothing AndAlso lista.Count > 0 Then
+                Log($"Se recuperaron {lista.Count} registros del reloj {dispositivo.Descripcion}")
+                For Each record As AttendanceRecord In lista
+                    Dim processRecord As Boolean = params.Modo <> 1 OrElse
+                                               (record.DateTime.Date >= params.FechaDesde.Date AndAlso record.DateTime.Date <= params.FechaHasta.Date)
+                    If processRecord Then
+                        Me.Invoke(Sub()
+                                      MarcacionesLogs1.RegistrarMarcacion(record)
+                                  End Sub)
+                    End If
+                Next
+            Else
+                Log($"No se encontraron registros en el reloj {dispositivo.Descripcion}")
+            End If
 
-            For Each record As AttendanceRecord In lista
-
-                If params.Modo = 1 AndAlso (record.DateTime.Date >= params.FechaDesde.Date AndAlso record.DateTime.Date <= params.FechaHasta.Date) Then
-                    Me.Invoke(Sub()
-                                  MarcacionesLogs1.RegistrarMarcacion(record)
-                              End Sub)
-                    Continue For
-                End If
-                Me.Invoke(Sub()
-                              MarcacionesLogs1.RegistrarMarcacion(record)
-                          End Sub)
-            Next
-
-        End If
-        _device.Disconnect()
-
+        Catch ex As Exception
+            Log($"Error al procesar los datos del reloj {dispositivo.Descripcion}: {ex.Message}")
+        Finally
+            If estado Then
+                _device.Disconnect()
+                Log($"Desconectado del reloj {dispositivo.Descripcion}")
+            End If
+        End Try
     End Sub
+
+    'Private Async Sub LeerAttendances(dispositivo As DispositivoModel, params As LecturaParametros)
+
+
+    '    Log($"Leyendo datos del reloj {dispositivo.Descripcion } ({dispositivo.DireccionIp}:{dispositivo.Puerto})")
+    '    Log($"Parametros {params.Modo } - {params.FechaDesde } - {params.FechaHasta }")
+    '    Dim _device As New ZKBiometricDevice()
+    '    Dim estado = _device.Connect(dispositivo.DireccionIp, dispositivo.Puerto)
+    '    'preguntar si esta conectado, si no avisar y volver
+    '    If estado = False Then
+    '        Log($"No se pudo conectar al reloj {dispositivo.Descripcion } ({dispositivo.DireccionIp}:{dispositivo.Puerto})")
+    '        Return
+    '    End If
+
+    '    Dim lista As List(Of AttendanceRecord)
+
+    '    Await Task.Run(Sub() lista = _device.GetAttendanceLogs())
+
+    '    If lista IsNot Nothing Then
+
+    '        For Each record As AttendanceRecord In lista
+
+    '            If params.Modo = 1 AndAlso (record.DateTime.Date >= params.FechaDesde.Date AndAlso record.DateTime.Date <= params.FechaHasta.Date) Then
+    '                Me.Invoke(Sub()
+    '                              MarcacionesLogs1.RegistrarMarcacion(record)
+    '                          End Sub)
+    '                Continue For
+    '            End If
+    '            Me.Invoke(Sub()
+    '                          MarcacionesLogs1.RegistrarMarcacion(record)
+    '                      End Sub)
+    '        Next
+
+    '    End If
+    '    _device.Disconnect()
+
+    'End Sub
 
 
 

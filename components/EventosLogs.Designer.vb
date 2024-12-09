@@ -111,7 +111,7 @@ Partial Class EventsLogs
         ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripSeparator1, ToolStripButton2})
         ToolStrip1.Location = New Point(3, 0)
         ToolStrip1.Name = "ToolStrip1"
-        ToolStrip1.Size = New Size(64, 25)
+        ToolStrip1.Size = New Size(95, 25)
         ToolStrip1.TabIndex = 0
         ' 
         ' ToolStripButton1

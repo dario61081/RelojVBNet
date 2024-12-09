@@ -50,32 +50,33 @@ Partial Class RelojesList
         ' 
         ContextMenuStrip1.Items.AddRange(New ToolStripItem() {LeerEventosToolStripMenuItem, ToolStripSeparator1, SeleccionarTodosToolStripMenuItem, DeseleccionarTodosToolStripMenuItem})
         ContextMenuStrip1.Name = "ContextMenuStrip1"
-        ContextMenuStrip1.Size = New Size(269, 76)
+        ContextMenuStrip1.Size = New Size(246, 98)
         ' 
         ' LeerEventosToolStripMenuItem
         ' 
         LeerEventosToolStripMenuItem.Image = My.Resources.Resources.icons8_descargar_16
         LeerEventosToolStripMenuItem.Name = "LeerEventosToolStripMenuItem"
-        LeerEventosToolStripMenuItem.Size = New Size(268, 22)
-        LeerEventosToolStripMenuItem.Text = "Leer marcaciones de seleccionados..."
+        LeerEventosToolStripMenuItem.Size = New Size(245, 22)
+        LeerEventosToolStripMenuItem.Text = "Descargar eventos de marcación"
+        LeerEventosToolStripMenuItem.ToolTipText = "Descargar eventos de marcación"
         ' 
         ' ToolStripSeparator1
         ' 
         ToolStripSeparator1.Name = "ToolStripSeparator1"
-        ToolStripSeparator1.Size = New Size(265, 6)
+        ToolStripSeparator1.Size = New Size(242, 6)
         ' 
         ' SeleccionarTodosToolStripMenuItem
         ' 
         SeleccionarTodosToolStripMenuItem.Image = My.Resources.Resources.icons8_marque_todas_las_16
         SeleccionarTodosToolStripMenuItem.Name = "SeleccionarTodosToolStripMenuItem"
-        SeleccionarTodosToolStripMenuItem.Size = New Size(268, 22)
+        SeleccionarTodosToolStripMenuItem.Size = New Size(245, 22)
         SeleccionarTodosToolStripMenuItem.Text = "Seleccionar todos"
         ' 
         ' DeseleccionarTodosToolStripMenuItem
         ' 
         DeseleccionarTodosToolStripMenuItem.Image = My.Resources.Resources.icons8_desactive_todas_16
         DeseleccionarTodosToolStripMenuItem.Name = "DeseleccionarTodosToolStripMenuItem"
-        DeseleccionarTodosToolStripMenuItem.Size = New Size(268, 22)
+        DeseleccionarTodosToolStripMenuItem.Size = New Size(245, 22)
         DeseleccionarTodosToolStripMenuItem.Text = "Deseleccionar todos"
         ' 
         ' ImageList1

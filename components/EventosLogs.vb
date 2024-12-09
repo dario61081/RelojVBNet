@@ -25,5 +25,11 @@
         End If
     End Sub
 
-
+    Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
+        'confirmar si quiere limpiar
+        Dim result = MessageBox.Show("Desea limpiar los eventos?", "Limpiar", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        If result = DialogResult.Yes Then
+            lvLog.Items.Clear()
+        End If
+    End Sub
 End Class

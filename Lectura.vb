@@ -72,7 +72,7 @@ Public Class Lectura
         Try
             estado = _device.Connect(dispositivo.DireccionIp, dispositivo.Puerto)
             If Not estado Then
-                Log($"No se pudo conectar al reloj {dispositivo.Descripcion} ({dispositivo.DireccionIp}:{dispositivo.Puerto})", dispositivo)
+                LogError($"No se pudo conectar al reloj {dispositivo.Descripcion} ({dispositivo.DireccionIp}:{dispositivo.Puerto})", dispositivo)
                 Return
             End If
 
@@ -97,7 +97,7 @@ Public Class Lectura
             End If
 
         Catch ex As Exception
-            Log($"Error al procesar los datos del reloj {dispositivo.Descripcion}: {ex.Message}", dispositivo)
+            LogError($"Error al procesar los datos del reloj {dispositivo.Descripcion}: {ex.Message}", dispositivo)
         Finally
             If estado Then
                 _device.Disconnect()

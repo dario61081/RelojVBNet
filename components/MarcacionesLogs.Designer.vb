@@ -30,6 +30,8 @@ Partial Class MarcacionesLogs
         ColumnHeader4 = New ColumnHeader()
         ToolStrip1 = New ToolStrip()
         ToolStripButton1 = New ToolStripButton()
+        ToolStripSeparator1 = New ToolStripSeparator()
+        lblContador = New ToolStripLabel()
         ToolStripContainer1.ContentPanel.SuspendLayout()
         ToolStripContainer1.TopToolStripPanel.SuspendLayout()
         ToolStripContainer1.SuspendLayout()
@@ -91,10 +93,10 @@ Partial Class MarcacionesLogs
         ' ToolStrip1
         ' 
         ToolStrip1.Dock = DockStyle.None
-        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripSeparator1, lblContador})
         ToolStrip1.Location = New Point(3, 0)
         ToolStrip1.Name = "ToolStrip1"
-        ToolStrip1.Size = New Size(35, 25)
+        ToolStrip1.Size = New Size(134, 25)
         ToolStrip1.TabIndex = 0
         ' 
         ' ToolStripButton1
@@ -105,6 +107,17 @@ Partial Class MarcacionesLogs
         ToolStripButton1.Name = "ToolStripButton1"
         ToolStripButton1.Size = New Size(23, 22)
         ToolStripButton1.Text = "Upload a base de datos"
+        ' 
+        ' ToolStripSeparator1
+        ' 
+        ToolStripSeparator1.Name = "ToolStripSeparator1"
+        ToolStripSeparator1.Size = New Size(6, 25)
+        ' 
+        ' lblContador
+        ' 
+        lblContador.Name = "lblContador"
+        lblContador.Size = New Size(93, 22)
+        lblContador.Text = "Encontrado(s): 0"
         ' 
         ' MarcacionesLogs
         ' 
@@ -131,5 +144,7 @@ Partial Class MarcacionesLogs
     Friend WithEvents ColumnHeader4 As ColumnHeader
     Friend WithEvents ToolStrip1 As ToolStrip
     Friend WithEvents ToolStripButton1 As ToolStripButton
+    Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
+    Friend WithEvents lblContador As ToolStripLabel
 
 End Class

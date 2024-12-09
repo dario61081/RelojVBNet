@@ -35,6 +35,8 @@ Partial Class EventsLogs
         ToolStripButton1 = New ToolStripButton()
         ToolStripSeparator1 = New ToolStripSeparator()
         ToolStripButton2 = New ToolStripButton()
+        ToolStripSeparator2 = New ToolStripSeparator()
+        lblContador = New ToolStripLabel()
         ContextMenuStrip1.SuspendLayout()
         ToolStripContainer1.ContentPanel.SuspendLayout()
         ToolStripContainer1.TopToolStripPanel.SuspendLayout()
@@ -108,10 +110,10 @@ Partial Class EventsLogs
         ' ToolStrip1
         ' 
         ToolStrip1.Dock = DockStyle.None
-        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripSeparator1, ToolStripButton2})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripSeparator1, ToolStripButton2, ToolStripSeparator2, lblContador})
         ToolStrip1.Location = New Point(3, 0)
         ToolStrip1.Name = "ToolStrip1"
-        ToolStrip1.Size = New Size(95, 25)
+        ToolStrip1.Size = New Size(194, 25)
         ToolStrip1.TabIndex = 0
         ' 
         ' ToolStripButton1
@@ -136,6 +138,17 @@ Partial Class EventsLogs
         ToolStripButton2.Name = "ToolStripButton2"
         ToolStripButton2.Size = New Size(23, 22)
         ToolStripButton2.Text = "Descargar contenido en archivo..."
+        ' 
+        ' ToolStripSeparator2
+        ' 
+        ToolStripSeparator2.Name = "ToolStripSeparator2"
+        ToolStripSeparator2.Size = New Size(6, 25)
+        ' 
+        ' lblContador
+        ' 
+        lblContador.Name = "lblContador"
+        lblContador.Size = New Size(93, 22)
+        lblContador.Text = "Encontrado(s): 0"
         ' 
         ' EventsLogs
         ' 
@@ -166,5 +179,7 @@ Partial Class EventsLogs
     Friend WithEvents ToolStripButton1 As ToolStripButton
     Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
     Friend WithEvents ToolStripButton2 As ToolStripButton
+    Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
+    Friend WithEvents lblContador As ToolStripLabel
 
 End Class

@@ -23,6 +23,14 @@
         If lvLog.Items.Count > 0 Then
             lvLog.Items(lvLog.Items.Count - 1).EnsureVisible()
         End If
+
+        ContarEncontrados()
+
+    End Sub
+
+    Private Sub ContarEncontrados()
+        'contar encontrados
+        lblContador.Text = $"Encontrado(s) : {lvLog.Items.Count}"
     End Sub
 
     Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
@@ -31,5 +39,6 @@
         If result = DialogResult.Yes Then
             lvLog.Items.Clear()
         End If
+        ContarEncontrados()
     End Sub
 End Class

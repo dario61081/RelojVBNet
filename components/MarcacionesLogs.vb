@@ -16,12 +16,20 @@
             ListView1.Items(ListView1.Items.Count - 1).EnsureVisible()
         End If
 
+        ContarEncontrados()
+
     End Sub
+
+    Private Sub ContarEncontrados()
+        lblContador.Text = $"Encontrado(s): {ListView1.Items.Count}"
+    End Sub
+
     ''' <summary>
     ''' Limpia la lista
     ''' </summary>
     Public Sub Clear()
         ListView1.Items.Clear()
+        ContarEncontrados()
     End Sub
 
 End Class

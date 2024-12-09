@@ -32,7 +32,6 @@ Partial Class RelojesList
         BorrarEventosToolStripMenuItem = New ToolStripMenuItem()
         ImageList1 = New ImageList(components)
         ToolStripContainer1 = New ToolStripContainer()
-        StatusStrip1 = New StatusStrip()
         LvDispositivos = New ListView()
         ColumnHeader1 = New ColumnHeader()
         ColumnHeader2 = New ColumnHeader()
@@ -42,7 +41,6 @@ Partial Class RelojesList
         ToolStripSeparator2 = New ToolStripSeparator()
         ToolStripButton3 = New ToolStripButton()
         ContextMenuStrip1.SuspendLayout()
-        ToolStripContainer1.BottomToolStripPanel.SuspendLayout()
         ToolStripContainer1.ContentPanel.SuspendLayout()
         ToolStripContainer1.TopToolStripPanel.SuspendLayout()
         ToolStripContainer1.SuspendLayout()
@@ -98,14 +96,10 @@ Partial Class RelojesList
         ' ToolStripContainer1
         ' 
         ' 
-        ' ToolStripContainer1.BottomToolStripPanel
-        ' 
-        ToolStripContainer1.BottomToolStripPanel.Controls.Add(StatusStrip1)
-        ' 
         ' ToolStripContainer1.ContentPanel
         ' 
         ToolStripContainer1.ContentPanel.Controls.Add(LvDispositivos)
-        ToolStripContainer1.ContentPanel.Size = New Size(224, 380)
+        ToolStripContainer1.ContentPanel.Size = New Size(224, 402)
         ToolStripContainer1.Dock = DockStyle.Fill
         ToolStripContainer1.Location = New Point(0, 0)
         ToolStripContainer1.Name = "ToolStripContainer1"
@@ -116,15 +110,6 @@ Partial Class RelojesList
         ' ToolStripContainer1.TopToolStripPanel
         ' 
         ToolStripContainer1.TopToolStripPanel.Controls.Add(ToolStrip1)
-        ' 
-        ' StatusStrip1
-        ' 
-        StatusStrip1.Dock = DockStyle.None
-        StatusStrip1.Location = New Point(0, 0)
-        StatusStrip1.Name = "StatusStrip1"
-        StatusStrip1.Size = New Size(224, 22)
-        StatusStrip1.SizingGrip = False
-        StatusStrip1.TabIndex = 0
         ' 
         ' LvDispositivos
         ' 
@@ -138,7 +123,7 @@ Partial Class RelojesList
         LvDispositivos.HoverSelection = True
         LvDispositivos.Location = New Point(0, 0)
         LvDispositivos.Name = "LvDispositivos"
-        LvDispositivos.Size = New Size(224, 380)
+        LvDispositivos.Size = New Size(224, 402)
         LvDispositivos.SmallImageList = ImageList1
         LvDispositivos.TabIndex = 2
         LvDispositivos.UseCompatibleStateImageBehavior = False
@@ -203,8 +188,6 @@ Partial Class RelojesList
         Name = "RelojesList"
         Size = New Size(224, 427)
         ContextMenuStrip1.ResumeLayout(False)
-        ToolStripContainer1.BottomToolStripPanel.ResumeLayout(False)
-        ToolStripContainer1.BottomToolStripPanel.PerformLayout()
         ToolStripContainer1.ContentPanel.ResumeLayout(False)
         ToolStripContainer1.TopToolStripPanel.ResumeLayout(False)
         ToolStripContainer1.TopToolStripPanel.PerformLayout()
@@ -230,6 +213,5 @@ Partial Class RelojesList
     Friend WithEvents ToolStripButton2 As ToolStripButton
     Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
     Friend WithEvents ToolStripButton3 As ToolStripButton
-    Friend WithEvents StatusStrip1 As StatusStrip
 
 End Class

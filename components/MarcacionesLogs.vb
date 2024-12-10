@@ -7,7 +7,7 @@ Public Class MarcacionesLogs
 
         With ListView1.Items.Add(Record.DateTime)
             .SubItems.Add(Record.EnrollNumber)
-            .SubItems.Add(Record.VerifyMode)
+            .SubItems.Add(Record.InOutMode)
             .SubItems.Add(Record.DeviceNumber)
             .SubItems.Add(Record.WorkMode)
         End With

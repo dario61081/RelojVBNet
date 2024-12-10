@@ -245,6 +245,8 @@ Public Class Lectura
             End Try
         Next
 
-        MessageBox.Show("Tarea finalizada")
+        Me.Invoke(Sub()
+                      MessageBox.Show("Tarea finalizada", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                  End Sub)
     End Sub
 End Class

@@ -31,7 +31,8 @@ Public Class ZKBiometricDevice
         Password = Dispositivo.ClaveAdmin
 
         Try
-            Zkem.SetCommPassword(Password)
+            Dim status = Zkem.SetCommPassword(Password)
+            LogError($"Set communication password: {status}")
         Catch ex As Exception
             LogError($"Error setting communication password: {ex.Message}")
             Return False

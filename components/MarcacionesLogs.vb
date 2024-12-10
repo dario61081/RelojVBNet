@@ -4,12 +4,11 @@ Public Class MarcacionesLogs
 
 
     Public Sub RegistrarMarcacion(Record As AttendanceRecord, Optional Dispositivo As DispositivoModel = Nothing)
-        Dim dispositivoID As Integer = If(Dispositivo?.IdDispositivo, 0)
 
         With ListView1.Items.Add(Record.DateTime)
             .SubItems.Add(Record.EnrollNumber)
             .SubItems.Add(Record.VerifyMode)
-            .SubItems.Add(dispositivoID)
+            .SubItems.Add(Record.DeviceNumber)
             .SubItems.Add(Record.WorkMode)
         End With
 

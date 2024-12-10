@@ -3,6 +3,7 @@
 ''' </summary>
 
 Public Class AttendanceRecord
+    Public Property DeviceNumber As Integer
     Public Property EnrollNumber As String
     Public Property VerifyMode As Integer
     Public Property InOutMode As Integer

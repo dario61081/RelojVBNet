@@ -70,6 +70,7 @@ Public Class ZKBiometricDevice
             If Zkem.ReadGeneralLogData(DeviceNumber) Then
                 While Zkem.SSR_GetGeneralLogData(DeviceNumber, dwEnrollNumber, dwVerifyMode, dwInOutMode, dwYear, dwMonth, dwDay, dwHour, dwMinute, dwSecond, dwWorkMode)
                     Dim record As New AttendanceRecord With {
+                        .DeviceNumber = DeviceNumber,
                         .EnrollNumber = dwEnrollNumber,
                         .VerifyMode = dwVerifyMode,
                         .InOutMode = dwInOutMode,

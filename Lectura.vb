@@ -174,6 +174,15 @@ Public Class Lectura
                 .Estado = 0,
                 .FechaCreacion = Nothing,
                 .IdDispositivo = 3
+            },
+            New DispositivoModel() With {
+                .DireccionIp = "192.168.0.202",
+                .Puerto = 4370,
+                .ClaveAdmin = "",
+                .Descripcion = "Reloj de fallo",
+                .Estado = 0,
+                .FechaCreacion = Nothing,
+                .IdDispositivo = 3
             }
         }
 

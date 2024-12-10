@@ -209,4 +209,40 @@ Public Class Lectura
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
         'para exportar los datos al dataset
     End Sub
+
+    Private Async Sub RelojesList1_BorrarMarcaciones(Lista As List(Of DispositivoModel)) Handles RelojesList1.BorrarMarcaciones
+        If Lista Is Nothing Then
+            Return
+        End If
+        Dim _device As New ZKBiometricDevice()
+        Dim estado As Boolean
+
+        For Each dispositivo In Lista
+            Log($"Borrando datos del reloj {dispositivo.Descripcion} ({dispositivo.DireccionIp}:{dispositivo.Puerto})")
+
+            Try
+                estado = _device.Connect(dispositivo)
+                If Not estado Then
+                    LogError($"No se pudo conectar al reloj {dispositivo.Descripcion} ({dispositivo.DireccionIp}:{dispositivo.Puerto})", dispositivo)
+                    Return
+                End If
+
+                Await Task.Run(Sub()
+                                   estado = _device.ClearLogs()
+                               End Sub)
+
+                If estado = False Then
+                    Log($"No se borraron registros del reloj {dispositivo.Descripcion}", dispositivo)
+                End If
+
+            Catch ex As Exception
+                LogError($"Error al borrar registros del reloj {dispositivo.Descripcion}: {ex.Message}", dispositivo)
+            Finally
+                If estado Then
+                    _device.Disconnect()
+                    Log($"Desconectado del reloj {dispositivo.Descripcion}", dispositivo)
+                End If
+            End Try
+        Next
+    End Sub
 End Class

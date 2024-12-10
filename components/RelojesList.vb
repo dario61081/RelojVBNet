@@ -5,6 +5,7 @@ Public Class RelojesList
     Public Dispositivos As List(Of DispositivoModel)
 
     Public Event LeerDispostivos(Lista As List(Of DispositivoModel), Parametros As LecturaParametros)
+    Public Event BorrarMarcaciones(Lista As List(Of DispositivoModel))
 
     ''' <summary>
     ''' Representa un arbol de relojes
@@ -128,11 +129,25 @@ Public Class RelojesList
     End Sub
 
     Private Sub BorrarMarcacionesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BorrarMarcacionesToolStripMenuItem.Click
+        If LvDispositivos.CheckedItems.Count = 0 Then
+            MessageBox.Show("No hay relojes seleccionados", "Borrar")
+            Return
+        End If
+
+
         'pregunta a conciencia si quiere ejecutar el borrado de registro de attendance 
         Dim resp = MessageBox.Show("Estas seguro de borrar los registros de marcaciones? Esta operación no es reversible y se aplicara de inmediato", "Borrar", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
         If resp = DialogResult.Yes Then
             'borrar
+            Dim lista_dispositivos As List(Of DispositivoModel) = New List(Of DispositivoModel)
+
+            For Each item As ListViewItem In LvDispositivos.CheckedItems
+                lista_dispositivos.Add(DirectCast(item.Tag, DispositivoModel))
+            Next
+
+            RaiseEvent BorrarMarcaciones(lista_dispositivos)
+
         End If
     End Sub
 

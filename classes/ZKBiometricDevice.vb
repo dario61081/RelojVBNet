@@ -10,6 +10,7 @@ Public Class ZKBiometricDevice
     Private IsConnected As Boolean
     Private DeviceNumber As Integer
     Public SerialNumber As String
+    Public Password As Long
 
     Public Sub New()
         Zkem = New CZKEM()
@@ -27,6 +28,16 @@ Public Class ZKBiometricDevice
     ''' <returns>True si la conexión es exitosa, False en caso contrario.</returns>
     Public Function Connect(Dispositivo As DispositivoModel) As Boolean
         DeviceNumber = Dispositivo.IdDispositivo
+        Password = Dispositivo.ClaveAdmin
+
+        Try
+            Zkem.SetCommPassword(Password)
+        Catch ex As Exception
+            LogError($"Error setting communication password: {ex.Message}")
+            Return False
+        End Try
+
+
         If Zkem.Connect_Net(Dispositivo.DireccionIp, Dispositivo.Puerto) Then
             Zkem.GetSerialNumber(DeviceNumber, SerialNumber)
 

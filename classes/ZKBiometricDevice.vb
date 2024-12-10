@@ -1,5 +1,6 @@
 ﻿
 
+Imports System.IO
 Imports RelojVBNET.Models
 Imports zkemkeeper
 
@@ -52,24 +53,57 @@ Public Class ZKBiometricDevice
     ''' Obtiene los registros de asistencia del dispositivo.
     ''' </summary>
     ''' <returns>Lista de registros de asistencia.</returns>
+    'Public Function GetAttendanceLogs() As List(Of AttendanceRecord)
+    '    Dim records As New List(Of AttendanceRecord)()
+
+    '    If IsConnected Then
+    '        Dim dwEnrollNumber As String = ""
+    '        Dim dwVerifyMode As Integer
+    '        Dim dwInOutMode As Integer
+    '        Dim dwYear As Integer
+    '        Dim dwMonth As Integer
+    '        Dim dwDay As Integer
+    '        Dim dwHour As Integer
+    '        Dim dwMinute As Integer
+    '        Dim dwSecond As Integer
+    '        Dim dwWorkMode As Integer
+
+    '        If Zkem.ReadGeneralLogData(DeviceNumber) Then
+    '            While Zkem.SSR_GetGeneralLogData(DeviceNumber, dwEnrollNumber, dwVerifyMode, dwInOutMode, dwYear, dwMonth, dwDay, dwHour, dwMinute, dwSecond, dwWorkMode)
+    '                Dim record As New AttendanceRecord With {
+    '                    .DeviceNumber = DeviceNumber,
+    '                    .EnrollNumber = dwEnrollNumber,
+    '                    .VerifyMode = dwVerifyMode,
+    '                    .InOutMode = dwInOutMode,
+    '                    .DateTime = New DateTime(dwYear, dwMonth, dwDay, dwHour, dwMinute, dwSecond),
+    '                    .WorkMode = dwWorkMode
+    '                }
+    '                records.Add(record)
+    '            End While
+    '        End If
+    '    End If
+
+    '    Return records
+    'End Function
     Public Function GetAttendanceLogs() As List(Of AttendanceRecord)
         Dim records As New List(Of AttendanceRecord)()
 
-        If IsConnected Then
-            Dim dwEnrollNumber As String = ""
-            Dim dwVerifyMode As Integer
-            Dim dwInOutMode As Integer
-            Dim dwYear As Integer
-            Dim dwMonth As Integer
-            Dim dwDay As Integer
-            Dim dwHour As Integer
-            Dim dwMinute As Integer
-            Dim dwSecond As Integer
-            Dim dwWorkMode As Integer
+        Try
+            If IsConnected Then
+                Dim dwEnrollNumber As String = ""
+                Dim dwVerifyMode As Integer
+                Dim dwInOutMode As Integer
+                Dim dwYear As Integer
+                Dim dwMonth As Integer
+                Dim dwDay As Integer
+                Dim dwHour As Integer
+                Dim dwMinute As Integer
+                Dim dwSecond As Integer
+                Dim dwWorkMode As Integer
 
-            If Zkem.ReadGeneralLogData(DeviceNumber) Then
-                While Zkem.SSR_GetGeneralLogData(DeviceNumber, dwEnrollNumber, dwVerifyMode, dwInOutMode, dwYear, dwMonth, dwDay, dwHour, dwMinute, dwSecond, dwWorkMode)
-                    Dim record As New AttendanceRecord With {
+                If Zkem.ReadGeneralLogData(DeviceNumber) Then
+                    While Zkem.SSR_GetGeneralLogData(DeviceNumber, dwEnrollNumber, dwVerifyMode, dwInOutMode, dwYear, dwMonth, dwDay, dwHour, dwMinute, dwSecond, dwWorkMode)
+                        Dim record As New AttendanceRecord With {
                         .DeviceNumber = DeviceNumber,
                         .EnrollNumber = dwEnrollNumber,
                         .VerifyMode = dwVerifyMode,
@@ -77,13 +111,35 @@ Public Class ZKBiometricDevice
                         .DateTime = New DateTime(dwYear, dwMonth, dwDay, dwHour, dwMinute, dwSecond),
                         .WorkMode = dwWorkMode
                     }
-                    records.Add(record)
-                End While
+                        records.Add(record)
+                    End While
+                Else
+                    LogError("Failed to read general log data from the device.")
+                End If
+            Else
+                LogError("Device is not connected.")
             End If
-        End If
+        Catch ex As Exception
+            LogError($"Error retrieving attendance logs: {ex.Message}")
+        End Try
 
         Return records
     End Function
+
+    ' Enhanced Asynchronous Version
+    Public Async Function GetAttendanceLogsAsync() As Task(Of List(Of AttendanceRecord))
+        Return Await Task.Run(Function() GetAttendanceLogs())
+    End Function
+
+    ' Helper Method for Logging
+    Private Sub LogError(message As String)
+        Try
+            Dim logFilePath As String = "AttendanceLogErrors.txt"
+            File.AppendAllText(logFilePath, $"{DateTime.Now}: {message}{Environment.NewLine}")
+        Catch
+            ' If logging fails, suppress errors to avoid cascading failures.
+        End Try
+    End Sub
 
     ''' <summary>
     ''' Comprueba si el dispositivo está conectado.

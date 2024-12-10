@@ -97,9 +97,11 @@ Public Class ZKBiometricDevice
     'clear logs
     Public Function ClearLogs() As Boolean
 
-        Return Zkem.ClearGeneralLogData(DeviceNumber)
+        Return Zkem.ClearGLog(DeviceNumber)
 
     End Function
+
+
 
 
 

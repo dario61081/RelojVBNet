@@ -232,7 +232,7 @@ Public Class Lectura
                                End Sub)
 
                 If estado = False Then
-                    Log($"No se borraron registros del reloj {dispositivo.Descripcion}", dispositivo)
+                    LogError($"No se borraron registros del reloj {dispositivo.Descripcion}", dispositivo)
                 End If
 
             Catch ex As Exception
@@ -244,5 +244,7 @@ Public Class Lectura
                 End If
             End Try
         Next
+
+        MessageBox.Show("Tarea finalizada")
     End Sub
 End Class

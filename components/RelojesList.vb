@@ -28,7 +28,7 @@ Public Class RelojesList
         }
         node.SubItems.Add(data.Descripcion)
         node.SubItems.Add(data.IdDispositivo)
-        node.SubItems.Add("Desconectado") ' estado offline por defecto
+        node.SubItems.Add("No detectado") ' estado offline por defecto
         node.Tag = data
         LvDispositivos.Items.Add(node)
     End Sub
@@ -165,11 +165,11 @@ Public Class RelojesList
                           If resultado Then
                               row.ImageIndex = 6
                               row.ForeColor = Color.DarkGreen
-                              row.SubItems(3).Text = "Conectado"
+                              row.SubItems(3).Text = "Detectado"
                           Else
                               row.ImageIndex = 7
                               row.ForeColor = Color.DarkRed
-                              row.SubItems(3).Text = "Desconectado"
+                              row.SubItems(3).Text = "No detectado"
                           End If
                       Next
                   End Sub)

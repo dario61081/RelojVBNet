@@ -70,7 +70,7 @@ Public Class Lectura
         Dim estado As Boolean
 
         Try
-            estado = _device.Connect(dispositivo.DireccionIp, dispositivo.Puerto)
+            estado = _device.Connect(dispositivo)
             If Not estado Then
                 LogError($"No se pudo conectar al reloj {dispositivo.Descripcion} ({dispositivo.DireccionIp}:{dispositivo.Puerto})", dispositivo)
                 Return
@@ -186,16 +186,20 @@ Public Class Lectura
     ''' <param name="message"></param>
     Public Sub Log(message As String, Optional Dispositivo As DispositivoModel = Nothing)
         Debug.WriteLine($"Log: {message}")
-        Me.Invoke(Sub()
-                      EventsLogs1.RegistrarEvento(message, Dispositivo)
-                  End Sub)
+        Me.Invoke(
+            Sub()
+                EventsLogs1.RegistrarEvento(message, Dispositivo)
+            End Sub
+            )
 
     End Sub
     Public Sub LogError(message As String, Optional Dispositivo As DispositivoModel = Nothing)
         Debug.WriteLine($"Error: {message}")
-        Me.Invoke(Sub()
-                      EventsLogs1.RegistrarError(message, Dispositivo)
-                  End Sub)
+        Me.Invoke(
+            Sub()
+                EventsLogs1.RegistrarError(message, Dispositivo)
+            End Sub
+            )
     End Sub
 
     Private Sub CerrarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CerrarToolStripMenuItem.Click
@@ -203,6 +207,6 @@ Public Class Lectura
     End Sub
 
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
-
+        'para exportar los datos al dataset
     End Sub
 End Class

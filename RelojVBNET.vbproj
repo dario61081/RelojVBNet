@@ -7,8 +7,9 @@
     <UseWindowsForms>true</UseWindowsForms>
     <MyType>WindowsForms</MyType>
     <ApplicationIcon>clock.ico</ApplicationIcon>
-    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <AssemblyVersion></AssemblyVersion>
     <FileVersion>1.0.*</FileVersion>
+    <IncludeSymbols>False</IncludeSymbols>
   </PropertyGroup>
 
   <ItemGroup>

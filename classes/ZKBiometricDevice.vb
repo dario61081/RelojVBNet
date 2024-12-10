@@ -1,5 +1,6 @@
 ﻿
 
+Imports RelojVBNET.Models
 Imports zkemkeeper
 
 Public Class ZKBiometricDevice
@@ -22,9 +23,9 @@ Public Class ZKBiometricDevice
     ''' <param name="ip">Dirección IP del dispositivo.</param>
     ''' <param name="port">Puerto del dispositivo (por defecto 4370).</param>
     ''' <returns>True si la conexión es exitosa, False en caso contrario.</returns>
-    Public Function Connect(ip As String, port As Integer) As Boolean
-
-        If Zkem.Connect_Net(ip, port) Then
+    Public Function Connect(Dispositivo As DispositivoModel) As Boolean
+        DeviceNumber = Dispositivo.IdDispositivo
+        If Zkem.Connect_Net(Dispositivo.DireccionIp, Dispositivo.Puerto) Then
             IsConnected = True
             ' Establecer la máquina en modo normal
             Zkem.EnableDevice(DeviceNumber, True)

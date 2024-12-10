@@ -27,7 +27,7 @@ Public Class RelojesList
         }
         node.SubItems.Add(data.Descripcion)
         node.SubItems.Add(data.IdDispositivo)
-        node.SubItems.Add("") ' estado
+        node.SubItems.Add("Offline") ' estado offline por defecto
         node.Tag = data
         LvDispositivos.Items.Add(node)
     End Sub

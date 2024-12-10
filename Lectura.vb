@@ -224,7 +224,7 @@ Public Class Lectura
                 estado = _device.Connect(dispositivo)
                 If Not estado Then
                     LogError($"No se pudo conectar al reloj {dispositivo.Descripcion} ({dispositivo.DireccionIp}:{dispositivo.Puerto})", dispositivo)
-                    Return
+                    Continue For
                 End If
 
                 Await Task.Run(Sub()

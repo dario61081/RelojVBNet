@@ -216,7 +216,10 @@ Public Class Lectura
         End If
         Dim _device As New ZKBiometricDevice()
         Dim estado As Boolean
-
+        Me.Invoke(Sub()
+                      progressbar1.Visible = True
+                      progressbar1.Style = ProgressBarStyle.Marquee
+                  End Sub)
         For Each dispositivo In Lista
             Log($"Borrando datos del reloj {dispositivo.Descripcion} ({dispositivo.DireccionIp}:{dispositivo.Puerto})")
 
@@ -244,7 +247,10 @@ Public Class Lectura
                 End If
             End Try
         Next
-
+        Me.Invoke(Sub()
+                      progressbar1.Visible = False
+                      progressbar1.Style = ProgressBarStyle.Marquee
+                  End Sub)
         Me.Invoke(Sub()
                       MessageBox.Show("Tarea finalizada", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information)
                   End Sub)

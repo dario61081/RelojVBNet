@@ -224,7 +224,8 @@ Public Class Lectura
             Log($"Borrando datos del reloj {dispositivo.Descripcion} ({dispositivo.DireccionIp}:{dispositivo.Puerto})")
 
             Try
-                estado = _device.Connect(dispositivo)
+                Await Task.Run(Sub() estado = _device.Connect(dispositivo))
+
                 If Not estado Then
                     LogError($"No se pudo conectar al reloj {dispositivo.Descripcion} ({dispositivo.DireccionIp}:{dispositivo.Puerto})", dispositivo)
                     Continue For

@@ -76,10 +76,12 @@ Public Class Lectura
                 Return
             End If
 
-            Dim lista As List(Of AttendanceRecord) = Nothing
-            Await Task.Run(Sub()
-                               lista = _device.GetAttendanceLogs()
-                           End Sub)
+            Dim lista As List(Of AttendanceRecord) = Await _device.GetAttendanceLogsAsync()
+
+            'Await Task.Run(Sub()
+            '                   lista = _device.GetAttendanceLogs
+
+            '               End Sub)
 
             If lista IsNot Nothing AndAlso lista.Count > 0 Then
                 Log($"Se recuperaron {lista.Count} registros del reloj {dispositivo.Descripcion}", dispositivo)

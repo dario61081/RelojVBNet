@@ -10,6 +10,7 @@ Public Class MarcacionesLogs
             .SubItems.Add(Record.InOutMode)
             .SubItems.Add(Record.DeviceNumber)
             .SubItems.Add(Record.WorkMode)
+            .ImageIndex = 0
         End With
 
         If ListView1.Items.Count > 0 Then ListView1.Items(ListView1.Items.Count - 1).EnsureVisible()
@@ -26,7 +27,7 @@ Public Class MarcacionesLogs
             RegistrarMarcacion(record, Dispositivo)
         Next
         ListView1.EndUpdate()
-        ResizeListviewColumns(ListView1)
+
 
 
 

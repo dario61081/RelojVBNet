@@ -1,4 +1,5 @@
-﻿Imports RelojVBNET.Models
+﻿Imports System.IO
+Imports RelojVBNET.Models
 
 
 Public Class Lectura
@@ -49,7 +50,9 @@ Public Class Lectura
 
         MarcacionesLogs1.Clear()
         Log("Iniciando lectura datos, aguarde...")
+
         For Each row As DispositivoModel In Lista
+            'leer marcaciones
             Await Task.Run(Sub() LeerAttendances(row, Parametros))
         Next
         Log("Finalizado lectura de datos")
@@ -60,10 +63,32 @@ Public Class Lectura
 
         'avisar que la lectura ha terminado con un messagebox
         Me.Invoke(Sub()
+                      MarcacionesLogs1.UpdateListView()
+                      EventsLogs1.UpdateListView()
+
                       MessageBox.Show("Lectura finalizada", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information)
                   End Sub)
 
+
     End Sub
+
+    ''' <summary>
+    ''' Cachear los datos del marcado de los relojes
+    ''' </summary>
+    ''' <param name="dispositivo"></param>
+    ''' <param name="data"></param>
+    Private Async Sub BackupLecturas(dispositivo As DispositivoModel, data As List(Of AttendanceRecord))
+        'genera el nombre del archivo del reloj 
+        Dim backupfolder As String = GetCacheDirectory("marcaciones")
+        'genera el nombre del archivo con timestamp
+        Dim filename As String = Path.Combine(backupfolder, "marcaciones_" & dispositivo.DireccionIp & $"_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}" & ".json")
+
+        Await Task.Run(Sub() ObjectReaderWriter(Of AttendanceRecord).SaveToJson(data, filename))
+
+
+    End Sub
+
+
 
     Private Async Sub LeerAttendances(dispositivo As DispositivoModel, params As LecturaParametros)
         Log($"Leyendo datos del reloj {dispositivo.Descripcion} ({dispositivo.DireccionIp}:{dispositivo.Puerto})")
@@ -78,8 +103,11 @@ Public Class Lectura
                 LogError($"No se pudo conectar al reloj {dispositivo.Descripcion} ({dispositivo.DireccionIp}:{dispositivo.Puerto})", dispositivo)
                 Return
             End If
-
+            'obtener marcaciones
             Dim lista As List(Of AttendanceRecord) = Await _device.GetAttendanceLogsAsync()
+            'backup marcaciones
+            Await Task.Run(Sub() BackupLecturas(dispositivo, lista))
+            'si no hay registros
             If lista Is Nothing OrElse lista.Count = 0 Then
                 Log($"No se encontraron registros en el reloj {dispositivo.Descripcion}", dispositivo)
             Else
@@ -87,15 +115,6 @@ Public Class Lectura
                 Me.Invoke(Sub()
                               MarcacionesLogs1.RegistrasMarcaciones(lista, dispositivo)
                           End Sub)
-                'For Each record As AttendanceRecord In lista
-                '    Dim processRecord As Boolean = params.Modo <> 1 OrElse
-                '                               (record.DateTime.Date >= params.FechaDesde.Date AndAlso record.DateTime.Date <= params.FechaHasta.Date)
-                '    If processRecord Then
-                '        Me.Invoke(Sub()
-                '                      MarcacionesLogs1.RegistrasMarcacionesRegistrarMarcacion(record)
-                '                  End Sub)
-                '    End If
-                'Next
             End If
 
         Catch ex As Exception
@@ -108,87 +127,18 @@ Public Class Lectura
         End Try
     End Sub
 
-    'Private Async Sub LeerAttendances(dispositivo As DispositivoModel, params As LecturaParametros)
-
-
-    '    Log($"Leyendo datos del reloj {dispositivo.Descripcion } ({dispositivo.DireccionIp}:{dispositivo.Puerto})")
-    '    Log($"Parametros {params.Modo } - {params.FechaDesde } - {params.FechaHasta }")
-    '    Dim _device As New ZKBiometricDevice()
-    '    Dim estado = _device.Connect(dispositivo.DireccionIp, dispositivo.Puerto)
-    '    'preguntar si esta conectado, si no avisar y volver
-    '    If estado = False Then
-    '        Log($"No se pudo conectar al reloj {dispositivo.Descripcion } ({dispositivo.DireccionIp}:{dispositivo.Puerto})")
-    '        Return
-    '    End If
-
-    '    Dim lista As List(Of AttendanceRecord)
-
-    '    Await Task.Run(Sub() lista = _device.GetAttendanceLogs())
-
-    '    If lista IsNot Nothing Then
-
-    '        For Each record As AttendanceRecord In lista
-
-    '            If params.Modo = 1 AndAlso (record.DateTime.Date >= params.FechaDesde.Date AndAlso record.DateTime.Date <= params.FechaHasta.Date) Then
-    '                Me.Invoke(Sub()
-    '                              MarcacionesLogs1.RegistrarMarcacion(record)
-    '                          End Sub)
-    '                Continue For
-    '            End If
-    '            Me.Invoke(Sub()
-    '                          MarcacionesLogs1.RegistrarMarcacion(record)
-    '                      End Sub)
-    '        Next
-
-    '    End If
-    '    _device.Disconnect()
-
-    'End Sub
-
-
-
     Public Function CargarDispositivosBBDD() As List(Of DispositivoModel)
 
-        Dim Local As New List(Of DispositivoModel) From {
-            New DispositivoModel() With {
-                .DireccionIp = "192.168.0.201",
-                .Puerto = 4370,
-                .ClaveAdmin = "",
-                .Descripcion = "Reloj de prueba",
-                .Estado = 0,
-                .FechaCreacion = Nothing,
-                .IdDispositivo = 1
-            },
-             New DispositivoModel() With {
-                .DireccionIp = "127.0.0.1",
-                .Puerto = 12345,
-                .ClaveAdmin = "",
-                .Descripcion = "Reloj de prueba local",
-                .Estado = 0,
-                .FechaCreacion = Nothing,
-                .IdDispositivo = 2
-            },
-              New DispositivoModel() With {
-                .DireccionIp = "192.168.0.202",
-                .Puerto = 4370,
-                .ClaveAdmin = "",
-                .Descripcion = "Reloj de fallo",
-                .Estado = 0,
-                .FechaCreacion = Nothing,
-                .IdDispositivo = 3
-            },
-            New DispositivoModel() With {
-                .DireccionIp = "192.168.0.202",
-                .Puerto = 4370,
-                .ClaveAdmin = "",
-                .Descripcion = "Reloj de fallo",
-                .Estado = 0,
-                .FechaCreacion = Nothing,
-                .IdDispositivo = 3
-            }
-        }
+        Dim ArbolDispositivos As List(Of DispositivoModel) = New List(Of DispositivoModel)
+        Dim ConfigFilename As String = Path.Combine(GetCacheDirectory("configuraciones"), "dispositivos.json")
 
-        Return Local
+        ArbolDispositivos = ObjectReaderWriter(Of DispositivoModel).LoadFromJson(ConfigFilename)
+        If ArbolDispositivos Is Nothing Then
+            Log("No se encontraron dispositivos en la base de datos, cargando datos locales")
+            Dim ConfigDemoFilename As String = Path.Combine(GetCacheDirectory("configuraciones"), "dispositivos_demo.json")
+            ArbolDispositivos = ObjectReaderWriter(Of DispositivoModel).LoadFromJson(ConfigDemoFilename)
+        End If
+        Return ArbolDispositivos
     End Function
 
     ''' <summary>
@@ -259,16 +209,13 @@ Public Class Lectura
                 End If
             End Try
         Next
+
         Me.Invoke(Sub()
                       progressbar1.Visible = False
                       progressbar1.Style = ProgressBarStyle.Marquee
-                  End Sub)
-        Me.Invoke(Sub()
                       MessageBox.Show("Tarea finalizada", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information)
                   End Sub)
     End Sub
 
-    Private Sub MenuStrip1_ItemClicked(sender As Object, e As ToolStripItemClickedEventArgs) Handles MenuStrip1.ItemClicked
 
-    End Sub
 End Class

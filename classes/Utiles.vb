@@ -38,10 +38,26 @@ Module Utiles
         End Try
     End Function
 
-
+    ''' <summary>
+    ''' Recalcular los anchos del listview
+    ''' </summary>
+    ''' <param name="listView"></param>
     Public Sub ResizeListviewColumns(listView As ListView)
         listView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent)
         listView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize)
     End Sub
+
+    Public Function GetCacheDirectory(Optional subfolder As String = "cache")
+        'genera un path para el directorio subfolder
+        Dim source = Path.Combine(GetDirectory(), subfolder)
+        If Not Directory.Exists(source) Then
+            Directory.CreateDirectory(source)
+        End If
+
+        Return source
+
+    End Function
+
+
 
 End Module

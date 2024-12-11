@@ -30,12 +30,12 @@ Partial Class MarcacionesLogs
         ColumnHeader2 = New ColumnHeader()
         ColumnHeader3 = New ColumnHeader()
         ColumnHeader4 = New ColumnHeader()
+        ColumnHeader5 = New ColumnHeader()
+        ImageList1 = New ImageList(components)
         ToolStrip1 = New ToolStrip()
         ToolStripButton1 = New ToolStripButton()
         ToolStripSeparator1 = New ToolStripSeparator()
         lblContador = New ToolStripLabel()
-        ColumnHeader5 = New ColumnHeader()
-        ImageList1 = New ImageList(components)
         ToolStripContainer1.ContentPanel.SuspendLayout()
         ToolStripContainer1.TopToolStripPanel.SuspendLayout()
         ToolStripContainer1.SuspendLayout()
@@ -67,6 +67,7 @@ Partial Class MarcacionesLogs
         ListView1.Dock = DockStyle.Fill
         ListView1.FullRowSelect = True
         ListView1.GridLines = True
+        ListView1.HideSelection = False
         ListView1.Location = New Point(0, 0)
         ListView1.Name = "ListView1"
         ListView1.Size = New Size(570, 352)
@@ -94,6 +95,18 @@ Partial Class MarcacionesLogs
         ' 
         ColumnHeader4.Text = "Dispositivo #"
         ColumnHeader4.Width = 120
+        ' 
+        ' ColumnHeader5
+        ' 
+        ColumnHeader5.Text = "WorkMode"
+        ColumnHeader5.Width = 80
+        ' 
+        ' ImageList1
+        ' 
+        ImageList1.ColorDepth = ColorDepth.Depth32Bit
+        ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), ImageListStreamer)
+        ImageList1.TransparentColor = Color.Transparent
+        ImageList1.Images.SetKeyName(0, "icons8-huella-dactilar-16.png")
         ' 
         ' ToolStrip1
         ' 
@@ -123,20 +136,6 @@ Partial Class MarcacionesLogs
         lblContador.Name = "lblContador"
         lblContador.Size = New Size(93, 22)
         lblContador.Text = "Encontrado(s): 0"
-        ' 
-        ' ColumnHeader5
-        ' 
-        ColumnHeader5.Text = "WorkMode"
-        ColumnHeader5.Width = 80
-        ' 
-        ' ImageList1
-        ' 
-        ImageList1.ColorDepth = ColorDepth.Depth32Bit
-        ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), ImageListStreamer)
-        ImageList1.TransparentColor = Color.Transparent
-        ImageList1.Images.SetKeyName(0, "icons8-información-16.png")
-        ImageList1.Images.SetKeyName(1, "icons8-alta-importancia-16 (1).png")
-        ImageList1.Images.SetKeyName(2, "icons8-error-16.png")
         ' 
         ' MarcacionesLogs
         ' 

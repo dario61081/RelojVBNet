@@ -34,7 +34,7 @@ Public Class EventsLogs
         End If
 
         ContarEncontrados()
-        ResizeListviewColumns(lvLog)
+
     End Sub
 
 
@@ -55,7 +55,7 @@ Public Class EventsLogs
         End If
 
         ContarEncontrados()
-        ResizeListviewColumns(lvLog)
+
     End Sub
 
     Private Sub ContarEncontrados()

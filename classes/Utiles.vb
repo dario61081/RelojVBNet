@@ -38,4 +38,10 @@ Module Utiles
         End Try
     End Function
 
+
+    Public Sub ResizeListviewColumns(listView As ListView)
+        listView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent)
+        listView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize)
+    End Sub
+
 End Module

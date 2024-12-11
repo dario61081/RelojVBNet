@@ -12,6 +12,11 @@ Public Class EventsLogs
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
     End Sub
+    Public Sub UpdateListView()
+        ResizeListviewColumns(lvLog)
+    End Sub
+
+
     Public Sub RegistrarError(message As String, Optional Dispositivo As DispositivoModel = Nothing)
         Dim row As New ListViewItem
         Dim dispositivoID As Integer = If(Dispositivo?.IdDispositivo, 0)

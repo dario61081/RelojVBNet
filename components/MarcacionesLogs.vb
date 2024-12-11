@@ -16,6 +16,10 @@ Public Class MarcacionesLogs
         ContarEncontrados()
     End Sub
 
+    Public Sub UpdateListView()
+        Utiles.ResizeListviewColumns(listView:=ListView1)
+    End Sub
+
     Private Sub ContarEncontrados()
         lblContador.Text = $"Encontrado(s): {ListView1.Items.Count}"
     End Sub

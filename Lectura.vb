@@ -36,6 +36,9 @@ Public Class Lectura
         RelojesList1.RegistrarTodo(relojes)
         RelojesList1.VerificarRelojes()
         Log("Listo")
+
+        MarcacionesLogs1.UpdateListView()
+        EventsLogs1.UpdateListView()
     End Sub
 
     Private Async Sub RelojesList1_LeerDispostivos(Lista As List(Of DispositivoModel), Parametros As LecturaParametros) Handles RelojesList1.LeerDispostivos
@@ -266,5 +269,9 @@ Public Class Lectura
         Me.Invoke(Sub()
                       MessageBox.Show("Tarea finalizada", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information)
                   End Sub)
+    End Sub
+
+    Private Sub MenuStrip1_ItemClicked(sender As Object, e As ToolStripItemClickedEventArgs) Handles MenuStrip1.ItemClicked
+
     End Sub
 End Class

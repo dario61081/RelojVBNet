@@ -56,33 +56,33 @@ Public Class Lectura
     End Sub
 
     Private Async Sub RelojesList1_LeerDispostivos(Lista As List(Of DispositivoModel), Parametros As LecturaParametros) Handles RelojesList1.LeerDispostivos
-        Dim progreso As New Loading()
+
         Me.Invoke(Sub()
                       progressbar1.Visible = True
                       progressbar1.Style = ProgressBarStyle.Marquee
-                      progreso.Show(Me)
-                  End Sub)
 
+                  End Sub)
 
         MarcacionesLogs1.Clear()
         Log("Iniciando lectura datos, aguarde...")
 
         For Each row As DispositivoModel In Lista
             'leer marcaciones
-            Await Task.Run(Sub() LeerAttendances(row, Parametros))
+            Await Task.Run(Sub()
+                               Dim progreso As New Loading()
+                               progreso.Show(Me)
+                               LeerAttendances(row, Parametros) 'lectura del reloj
+                               progreso.Close()
+                               progreso = Nothing
+                           End Sub)
         Next
         Log("Finalizado lectura de datos")
         Me.Invoke(Sub()
                       progressbar1.Visible = False
                       progressbar1.Style = ProgressBarStyle.Marquee
-                  End Sub)
-
-        'avisar que la lectura ha terminado con un messagebox
-        Me.Invoke(Sub()
+                      'avisar que la lectura ha terminado con un messagebox
                       MarcacionesLogs1.UpdateListView()
                       EventsLogs1.UpdateListView()
-                      progreso.Close()
-                      progreso = Nothing
                       MessageBox.Show("Lectura finalizada", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information)
                   End Sub)
 

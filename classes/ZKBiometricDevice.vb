@@ -28,15 +28,17 @@ Public Class ZKBiometricDevice
     ''' <returns>True si la conexión es exitosa, False en caso contrario.</returns>
     Public Function Connect(Dispositivo As DispositivoModel) As Boolean
         DeviceNumber = Dispositivo.IdDispositivo
-        Password = Dispositivo.ClaveAdmin
+        If Not String.IsNullOrEmpty(Dispositivo.ClaveAdmin) Then
+            Password = Dispositivo.ClaveAdmin
 
-        Try
-            Dim status = Zkem.SetCommPassword(Password)
-            LogError($"Set communication password: {status}")
-        Catch ex As Exception
-            LogError($"Error setting communication password: {ex.Message}")
-            Return False
-        End Try
+            Try
+                Dim status = Zkem.SetCommPassword(Password)
+                LogError($"Set communication password: {status}")
+            Catch ex As Exception
+                LogError($"Error setting communication password: {ex.Message}")
+                Return False
+            End Try
+        End If
 
 
         If Zkem.Connect_Net(Dispositivo.DireccionIp, Dispositivo.Puerto) Then

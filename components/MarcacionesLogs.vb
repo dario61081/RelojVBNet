@@ -26,7 +26,7 @@ Public Class MarcacionesLogs
             RegistrarMarcacion(record, Dispositivo)
         Next
         ListView1.EndUpdate()
-
+        ResizeListviewColumns(ListView1)
 
 
 

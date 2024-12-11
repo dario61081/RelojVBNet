@@ -36,6 +36,7 @@ Partial Class MarcacionesLogs
         ToolStripButton1 = New ToolStripButton()
         ToolStripSeparator1 = New ToolStripSeparator()
         lblContador = New ToolStripLabel()
+        ToolStripButton2 = New ToolStripButton()
         ToolStripContainer1.ContentPanel.SuspendLayout()
         ToolStripContainer1.TopToolStripPanel.SuspendLayout()
         ToolStripContainer1.SuspendLayout()
@@ -111,10 +112,10 @@ Partial Class MarcacionesLogs
         ' ToolStrip1
         ' 
         ToolStrip1.Dock = DockStyle.None
-        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripSeparator1, lblContador})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripButton2, ToolStripSeparator1, lblContador})
         ToolStrip1.Location = New Point(3, 0)
         ToolStrip1.Name = "ToolStrip1"
-        ToolStrip1.Size = New Size(134, 25)
+        ToolStrip1.Size = New Size(188, 25)
         ToolStrip1.TabIndex = 0
         ' 
         ' ToolStripButton1
@@ -136,6 +137,16 @@ Partial Class MarcacionesLogs
         lblContador.Name = "lblContador"
         lblContador.Size = New Size(93, 22)
         lblContador.Text = "Encontrado(s): 0"
+        ' 
+        ' ToolStripButton2
+        ' 
+        ToolStripButton2.DisplayStyle = ToolStripItemDisplayStyle.Image
+        ToolStripButton2.Image = My.Resources.Resources.icons8_cambiar_tamaño_horizontal_16
+        ToolStripButton2.ImageTransparentColor = Color.Magenta
+        ToolStripButton2.Name = "ToolStripButton2"
+        ToolStripButton2.Size = New Size(23, 22)
+        ToolStripButton2.Text = "ToolStripButton2"
+        ToolStripButton2.ToolTipText = "Auto ajustar columnas"
         ' 
         ' MarcacionesLogs
         ' 
@@ -166,5 +177,6 @@ Partial Class MarcacionesLogs
     Friend WithEvents lblContador As ToolStripLabel
     Friend WithEvents ColumnHeader5 As ColumnHeader
     Friend WithEvents ImageList1 As ImageList
+    Friend WithEvents ToolStripButton2 As ToolStripButton
 
 End Class

@@ -71,4 +71,8 @@ Public Class EventsLogs
         End If
         ContarEncontrados()
     End Sub
+
+    Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
+        ResizeListviewColumns(lvLog)
+    End Sub
 End Class

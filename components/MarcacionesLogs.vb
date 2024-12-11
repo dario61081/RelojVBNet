@@ -45,4 +45,7 @@ Public Class MarcacionesLogs
         ContarEncontrados()
     End Sub
 
+    Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
+        ResizeListviewColumns(ListView1)
+    End Sub
 End Class

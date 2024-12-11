@@ -61,7 +61,7 @@ Partial Class Loading
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.White
-        ClientSize = New Size(299, 83)
+        ClientSize = New Size(279, 83)
         Controls.Add(PictureBox1)
         Controls.Add(Label1)
         Controls.Add(ProgressBar1)

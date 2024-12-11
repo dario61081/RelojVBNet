@@ -122,6 +122,12 @@ Public Class Lectura
             End If
             'obtener marcaciones
             Dim lista As List(Of AttendanceRecord) = Await _device.GetAttendanceLogsAsync()
+            'filtrar las marcaciones por fecha
+            If params.Modo = 1 Then
+                lista = lista.Where(Function(x As AttendanceRecord) x.DateTime.Date >= params.FechaDesde.Date And x.DateTime.Date <= params.FechaHasta).ToList()
+            End If
+
+
             'backup marcaciones
             Await Task.Run(Sub() BackupLecturas(dispositivo, lista))
             'si no hay registros

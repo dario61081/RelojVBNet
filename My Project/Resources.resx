@@ -121,8 +121,11 @@
   <data name="icons8-actualizar-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\interfaces\icons8-actualizar-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icons8-reloj-16 (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\interfaces\icons8-reloj-16 (2).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icons8-descargar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icons8-descargar.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icons8-ajustes-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\interfaces\icons8-ajustes-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icons8-basura-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-basura-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -142,16 +145,16 @@
   <data name="icons8-marque-todas-las-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-marque-todas-las-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icons8-reloj-16 (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\interfaces\icons8-reloj-16 (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icons8-reloj-16 (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\interfaces\icons8-reloj-16 (2).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icons8-subir-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-subir-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icons8-ajustes-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\interfaces\icons8-ajustes-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icons8-reloj-16 (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\interfaces\icons8-reloj-16 (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icons8-descargar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8-descargar.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icons8-cambiar-tamaño-horizontal-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icons8-cambiar-tamaño-horizontal-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

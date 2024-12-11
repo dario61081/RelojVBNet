@@ -32,13 +32,14 @@ Partial Class EventsLogs
         ColumnHeader2 = New ColumnHeader()
         ColumnHeader8 = New ColumnHeader()
         ColumnHeader9 = New ColumnHeader()
+        ImageList1 = New ImageList(components)
         ToolStrip1 = New ToolStrip()
         ToolStripButton1 = New ToolStripButton()
         ToolStripSeparator1 = New ToolStripSeparator()
         ToolStripButton2 = New ToolStripButton()
         ToolStripSeparator2 = New ToolStripSeparator()
         lblContador = New ToolStripLabel()
-        ImageList1 = New ImageList(components)
+        ToolStripButton3 = New ToolStripButton()
         ContextMenuStrip1.SuspendLayout()
         ToolStripContainer1.ContentPanel.SuspendLayout()
         ToolStripContainer1.TopToolStripPanel.SuspendLayout()
@@ -82,6 +83,7 @@ Partial Class EventsLogs
         lvLog.Dock = DockStyle.Fill
         lvLog.FullRowSelect = True
         lvLog.GridLines = True
+        lvLog.HideSelection = False
         lvLog.Location = New Point(0, 0)
         lvLog.Name = "lvLog"
         lvLog.Size = New Size(599, 261)
@@ -110,13 +112,22 @@ Partial Class EventsLogs
         ColumnHeader9.Text = "Descripción"
         ColumnHeader9.Width = 300
         ' 
+        ' ImageList1
+        ' 
+        ImageList1.ColorDepth = ColorDepth.Depth32Bit
+        ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), ImageListStreamer)
+        ImageList1.TransparentColor = Color.Transparent
+        ImageList1.Images.SetKeyName(0, "icons8-información-16.png")
+        ImageList1.Images.SetKeyName(1, "icons8-alta-importancia-16 (1).png")
+        ImageList1.Images.SetKeyName(2, "icons8-error-16.png")
+        ' 
         ' ToolStrip1
         ' 
         ToolStrip1.Dock = DockStyle.None
-        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripSeparator1, ToolStripButton2, ToolStripSeparator2, lblContador})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripButton3, ToolStripSeparator1, ToolStripButton2, ToolStripSeparator2, lblContador})
         ToolStrip1.Location = New Point(3, 0)
         ToolStrip1.Name = "ToolStrip1"
-        ToolStrip1.Size = New Size(163, 25)
+        ToolStrip1.Size = New Size(217, 25)
         ToolStrip1.TabIndex = 0
         ' 
         ' ToolStripButton1
@@ -153,18 +164,18 @@ Partial Class EventsLogs
         lblContador.Size = New Size(93, 22)
         lblContador.Text = "Encontrado(s): 0"
         ' 
-        ' ImageList1
+        ' ToolStripButton3
         ' 
-        ImageList1.ColorDepth = ColorDepth.Depth32Bit
-        ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), ImageListStreamer)
-        ImageList1.TransparentColor = Color.Transparent
-        ImageList1.Images.SetKeyName(0, "icons8-información-16.png")
-        ImageList1.Images.SetKeyName(1, "icons8-alta-importancia-16 (1).png")
-        ImageList1.Images.SetKeyName(2, "icons8-error-16.png")
+        ToolStripButton3.DisplayStyle = ToolStripItemDisplayStyle.Image
+        ToolStripButton3.Image = My.Resources.Resources.icons8_cambiar_tamaño_horizontal_16
+        ToolStripButton3.ImageTransparentColor = Color.Magenta
+        ToolStripButton3.Name = "ToolStripButton3"
+        ToolStripButton3.Size = New Size(23, 22)
+        ToolStripButton3.Text = "Auto ajustar columnas"
         ' 
         ' EventsLogs
         ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
         AutoScaleMode = AutoScaleMode.Font
         Controls.Add(ToolStripContainer1)
         Name = "EventsLogs"
@@ -194,5 +205,6 @@ Partial Class EventsLogs
     Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
     Friend WithEvents lblContador As ToolStripLabel
     Friend WithEvents ImageList1 As ImageList
+    Friend WithEvents ToolStripButton3 As ToolStripButton
 
 End Class

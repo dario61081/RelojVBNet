@@ -3,7 +3,7 @@
 Public Class MarcacionesLogs
 
 
-    Public Sub RegistrarMarcacion(Record As AttendanceRecord, Optional Dispositivo As DispositivoModel = Nothing)
+    Private Sub RegistrarMarcacion(Record As AttendanceRecord, Optional Dispositivo As DispositivoModel = Nothing)
 
         With ListView1.Items.Add(Record.DateTime)
             .SubItems.Add(Record.EnrollNumber)
@@ -14,6 +14,23 @@ Public Class MarcacionesLogs
 
         If ListView1.Items.Count > 0 Then ListView1.Items(ListView1.Items.Count - 1).EnsureVisible()
         ContarEncontrados()
+    End Sub
+
+    Public Sub RegistrasMarcaciones(Records As List(Of AttendanceRecord), Optional Dispositivo As DispositivoModel = Nothing)
+        If Records Is Nothing Then
+            Return
+        End If
+
+        ListView1.BeginUpdate()
+        For Each record As AttendanceRecord In Records
+            RegistrarMarcacion(record, Dispositivo)
+        Next
+        ListView1.EndUpdate()
+
+
+
+
+
     End Sub
 
     Public Sub UpdateListView()

@@ -80,25 +80,22 @@ Public Class Lectura
             End If
 
             Dim lista As List(Of AttendanceRecord) = Await _device.GetAttendanceLogsAsync()
-
-            'Await Task.Run(Sub()
-            '                   lista = _device.GetAttendanceLogs
-
-            '               End Sub)
-
-            If lista IsNot Nothing AndAlso lista.Count > 0 Then
-                Log($"Se recuperaron {lista.Count} registros del reloj {dispositivo.Descripcion}", dispositivo)
-                For Each record As AttendanceRecord In lista
-                    Dim processRecord As Boolean = params.Modo <> 1 OrElse
-                                               (record.DateTime.Date >= params.FechaDesde.Date AndAlso record.DateTime.Date <= params.FechaHasta.Date)
-                    If processRecord Then
-                        Me.Invoke(Sub()
-                                      MarcacionesLogs1.RegistrarMarcacion(record)
-                                  End Sub)
-                    End If
-                Next
-            Else
+            If lista Is Nothing OrElse lista.Count = 0 Then
                 Log($"No se encontraron registros en el reloj {dispositivo.Descripcion}", dispositivo)
+            Else
+                Log($"Se recuperaron {lista.Count} registros del reloj {dispositivo.Descripcion}", dispositivo)
+                Me.Invoke(Sub()
+                              MarcacionesLogs1.RegistrasMarcaciones(lista, dispositivo)
+                          End Sub)
+                'For Each record As AttendanceRecord In lista
+                '    Dim processRecord As Boolean = params.Modo <> 1 OrElse
+                '                               (record.DateTime.Date >= params.FechaDesde.Date AndAlso record.DateTime.Date <= params.FechaHasta.Date)
+                '    If processRecord Then
+                '        Me.Invoke(Sub()
+                '                      MarcacionesLogs1.RegistrasMarcacionesRegistrarMarcacion(record)
+                '                  End Sub)
+                '    End If
+                'Next
             End If
 
         Catch ex As Exception

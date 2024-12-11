@@ -24,6 +24,19 @@ Public Class Lectura
         Dim numeroBuild As String = AppInfo.ObtenerNumeroBuild()
         'leer relojes de la base de datos 
         Dim relojes As List(Of DispositivoModel) = CargarDispositivosBBDD()
+        If relojes Is Nothing Then
+            relojes = New List(Of DispositivoModel)
+            Log("No se encontraron relojes en la base de datos")
+            relojes.Add(New DispositivoModel() With {
+            .DireccionIp = "127.0.0.1",
+            .Puerto = 4370,
+            .IdDispositivo = 1,
+            .Descripcion = "Prueba",
+            .Estado = False,
+            .ClaveAdmin = "",
+            .FechaCreacion = Nothing
+            })
+        End If
         Log("Cargando relojes de la base de datos")
         For Each row As DispositivoModel In relojes
             Dim _reloj As New Reloj()
@@ -43,10 +56,13 @@ Public Class Lectura
     End Sub
 
     Private Async Sub RelojesList1_LeerDispostivos(Lista As List(Of DispositivoModel), Parametros As LecturaParametros) Handles RelojesList1.LeerDispostivos
+        Dim progreso As New Loading()
         Me.Invoke(Sub()
                       progressbar1.Visible = True
                       progressbar1.Style = ProgressBarStyle.Marquee
+                      progreso.Show(Me)
                   End Sub)
+
 
         MarcacionesLogs1.Clear()
         Log("Iniciando lectura datos, aguarde...")
@@ -65,7 +81,8 @@ Public Class Lectura
         Me.Invoke(Sub()
                       MarcacionesLogs1.UpdateListView()
                       EventsLogs1.UpdateListView()
-
+                      progreso.Close()
+                      progreso = Nothing
                       MessageBox.Show("Lectura finalizada", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information)
                   End Sub)
 
@@ -125,6 +142,7 @@ Public Class Lectura
                 Log($"Desconectado del reloj {dispositivo.Descripcion}", dispositivo)
             End If
         End Try
+
     End Sub
 
     Public Function CargarDispositivosBBDD() As List(Of DispositivoModel)

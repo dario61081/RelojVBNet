@@ -27,11 +27,6 @@ Public Class MarcacionesLogs
             RegistrarMarcacion(record, Dispositivo)
         Next
         ListView1.EndUpdate()
-
-
-
-
-
     End Sub
 
     Public Sub UpdateListView()

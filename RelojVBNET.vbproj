@@ -64,6 +64,7 @@
 
   <ItemGroup>
     <Folder Include="images\interfaces\" />
+    <Folder Include="VersionB\componentes\" />
   </ItemGroup>
 
   <ItemGroup>

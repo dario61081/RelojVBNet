@@ -43,12 +43,7 @@ Public Class Lectura
         EventsLogs1.UpdateListView()
     End Sub
 
-    Class WorkerParams
-        Public Property Dispositivos As List(Of DispositivoModel)
-        Public Property Parametros As LecturaParametros
-        Public Property Eventos As List(Of EventoDispositivoModel)
-        Public Property Marcaciones As List(Of AttendanceRecord)
-    End Class
+
 
     Private Sub RelojesList1_LeerDispostivos(Lista As List(Of DispositivoModel), Parametros As LecturaParametros) Handles RelojesList1.LeerDispostivos
         'forma 2
@@ -195,12 +190,16 @@ Public Class Lectura
         Dim worker As System.ComponentModel.BackgroundWorker = CType(sender, System.ComponentModel.BackgroundWorker)
         Dim _device As New ZKBiometricDevice()
         Dim estado As Boolean
+
+        'parametros de la tarea
         Dim parametros As WorkerParams = CType(e.Argument, WorkerParams)
+        'lista de dispositivos
         Dim dispositivos As List(Of DispositivoModel) = parametros.Dispositivos
-        Dim errores As List(Of EventoDispositivoModel) = New List(Of EventoDispositivoModel)
+        'lista de eventos
+        Dim Eventos As List(Of EventoDispositivoModel) = parametros.Eventos
 
         Dim RegistrarLog As Action(Of String, DispositivoModel) = Sub(message As String, dispositivo As DispositivoModel)
-                                                                      errores.Add(New EventoDispositivoModel() With {
+                                                                      Eventos.Add(New EventoDispositivoModel() With {
                                                                 .Descripcion = message,
                                                                 .IdEvento = 0,
                                                                 .TipoEvento = 0,
@@ -210,12 +209,13 @@ Public Class Lectura
 
         For Each dispositivo As DispositivoModel In dispositivos
             Try
+                RegistrarLog($"accediendo a {dispositivo.Descripcion }", dispositivo)
                 current += 1
                 worker.ReportProgress(CInt(current / dispositivos.Count))
                 estado = _device.Connect(dispositivo)
                 If Not estado Then
                     RegistrarLog($"No se pudo conectar al reloj {dispositivo.Descripcion} ({dispositivo.DireccionIp}:{dispositivo.Puerto})", dispositivo)
-                    Return
+                Return
                 End If
                 'obtener marcaciones
                 Dim lista As List(Of AttendanceRecord) = New List(Of AttendanceRecord)
@@ -237,6 +237,9 @@ Public Class Lectura
                 End If
             End Try
         Next
+
+        'devolver el parametro actualizado
+        e.Result = parametros
     End Sub
 
     Private Async Sub RelojesList1_BorrarMarcaciones(Lista As List(Of DispositivoModel)) Handles RelojesList1.BorrarMarcaciones
@@ -292,8 +295,19 @@ Public Class Lectura
     End Sub
 
     Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
+        Dim parametros As WorkerParams = CType(e.Result, WorkerParams)
+
         'anunciar finalizado
         progressbar1.Value = 100
+        progressbar1.Visible = False
+
+        'poblar la lista de marcaciones
+        MarcacionesLogs1.RegistrasMarcaciones(parametros.Marcaciones)
+        'poblas los eventos ocurridos
+        EventsLogs1.RegistrarEventos(parametros.Eventos)
+
+        MessageBox.Show("Tarea concluida", "Tareas", MessageBoxButtons.OK)
+
     End Sub
 
     Private Sub ResetImportacionProgress()

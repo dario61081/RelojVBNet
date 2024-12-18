@@ -46,8 +46,19 @@ Public Class Lectura
 
 
     Private Sub RelojesList1_LeerDispostivos(Lista As List(Of DispositivoModel), Parametros As LecturaParametros) Handles RelojesList1.LeerDispostivos
-        'forma 2
+
+        'validar la conexion
+        'Parametros.SapUsuario 
+        'Parametros.SapPassword
+        'If Not valido Then
+        '    Return
+        'End If
+
+
+        'iniciar la lectura si el hilo esta liberado
         If Not BackgroundWorker1.IsBusy Then
+            MarcacionesLogs1.Clear()
+
             ResetImportacionProgress()
             Dim worker_params As New WorkerParams() With {
                 .Dispositivos = Lista,
@@ -62,31 +73,6 @@ Public Class Lectura
 
 
 
-        'Me.Invoke(Sub()
-        '              progressbar1.Visible = True
-        '              progressbar1.Style = ProgressBarStyle.Marquee
-        '          End Sub)
-
-        'MarcacionesLogs1.Clear()
-        'Log("Iniciando lectura datos, aguarde...")
-
-        'For Each row As DispositivoModel In Lista
-        '    'leer marcaciones
-        '    Await Task.Run(Sub() LeerAttendances(row, Parametros))
-        'Next
-        'Log("Finalizado lectura de datos")
-        'Me.Invoke(Sub()
-        '              progressbar1.Visible = False
-        '              progressbar1.Style = ProgressBarStyle.Marquee
-        '          End Sub)
-
-        ''avisar que la lectura ha terminado con un messagebox
-        'Me.Invoke(Sub()
-        '              MarcacionesLogs1.UpdateListView()
-        '              EventsLogs1.UpdateListView()
-
-        '              MessageBox.Show("Lectura finalizada", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        '          End Sub)
 
 
     End Sub
@@ -198,24 +184,31 @@ Public Class Lectura
         'lista de eventos
         Dim Eventos As List(Of EventoDispositivoModel) = parametros.Eventos
 
-        Dim RegistrarLog As Action(Of String, DispositivoModel) = Sub(message As String, dispositivo As DispositivoModel)
-                                                                      Eventos.Add(New EventoDispositivoModel() With {
+        Dim RegistrarLog As Action(Of String, DispositivoModel, TipoDeEvento) = Sub(message As String, dispositivo As DispositivoModel, tipodeevento As TipoDeEvento)
+                                                                                    Eventos.Add(New EventoDispositivoModel() With {
+                                                                      .FechaEvento = DateTime.Now,
                                                                 .Descripcion = message,
                                                                 .IdEvento = 0,
-                                                                .TipoEvento = 0,
+                                                                .TipoEvento = CInt(tipodeevento),
+                                                                .TipoDeEvento = tipodeevento,
                                                                 .IdDispositivo = dispositivo.IdDispositivo})
-                                                                  End Sub
+                                                                                End Sub
         Dim current As Integer = 0
+        Dim progreso As Integer = 0
 
         For Each dispositivo As DispositivoModel In dispositivos
             Try
-                RegistrarLog($"accediendo a {dispositivo.Descripcion }", dispositivo)
-                current += 1
-                worker.ReportProgress(CInt(current / dispositivos.Count))
+                'calcular el progreso del recorrido
+                'current += 1
+                'progreso = CInt(current / dispositivos.Count)
+
+                RegistrarLog($"accediendo a {dispositivo.Descripcion }", dispositivo, TipoDeEvento.Informacion)
+                'worker.ReportProgress(progreso)
                 estado = _device.Connect(dispositivo)
                 If Not estado Then
-                    RegistrarLog($"No se pudo conectar al reloj {dispositivo.Descripcion} ({dispositivo.DireccionIp}:{dispositivo.Puerto})", dispositivo)
-                Return
+                    RegistrarLog($"No se pudo conectar al reloj {dispositivo.Descripcion} ({dispositivo.DireccionIp}:{dispositivo.Puerto})", dispositivo, TipoDeEvento.IsError)
+                    Continue For
+
                 End If
                 'obtener marcaciones
                 Dim lista As List(Of AttendanceRecord) = New List(Of AttendanceRecord)
@@ -223,17 +216,27 @@ Public Class Lectura
                 lista = _device.GetAttendanceLogs()
                 'si no hay registros
                 If lista Is Nothing OrElse lista.Count = 0 Then
-                    RegistrarLog($"No se encontraron registros en el reloj {dispositivo.Descripcion}", dispositivo)
+                    RegistrarLog($"No se encontraron registros en el reloj {dispositivo.Descripcion}", dispositivo, TipoDeEvento.IsError)
                 Else
-                    RegistrarLog($"Se recuperaron {lista.Count} registros del reloj {dispositivo.Descripcion}", dispositivo)
+                    RegistrarLog($"Se recuperaron {lista.Count} registros del reloj {dispositivo.Descripcion}", dispositivo, TipoDeEvento.Informacion)
+
+                    'si el modo esta en filtrar por fecha
+                    If parametros.Parametros.Modo = 1 Then
+                        'filtrar por fecha 
+                        lista = lista.Where(Function(x) x.DateTime.Date >= parametros.Parametros.FechaDesde.Date And x.DateTime.Date <= parametros.Parametros.FechaHasta.Date).ToList
+                    End If
+
+                    'concatenar marcaciones
+                    parametros.Marcaciones.AddRange(lista)
                 End If
 
+
             Catch ex As Exception
-                RegistrarLog($"Error al procesar los datos del reloj {dispositivo.Descripcion}: {ex.Message}", dispositivo)
+                RegistrarLog($"Error al procesar los datos del reloj {dispositivo.Descripcion}: {ex.Message}", dispositivo, TipoDeEvento.IsError)
             Finally
                 If estado Then
                     _device.Disconnect()
-                    RegistrarLog($"Desconectado del reloj {dispositivo.Descripcion}", dispositivo)
+                    RegistrarLog($"Desconectado del reloj {dispositivo.Descripcion}", dispositivo, TipoDeEvento.Informacion)
                 End If
             End Try
         Next
@@ -290,28 +293,37 @@ Public Class Lectura
 
     Private Sub BackgroundWorker1_ProgressChanged(sender As Object, e As ProgressChangedEventArgs) Handles BackgroundWorker1.ProgressChanged
         'actualizar progreso
-        progressbar1.Value = e.ProgressPercentage
+        progressbar2.Value = e.ProgressPercentage
+        progressbar2.Visible = False
         progressbar1.Visible = False
+
     End Sub
 
     Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
         Dim parametros As WorkerParams = CType(e.Result, WorkerParams)
 
         'anunciar finalizado
-        progressbar1.Value = 100
+        progressbar2.Value = 100
+        progressbar2.Visible = False
         progressbar1.Visible = False
 
         'poblar la lista de marcaciones
-        MarcacionesLogs1.RegistrasMarcaciones(parametros.Marcaciones)
+        If (parametros IsNot Nothing And parametros.Marcaciones IsNot Nothing) Then
+            MarcacionesLogs1.RegistrasMarcaciones(parametros.Marcaciones)
+        End If
         'poblas los eventos ocurridos
         EventsLogs1.RegistrarEventos(parametros.Eventos)
-
+        lblmensaje.Visible = False
+        MarcacionesLogs1.UpdateListView()
+        EventsLogs1.UpdateListView()
         MessageBox.Show("Tarea concluida", "Tareas", MessageBoxButtons.OK)
 
     End Sub
 
     Private Sub ResetImportacionProgress()
-        progressbar1.Value = 0
+        lblmensaje.Visible = True
+        progressbar2.Value = 0
+        progressbar2.Visible = True
         progressbar1.Visible = True
     End Sub
 

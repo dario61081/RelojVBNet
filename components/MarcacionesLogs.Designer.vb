@@ -22,136 +22,142 @@ Partial Class MarcacionesLogs
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        components = New ComponentModel.Container()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MarcacionesLogs))
-        ToolStripContainer1 = New ToolStripContainer()
-        ListView1 = New ListView()
-        ColumnHeader1 = New ColumnHeader()
-        ColumnHeader2 = New ColumnHeader()
-        ColumnHeader3 = New ColumnHeader()
-        ColumnHeader4 = New ColumnHeader()
-        ColumnHeader5 = New ColumnHeader()
-        ImageList1 = New ImageList(components)
-        ToolStrip1 = New ToolStrip()
-        ToolStripButton1 = New ToolStripButton()
-        ToolStripSeparator1 = New ToolStripSeparator()
-        lblContador = New ToolStripLabel()
-        ToolStripContainer1.ContentPanel.SuspendLayout()
-        ToolStripContainer1.TopToolStripPanel.SuspendLayout()
-        ToolStripContainer1.SuspendLayout()
-        ToolStrip1.SuspendLayout()
-        SuspendLayout()
-        ' 
-        ' ToolStripContainer1
-        ' 
-        ' 
-        ' ToolStripContainer1.ContentPanel
-        ' 
-        ToolStripContainer1.ContentPanel.Controls.Add(ListView1)
-        ToolStripContainer1.ContentPanel.Size = New Size(570, 352)
-        ToolStripContainer1.Dock = DockStyle.Fill
-        ToolStripContainer1.Location = New Point(0, 0)
-        ToolStripContainer1.Name = "ToolStripContainer1"
-        ToolStripContainer1.Size = New Size(570, 377)
-        ToolStripContainer1.TabIndex = 0
-        ToolStripContainer1.Text = "ToolStripContainer1"
-        ' 
-        ' ToolStripContainer1.TopToolStripPanel
-        ' 
-        ToolStripContainer1.TopToolStripPanel.Controls.Add(ToolStrip1)
-        ToolStripContainer1.TopToolStripPanel.RenderMode = ToolStripRenderMode.Professional
-        ' 
-        ' ListView1
-        ' 
-        ListView1.Columns.AddRange(New ColumnHeader() {ColumnHeader1, ColumnHeader2, ColumnHeader3, ColumnHeader4, ColumnHeader5})
-        ListView1.Dock = DockStyle.Fill
-        ListView1.FullRowSelect = True
-        ListView1.GridLines = True
-        ListView1.HideSelection = False
-        ListView1.Location = New Point(0, 0)
-        ListView1.Name = "ListView1"
-        ListView1.Size = New Size(570, 352)
-        ListView1.SmallImageList = ImageList1
-        ListView1.TabIndex = 1
-        ListView1.UseCompatibleStateImageBehavior = False
-        ListView1.View = View.Details
-        ' 
-        ' ColumnHeader1
-        ' 
-        ColumnHeader1.Text = "Fecha/hora"
-        ColumnHeader1.Width = 160
-        ' 
-        ' ColumnHeader2
-        ' 
-        ColumnHeader2.Text = "Legajo N°"
-        ColumnHeader2.Width = 120
-        ' 
-        ' ColumnHeader3
-        ' 
-        ColumnHeader3.Text = "TipoEvento"
-        ColumnHeader3.Width = 120
-        ' 
-        ' ColumnHeader4
-        ' 
-        ColumnHeader4.Text = "Dispositivo #"
-        ColumnHeader4.Width = 120
-        ' 
-        ' ColumnHeader5
-        ' 
-        ColumnHeader5.Text = "WorkMode"
-        ColumnHeader5.Width = 80
-        ' 
-        ' ImageList1
-        ' 
-        ImageList1.ColorDepth = ColorDepth.Depth32Bit
-        ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), ImageListStreamer)
-        ImageList1.TransparentColor = Color.Transparent
-        ImageList1.Images.SetKeyName(0, "icons8-huella-dactilar-16.png")
-        ' 
-        ' ToolStrip1
-        ' 
-        ToolStrip1.Dock = DockStyle.None
-        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripSeparator1, lblContador})
-        ToolStrip1.Location = New Point(3, 0)
-        ToolStrip1.Name = "ToolStrip1"
-        ToolStrip1.Size = New Size(134, 25)
-        ToolStrip1.TabIndex = 0
-        ' 
-        ' ToolStripButton1
-        ' 
-        ToolStripButton1.DisplayStyle = ToolStripItemDisplayStyle.Image
-        ToolStripButton1.Image = My.Resources.Resources.icons8_subir_16
-        ToolStripButton1.ImageTransparentColor = Color.Magenta
-        ToolStripButton1.Name = "ToolStripButton1"
-        ToolStripButton1.Size = New Size(23, 22)
-        ToolStripButton1.Text = "Upload a base de datos"
-        ' 
-        ' ToolStripSeparator1
-        ' 
-        ToolStripSeparator1.Name = "ToolStripSeparator1"
-        ToolStripSeparator1.Size = New Size(6, 25)
-        ' 
-        ' lblContador
-        ' 
-        lblContador.Name = "lblContador"
-        lblContador.Size = New Size(93, 22)
-        lblContador.Text = "Encontrado(s): 0"
-        ' 
-        ' MarcacionesLogs
-        ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
-        AutoScaleMode = AutoScaleMode.Font
-        Controls.Add(ToolStripContainer1)
-        Name = "MarcacionesLogs"
-        Size = New Size(570, 377)
-        ToolStripContainer1.ContentPanel.ResumeLayout(False)
-        ToolStripContainer1.TopToolStripPanel.ResumeLayout(False)
-        ToolStripContainer1.TopToolStripPanel.PerformLayout()
-        ToolStripContainer1.ResumeLayout(False)
-        ToolStripContainer1.PerformLayout()
-        ToolStrip1.ResumeLayout(False)
-        ToolStrip1.PerformLayout()
-        ResumeLayout(False)
+        Me.ToolStripContainer1 = New System.Windows.Forms.ToolStripContainer()
+        Me.ListView1 = New System.Windows.Forms.ListView()
+        Me.ColumnHeader1 = New System.Windows.Forms.ColumnHeader()
+        Me.ColumnHeader2 = New System.Windows.Forms.ColumnHeader()
+        Me.ColumnHeader3 = New System.Windows.Forms.ColumnHeader()
+        Me.ColumnHeader4 = New System.Windows.Forms.ColumnHeader()
+        Me.ColumnHeader5 = New System.Windows.Forms.ColumnHeader()
+        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
+        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
+        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.lblContador = New System.Windows.Forms.ToolStripLabel()
+        Me.ToolStripContainer1.ContentPanel.SuspendLayout()
+        Me.ToolStripContainer1.TopToolStripPanel.SuspendLayout()
+        Me.ToolStripContainer1.SuspendLayout()
+        Me.ToolStrip1.SuspendLayout()
+        Me.SuspendLayout()
+        '
+        'ToolStripContainer1
+        '
+        '
+        'ToolStripContainer1.ContentPanel
+        '
+        Me.ToolStripContainer1.ContentPanel.Controls.Add(Me.ListView1)
+        Me.ToolStripContainer1.ContentPanel.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.ToolStripContainer1.ContentPanel.Size = New System.Drawing.Size(651, 476)
+        Me.ToolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ToolStripContainer1.Location = New System.Drawing.Point(0, 0)
+        Me.ToolStripContainer1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.ToolStripContainer1.Name = "ToolStripContainer1"
+        Me.ToolStripContainer1.Size = New System.Drawing.Size(651, 503)
+        Me.ToolStripContainer1.TabIndex = 0
+        Me.ToolStripContainer1.Text = "ToolStripContainer1"
+        '
+        'ToolStripContainer1.TopToolStripPanel
+        '
+        Me.ToolStripContainer1.TopToolStripPanel.Controls.Add(Me.ToolStrip1)
+        Me.ToolStripContainer1.TopToolStripPanel.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
+        '
+        'ListView1
+        '
+        Me.ListView1.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3, Me.ColumnHeader4, Me.ColumnHeader5})
+        Me.ListView1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ListView1.FullRowSelect = True
+        Me.ListView1.GridLines = True
+        Me.ListView1.HideSelection = False
+        Me.ListView1.Location = New System.Drawing.Point(0, 0)
+        Me.ListView1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.ListView1.Name = "ListView1"
+        Me.ListView1.Size = New System.Drawing.Size(651, 476)
+        Me.ListView1.SmallImageList = Me.ImageList1
+        Me.ListView1.TabIndex = 1
+        Me.ListView1.UseCompatibleStateImageBehavior = False
+        Me.ListView1.View = System.Windows.Forms.View.Details
+        '
+        'ColumnHeader1
+        '
+        Me.ColumnHeader1.Text = "Fecha/hora"
+        Me.ColumnHeader1.Width = 200
+        '
+        'ColumnHeader2
+        '
+        Me.ColumnHeader2.Text = "Legajo N°"
+        Me.ColumnHeader2.Width = 120
+        '
+        'ColumnHeader3
+        '
+        Me.ColumnHeader3.Text = "TipoEvento"
+        Me.ColumnHeader3.Width = 120
+        '
+        'ColumnHeader4
+        '
+        Me.ColumnHeader4.Text = "Dispositivo #"
+        Me.ColumnHeader4.Width = 120
+        '
+        'ColumnHeader5
+        '
+        Me.ColumnHeader5.Text = "WorkMode"
+        Me.ColumnHeader5.Width = 80
+        '
+        'ImageList1
+        '
+        Me.ImageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit
+        Me.ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
+        Me.ImageList1.Images.SetKeyName(0, "icons8-huella-dactilar-16.png")
+        '
+        'ToolStrip1
+        '
+        Me.ToolStrip1.Dock = System.Windows.Forms.DockStyle.None
+        Me.ToolStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton1, Me.ToolStripSeparator1, Me.lblContador})
+        Me.ToolStrip1.Location = New System.Drawing.Point(4, 0)
+        Me.ToolStrip1.Name = "ToolStrip1"
+        Me.ToolStrip1.Size = New System.Drawing.Size(164, 27)
+        Me.ToolStrip1.TabIndex = 0
+        '
+        'ToolStripButton1
+        '
+        Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton1.Image = Global.RelojVBNET.My.Resources.Resources.icons8_subir_16
+        Me.ToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton1.Name = "ToolStripButton1"
+        Me.ToolStripButton1.Size = New System.Drawing.Size(29, 24)
+        Me.ToolStripButton1.Text = "Upload a base de datos"
+        '
+        'ToolStripSeparator1
+        '
+        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(6, 27)
+        '
+        'lblContador
+        '
+        Me.lblContador.Name = "lblContador"
+        Me.lblContador.Size = New System.Drawing.Size(116, 24)
+        Me.lblContador.Text = "Encontrado(s): 0"
+        '
+        'MarcacionesLogs
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 20.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.ToolStripContainer1)
+        Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Name = "MarcacionesLogs"
+        Me.Size = New System.Drawing.Size(651, 503)
+        Me.ToolStripContainer1.ContentPanel.ResumeLayout(False)
+        Me.ToolStripContainer1.TopToolStripPanel.ResumeLayout(False)
+        Me.ToolStripContainer1.TopToolStripPanel.PerformLayout()
+        Me.ToolStripContainer1.ResumeLayout(False)
+        Me.ToolStripContainer1.PerformLayout()
+        Me.ToolStrip1.ResumeLayout(False)
+        Me.ToolStrip1.PerformLayout()
+        Me.ResumeLayout(False)
+
     End Sub
 
     Friend WithEvents ToolStripContainer1 As ToolStripContainer

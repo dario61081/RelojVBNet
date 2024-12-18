@@ -23,312 +23,346 @@ Partial Class Lectura
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Lectura))
-        ToolStripContainer1 = New ToolStripContainer()
-        StatusStrip1 = New StatusStrip()
-        ToolStripStatusLabel1 = New ToolStripStatusLabel()
-        lblversion = New ToolStripStatusLabel()
-        ToolStripStatusLabel3 = New ToolStripStatusLabel()
-        progressbar1 = New ToolStripProgressBar()
-        SplitContainer1 = New SplitContainer()
-        TabTree = New TabControl()
-        TabPage2 = New TabPage()
-        RelojesList1 = New RelojesList()
-        SplitContainer2 = New SplitContainer()
-        TabControl2 = New TabControl()
-        TabPage4 = New TabPage()
-        MarcacionesLogs1 = New MarcacionesLogs()
-        TabControl1 = New TabControl()
-        TabPage1 = New TabPage()
-        EventsLogs1 = New EventsLogs()
-        MenuStrip1 = New MenuStrip()
-        SistemaToolStripMenuItem = New ToolStripMenuItem()
-        CerrarToolStripMenuItem = New ToolStripMenuItem()
-        ToolStripContainer2 = New ToolStripContainer()
-        BackgroundWorker1 = New ComponentModel.BackgroundWorker()
-        ToolStripContainer1.BottomToolStripPanel.SuspendLayout()
-        ToolStripContainer1.ContentPanel.SuspendLayout()
-        ToolStripContainer1.TopToolStripPanel.SuspendLayout()
-        ToolStripContainer1.SuspendLayout()
-        StatusStrip1.SuspendLayout()
-        CType(SplitContainer1, ComponentModel.ISupportInitialize).BeginInit()
-        SplitContainer1.Panel1.SuspendLayout()
-        SplitContainer1.Panel2.SuspendLayout()
-        SplitContainer1.SuspendLayout()
-        TabTree.SuspendLayout()
-        TabPage2.SuspendLayout()
-        CType(SplitContainer2, ComponentModel.ISupportInitialize).BeginInit()
-        SplitContainer2.Panel1.SuspendLayout()
-        SplitContainer2.Panel2.SuspendLayout()
-        SplitContainer2.SuspendLayout()
-        TabControl2.SuspendLayout()
-        TabPage4.SuspendLayout()
-        TabControl1.SuspendLayout()
-        TabPage1.SuspendLayout()
-        MenuStrip1.SuspendLayout()
-        ToolStripContainer2.SuspendLayout()
-        SuspendLayout()
-        ' 
-        ' ToolStripContainer1
-        ' 
-        ' 
-        ' ToolStripContainer1.BottomToolStripPanel
-        ' 
-        ToolStripContainer1.BottomToolStripPanel.Controls.Add(StatusStrip1)
-        ' 
-        ' ToolStripContainer1.ContentPanel
-        ' 
-        ToolStripContainer1.ContentPanel.Controls.Add(SplitContainer1)
-        ToolStripContainer1.ContentPanel.Size = New Size(784, 515)
-        ToolStripContainer1.Dock = DockStyle.Fill
-        ToolStripContainer1.Location = New Point(0, 0)
-        ToolStripContainer1.Name = "ToolStripContainer1"
-        ToolStripContainer1.Size = New Size(784, 561)
-        ToolStripContainer1.TabIndex = 0
-        ToolStripContainer1.Text = "ToolStripContainer1"
-        ' 
-        ' ToolStripContainer1.TopToolStripPanel
-        ' 
-        ToolStripContainer1.TopToolStripPanel.Controls.Add(MenuStrip1)
-        ' 
-        ' StatusStrip1
-        ' 
-        StatusStrip1.Dock = DockStyle.None
-        StatusStrip1.Items.AddRange(New ToolStripItem() {ToolStripStatusLabel1, lblversion, ToolStripStatusLabel3, progressbar1})
-        StatusStrip1.Location = New Point(0, 0)
-        StatusStrip1.Name = "StatusStrip1"
-        StatusStrip1.RenderMode = ToolStripRenderMode.Professional
-        StatusStrip1.Size = New Size(784, 22)
-        StatusStrip1.TabIndex = 1
-        StatusStrip1.Text = "StatusStrip1"
-        ' 
-        ' ToolStripStatusLabel1
-        ' 
-        ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
-        ToolStripStatusLabel1.Size = New Size(52, 17)
-        ToolStripStatusLabel1.Text = "NexTech"
-        ' 
-        ' lblversion
-        ' 
-        lblversion.Name = "lblversion"
-        lblversion.Size = New Size(50, 17)
-        lblversion.Text = "Ver: 1.01"
-        ' 
-        ' ToolStripStatusLabel3
-        ' 
-        ToolStripStatusLabel3.Image = My.Resources.Resources.icons8_cancelar_16
-        ToolStripStatusLabel3.Name = "ToolStripStatusLabel3"
-        ToolStripStatusLabel3.Size = New Size(98, 17)
-        ToolStripStatusLabel3.Text = "Desconectado"
-        ToolStripStatusLabel3.Visible = False
-        ' 
-        ' progressbar1
-        ' 
-        progressbar1.Name = "progressbar1"
-        progressbar1.Size = New Size(100, 16)
-        progressbar1.Visible = False
-        ' 
-        ' SplitContainer1
-        ' 
-        SplitContainer1.Dock = DockStyle.Fill
-        SplitContainer1.Location = New Point(0, 0)
-        SplitContainer1.Name = "SplitContainer1"
-        ' 
-        ' SplitContainer1.Panel1
-        ' 
-        SplitContainer1.Panel1.Controls.Add(TabTree)
-        ' 
-        ' SplitContainer1.Panel2
-        ' 
-        SplitContainer1.Panel2.Controls.Add(SplitContainer2)
-        SplitContainer1.Size = New Size(784, 515)
-        SplitContainer1.SplitterDistance = 230
-        SplitContainer1.TabIndex = 0
-        ' 
-        ' TabTree
-        ' 
-        TabTree.Controls.Add(TabPage2)
-        TabTree.Dock = DockStyle.Fill
-        TabTree.Location = New Point(0, 0)
-        TabTree.Name = "TabTree"
-        TabTree.SelectedIndex = 0
-        TabTree.Size = New Size(230, 515)
-        TabTree.TabIndex = 0
-        ' 
-        ' TabPage2
-        ' 
-        TabPage2.Controls.Add(RelojesList1)
-        TabPage2.Location = New Point(4, 24)
-        TabPage2.Name = "TabPage2"
-        TabPage2.Padding = New Padding(3)
-        TabPage2.Size = New Size(222, 487)
-        TabPage2.TabIndex = 0
-        TabPage2.Text = "Relojes"
-        TabPage2.UseVisualStyleBackColor = True
-        ' 
-        ' RelojesList1
-        ' 
-        RelojesList1.Dock = DockStyle.Fill
-        RelojesList1.Location = New Point(3, 3)
-        RelojesList1.Name = "RelojesList1"
-        RelojesList1.Size = New Size(216, 481)
-        RelojesList1.TabIndex = 1
-        ' 
-        ' SplitContainer2
-        ' 
-        SplitContainer2.Dock = DockStyle.Fill
-        SplitContainer2.Location = New Point(0, 0)
-        SplitContainer2.Name = "SplitContainer2"
-        SplitContainer2.Orientation = Orientation.Horizontal
-        ' 
-        ' SplitContainer2.Panel1
-        ' 
-        SplitContainer2.Panel1.Controls.Add(TabControl2)
-        ' 
-        ' SplitContainer2.Panel2
-        ' 
-        SplitContainer2.Panel2.Controls.Add(TabControl1)
-        SplitContainer2.Size = New Size(550, 515)
-        SplitContainer2.SplitterDistance = 305
-        SplitContainer2.TabIndex = 0
-        ' 
-        ' TabControl2
-        ' 
-        TabControl2.Controls.Add(TabPage4)
-        TabControl2.Dock = DockStyle.Fill
-        TabControl2.Location = New Point(0, 0)
-        TabControl2.Name = "TabControl2"
-        TabControl2.SelectedIndex = 0
-        TabControl2.Size = New Size(550, 305)
-        TabControl2.TabIndex = 0
-        ' 
-        ' TabPage4
-        ' 
-        TabPage4.Controls.Add(MarcacionesLogs1)
-        TabPage4.Location = New Point(4, 24)
-        TabPage4.Name = "TabPage4"
-        TabPage4.Padding = New Padding(3)
-        TabPage4.Size = New Size(542, 277)
-        TabPage4.TabIndex = 2
-        TabPage4.Text = "Marcaciones"
-        TabPage4.UseVisualStyleBackColor = True
-        ' 
-        ' MarcacionesLogs1
-        ' 
-        MarcacionesLogs1.Dock = DockStyle.Fill
-        MarcacionesLogs1.Location = New Point(3, 3)
-        MarcacionesLogs1.Name = "MarcacionesLogs1"
-        MarcacionesLogs1.Size = New Size(536, 271)
-        MarcacionesLogs1.TabIndex = 0
-        ' 
-        ' TabControl1
-        ' 
-        TabControl1.Controls.Add(TabPage1)
-        TabControl1.Dock = DockStyle.Fill
-        TabControl1.Location = New Point(0, 0)
-        TabControl1.Name = "TabControl1"
-        TabControl1.SelectedIndex = 0
-        TabControl1.Size = New Size(550, 206)
-        TabControl1.TabIndex = 0
-        ' 
-        ' TabPage1
-        ' 
-        TabPage1.Controls.Add(EventsLogs1)
-        TabPage1.Location = New Point(4, 24)
-        TabPage1.Name = "TabPage1"
-        TabPage1.Padding = New Padding(3)
-        TabPage1.Size = New Size(542, 178)
-        TabPage1.TabIndex = 0
-        TabPage1.Text = "Eventos del sistema"
-        TabPage1.UseVisualStyleBackColor = True
-        ' 
-        ' EventsLogs1
-        ' 
-        EventsLogs1.Dock = DockStyle.Fill
-        EventsLogs1.Location = New Point(3, 3)
-        EventsLogs1.Name = "EventsLogs1"
-        EventsLogs1.Size = New Size(536, 172)
-        EventsLogs1.TabIndex = 0
-        ' 
-        ' MenuStrip1
-        ' 
-        MenuStrip1.Dock = DockStyle.None
-        MenuStrip1.Items.AddRange(New ToolStripItem() {SistemaToolStripMenuItem})
-        MenuStrip1.Location = New Point(0, 0)
-        MenuStrip1.Name = "MenuStrip1"
-        MenuStrip1.Size = New Size(784, 24)
-        MenuStrip1.TabIndex = 0
-        MenuStrip1.Text = "MenuStrip1"
-        ' 
-        ' SistemaToolStripMenuItem
-        ' 
-        SistemaToolStripMenuItem.DropDownItems.AddRange(New ToolStripItem() {CerrarToolStripMenuItem})
-        SistemaToolStripMenuItem.Name = "SistemaToolStripMenuItem"
-        SistemaToolStripMenuItem.Size = New Size(60, 20)
-        SistemaToolStripMenuItem.Text = "&Sistema"
-        ' 
-        ' CerrarToolStripMenuItem
-        ' 
-        CerrarToolStripMenuItem.Name = "CerrarToolStripMenuItem"
-        CerrarToolStripMenuItem.ShortcutKeys = Keys.Alt Or Keys.F4
-        CerrarToolStripMenuItem.Size = New Size(148, 22)
-        CerrarToolStripMenuItem.Text = "&Cerrar"
-        ' 
-        ' ToolStripContainer2
-        ' 
-        ' 
-        ' ToolStripContainer2.ContentPanel
-        ' 
-        ToolStripContainer2.ContentPanel.Size = New Size(784, 536)
-        ToolStripContainer2.Dock = DockStyle.Fill
-        ToolStripContainer2.Location = New Point(0, 0)
-        ToolStripContainer2.Name = "ToolStripContainer2"
-        ToolStripContainer2.Size = New Size(784, 561)
-        ToolStripContainer2.TabIndex = 0
-        ToolStripContainer2.Text = "ToolStripContainer2"
-        ' 
-        ' BackgroundWorker1
-        ' 
-        ' 
-        ' Lectura
-        ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
-        AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(784, 561)
-        Controls.Add(ToolStripContainer1)
-        Controls.Add(ToolStripContainer2)
-        Icon = CType(resources.GetObject("$this.Icon"), Icon)
-        MainMenuStrip = MenuStrip1
-        MinimumSize = New Size(800, 600)
-        Name = "Lectura"
-        Text = "Lectura"
-        ToolStripContainer1.BottomToolStripPanel.ResumeLayout(False)
-        ToolStripContainer1.BottomToolStripPanel.PerformLayout()
-        ToolStripContainer1.ContentPanel.ResumeLayout(False)
-        ToolStripContainer1.TopToolStripPanel.ResumeLayout(False)
-        ToolStripContainer1.TopToolStripPanel.PerformLayout()
-        ToolStripContainer1.ResumeLayout(False)
-        ToolStripContainer1.PerformLayout()
-        StatusStrip1.ResumeLayout(False)
-        StatusStrip1.PerformLayout()
-        SplitContainer1.Panel1.ResumeLayout(False)
-        SplitContainer1.Panel2.ResumeLayout(False)
-        CType(SplitContainer1, ComponentModel.ISupportInitialize).EndInit()
-        SplitContainer1.ResumeLayout(False)
-        TabTree.ResumeLayout(False)
-        TabPage2.ResumeLayout(False)
-        SplitContainer2.Panel1.ResumeLayout(False)
-        SplitContainer2.Panel2.ResumeLayout(False)
-        CType(SplitContainer2, ComponentModel.ISupportInitialize).EndInit()
-        SplitContainer2.ResumeLayout(False)
-        TabControl2.ResumeLayout(False)
-        TabPage4.ResumeLayout(False)
-        TabControl1.ResumeLayout(False)
-        TabPage1.ResumeLayout(False)
-        MenuStrip1.ResumeLayout(False)
-        MenuStrip1.PerformLayout()
-        ToolStripContainer2.ResumeLayout(False)
-        ToolStripContainer2.PerformLayout()
-        ResumeLayout(False)
+        Me.ToolStripContainer1 = New System.Windows.Forms.ToolStripContainer()
+        Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
+        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.lblversion = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.progressbar1 = New System.Windows.Forms.ToolStripProgressBar()
+        Me.lblmensaje = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
+        Me.TabTree = New System.Windows.Forms.TabControl()
+        Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.RelojesList1 = New RelojVBNET.RelojesList()
+        Me.SplitContainer2 = New System.Windows.Forms.SplitContainer()
+        Me.TabControl2 = New System.Windows.Forms.TabControl()
+        Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.MarcacionesLogs1 = New RelojVBNET.MarcacionesLogs()
+        Me.TabControl1 = New System.Windows.Forms.TabControl()
+        Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.EventsLogs1 = New RelojVBNET.EventsLogs()
+        Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
+        Me.SistemaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CerrarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripContainer2 = New System.Windows.Forms.ToolStripContainer()
+        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
+        Me.progressbar2 = New System.Windows.Forms.ToolStripProgressBar()
+        Me.ToolStripContainer1.BottomToolStripPanel.SuspendLayout()
+        Me.ToolStripContainer1.ContentPanel.SuspendLayout()
+        Me.ToolStripContainer1.TopToolStripPanel.SuspendLayout()
+        Me.ToolStripContainer1.SuspendLayout()
+        Me.StatusStrip1.SuspendLayout()
+        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitContainer1.Panel1.SuspendLayout()
+        Me.SplitContainer1.Panel2.SuspendLayout()
+        Me.SplitContainer1.SuspendLayout()
+        Me.TabTree.SuspendLayout()
+        Me.TabPage2.SuspendLayout()
+        CType(Me.SplitContainer2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitContainer2.Panel1.SuspendLayout()
+        Me.SplitContainer2.Panel2.SuspendLayout()
+        Me.SplitContainer2.SuspendLayout()
+        Me.TabControl2.SuspendLayout()
+        Me.TabPage4.SuspendLayout()
+        Me.TabControl1.SuspendLayout()
+        Me.TabPage1.SuspendLayout()
+        Me.MenuStrip1.SuspendLayout()
+        Me.ToolStripContainer2.SuspendLayout()
+        Me.SuspendLayout()
+        '
+        'ToolStripContainer1
+        '
+        '
+        'ToolStripContainer1.BottomToolStripPanel
+        '
+        Me.ToolStripContainer1.BottomToolStripPanel.Controls.Add(Me.StatusStrip1)
+        '
+        'ToolStripContainer1.ContentPanel
+        '
+        Me.ToolStripContainer1.ContentPanel.Controls.Add(Me.SplitContainer1)
+        Me.ToolStripContainer1.ContentPanel.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.ToolStripContainer1.ContentPanel.Size = New System.Drawing.Size(896, 694)
+        Me.ToolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ToolStripContainer1.Location = New System.Drawing.Point(0, 0)
+        Me.ToolStripContainer1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.ToolStripContainer1.Name = "ToolStripContainer1"
+        Me.ToolStripContainer1.Size = New System.Drawing.Size(896, 748)
+        Me.ToolStripContainer1.TabIndex = 0
+        Me.ToolStripContainer1.Text = "ToolStripContainer1"
+        '
+        'ToolStripContainer1.TopToolStripPanel
+        '
+        Me.ToolStripContainer1.TopToolStripPanel.Controls.Add(Me.MenuStrip1)
+        '
+        'StatusStrip1
+        '
+        Me.StatusStrip1.Dock = System.Windows.Forms.DockStyle.None
+        Me.StatusStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1, Me.lblversion, Me.progressbar1, Me.lblmensaje, Me.progressbar2})
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 0)
+        Me.StatusStrip1.Name = "StatusStrip1"
+        Me.StatusStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
+        Me.StatusStrip1.Size = New System.Drawing.Size(896, 26)
+        Me.StatusStrip1.TabIndex = 1
+        Me.StatusStrip1.Text = "StatusStrip1"
+        '
+        'ToolStripStatusLabel1
+        '
+        Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
+        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(65, 20)
+        Me.ToolStripStatusLabel1.Text = "NexTech"
+        '
+        'lblversion
+        '
+        Me.lblversion.Name = "lblversion"
+        Me.lblversion.Size = New System.Drawing.Size(64, 20)
+        Me.lblversion.Text = "Ver: 1.01"
+        '
+        'progressbar1
+        '
+        Me.progressbar1.Name = "progressbar1"
+        Me.progressbar1.Size = New System.Drawing.Size(100, 18)
+        Me.progressbar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee
+        Me.progressbar1.Visible = False
+        '
+        'lblmensaje
+        '
+        Me.lblmensaje.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
+        Me.lblmensaje.ForeColor = System.Drawing.Color.DarkRed
+        Me.lblmensaje.Image = Global.RelojVBNET.My.Resources.Resources.icons8_descargar_16
+        Me.lblmensaje.Name = "lblmensaje"
+        Me.lblmensaje.Size = New System.Drawing.Size(270, 20)
+        Me.lblmensaje.Text = "Procesando marcaciones, aguarde."
+        Me.lblmensaje.Visible = False
+        '
+        'SplitContainer1
+        '
+        Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SplitContainer1.Location = New System.Drawing.Point(0, 0)
+        Me.SplitContainer1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.SplitContainer1.Name = "SplitContainer1"
+        '
+        'SplitContainer1.Panel1
+        '
+        Me.SplitContainer1.Panel1.Controls.Add(Me.TabTree)
+        '
+        'SplitContainer1.Panel2
+        '
+        Me.SplitContainer1.Panel2.Controls.Add(Me.SplitContainer2)
+        Me.SplitContainer1.Size = New System.Drawing.Size(896, 694)
+        Me.SplitContainer1.SplitterDistance = 262
+        Me.SplitContainer1.SplitterWidth = 5
+        Me.SplitContainer1.TabIndex = 0
+        '
+        'TabTree
+        '
+        Me.TabTree.Controls.Add(Me.TabPage2)
+        Me.TabTree.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TabTree.Location = New System.Drawing.Point(0, 0)
+        Me.TabTree.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TabTree.Name = "TabTree"
+        Me.TabTree.SelectedIndex = 0
+        Me.TabTree.Size = New System.Drawing.Size(262, 694)
+        Me.TabTree.TabIndex = 0
+        '
+        'TabPage2
+        '
+        Me.TabPage2.Controls.Add(Me.RelojesList1)
+        Me.TabPage2.Location = New System.Drawing.Point(4, 29)
+        Me.TabPage2.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TabPage2.Name = "TabPage2"
+        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TabPage2.Size = New System.Drawing.Size(254, 661)
+        Me.TabPage2.TabIndex = 0
+        Me.TabPage2.Text = "Relojes"
+        Me.TabPage2.UseVisualStyleBackColor = True
+        '
+        'RelojesList1
+        '
+        Me.RelojesList1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.RelojesList1.Location = New System.Drawing.Point(3, 4)
+        Me.RelojesList1.Margin = New System.Windows.Forms.Padding(3, 5, 3, 5)
+        Me.RelojesList1.Name = "RelojesList1"
+        Me.RelojesList1.Size = New System.Drawing.Size(248, 653)
+        Me.RelojesList1.TabIndex = 1
+        '
+        'SplitContainer2
+        '
+        Me.SplitContainer2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SplitContainer2.Location = New System.Drawing.Point(0, 0)
+        Me.SplitContainer2.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.SplitContainer2.Name = "SplitContainer2"
+        Me.SplitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal
+        '
+        'SplitContainer2.Panel1
+        '
+        Me.SplitContainer2.Panel1.Controls.Add(Me.TabControl2)
+        '
+        'SplitContainer2.Panel2
+        '
+        Me.SplitContainer2.Panel2.Controls.Add(Me.TabControl1)
+        Me.SplitContainer2.Size = New System.Drawing.Size(629, 694)
+        Me.SplitContainer2.SplitterDistance = 411
+        Me.SplitContainer2.SplitterWidth = 5
+        Me.SplitContainer2.TabIndex = 0
+        '
+        'TabControl2
+        '
+        Me.TabControl2.Controls.Add(Me.TabPage4)
+        Me.TabControl2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TabControl2.Location = New System.Drawing.Point(0, 0)
+        Me.TabControl2.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TabControl2.Name = "TabControl2"
+        Me.TabControl2.SelectedIndex = 0
+        Me.TabControl2.Size = New System.Drawing.Size(629, 411)
+        Me.TabControl2.TabIndex = 0
+        '
+        'TabPage4
+        '
+        Me.TabPage4.Controls.Add(Me.MarcacionesLogs1)
+        Me.TabPage4.Location = New System.Drawing.Point(4, 29)
+        Me.TabPage4.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TabPage4.Name = "TabPage4"
+        Me.TabPage4.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TabPage4.Size = New System.Drawing.Size(621, 378)
+        Me.TabPage4.TabIndex = 2
+        Me.TabPage4.Text = "Marcaciones"
+        Me.TabPage4.UseVisualStyleBackColor = True
+        '
+        'MarcacionesLogs1
+        '
+        Me.MarcacionesLogs1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.MarcacionesLogs1.Location = New System.Drawing.Point(3, 4)
+        Me.MarcacionesLogs1.Margin = New System.Windows.Forms.Padding(3, 5, 3, 5)
+        Me.MarcacionesLogs1.Name = "MarcacionesLogs1"
+        Me.MarcacionesLogs1.Size = New System.Drawing.Size(615, 370)
+        Me.MarcacionesLogs1.TabIndex = 0
+        '
+        'TabControl1
+        '
+        Me.TabControl1.Controls.Add(Me.TabPage1)
+        Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TabControl1.Location = New System.Drawing.Point(0, 0)
+        Me.TabControl1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TabControl1.Name = "TabControl1"
+        Me.TabControl1.SelectedIndex = 0
+        Me.TabControl1.Size = New System.Drawing.Size(629, 278)
+        Me.TabControl1.TabIndex = 0
+        '
+        'TabPage1
+        '
+        Me.TabPage1.Controls.Add(Me.EventsLogs1)
+        Me.TabPage1.Location = New System.Drawing.Point(4, 29)
+        Me.TabPage1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TabPage1.Name = "TabPage1"
+        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TabPage1.Size = New System.Drawing.Size(621, 245)
+        Me.TabPage1.TabIndex = 0
+        Me.TabPage1.Text = "Eventos del sistema"
+        Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'EventsLogs1
+        '
+        Me.EventsLogs1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.EventsLogs1.Location = New System.Drawing.Point(3, 4)
+        Me.EventsLogs1.Margin = New System.Windows.Forms.Padding(3, 5, 3, 5)
+        Me.EventsLogs1.Name = "EventsLogs1"
+        Me.EventsLogs1.Size = New System.Drawing.Size(615, 237)
+        Me.EventsLogs1.TabIndex = 0
+        '
+        'MenuStrip1
+        '
+        Me.MenuStrip1.Dock = System.Windows.Forms.DockStyle.None
+        Me.MenuStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SistemaToolStripMenuItem})
+        Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
+        Me.MenuStrip1.Name = "MenuStrip1"
+        Me.MenuStrip1.Size = New System.Drawing.Size(896, 28)
+        Me.MenuStrip1.TabIndex = 0
+        Me.MenuStrip1.Text = "MenuStrip1"
+        '
+        'SistemaToolStripMenuItem
+        '
+        Me.SistemaToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CerrarToolStripMenuItem})
+        Me.SistemaToolStripMenuItem.Name = "SistemaToolStripMenuItem"
+        Me.SistemaToolStripMenuItem.Size = New System.Drawing.Size(75, 24)
+        Me.SistemaToolStripMenuItem.Text = "&Sistema"
+        '
+        'CerrarToolStripMenuItem
+        '
+        Me.CerrarToolStripMenuItem.Name = "CerrarToolStripMenuItem"
+        Me.CerrarToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.F4), System.Windows.Forms.Keys)
+        Me.CerrarToolStripMenuItem.Size = New System.Drawing.Size(185, 26)
+        Me.CerrarToolStripMenuItem.Text = "&Cerrar"
+        '
+        'ToolStripContainer2
+        '
+        '
+        'ToolStripContainer2.ContentPanel
+        '
+        Me.ToolStripContainer2.ContentPanel.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.ToolStripContainer2.ContentPanel.Size = New System.Drawing.Size(896, 723)
+        Me.ToolStripContainer2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ToolStripContainer2.Location = New System.Drawing.Point(0, 0)
+        Me.ToolStripContainer2.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.ToolStripContainer2.Name = "ToolStripContainer2"
+        Me.ToolStripContainer2.Size = New System.Drawing.Size(896, 748)
+        Me.ToolStripContainer2.TabIndex = 0
+        Me.ToolStripContainer2.Text = "ToolStripContainer2"
+        '
+        'BackgroundWorker1
+        '
+        Me.BackgroundWorker1.WorkerReportsProgress = True
+        '
+        'progressbar2
+        '
+        Me.progressbar2.ForeColor = System.Drawing.Color.Maroon
+        Me.progressbar2.Name = "progressbar2"
+        Me.progressbar2.Size = New System.Drawing.Size(100, 18)
+        Me.progressbar2.Style = System.Windows.Forms.ProgressBarStyle.Continuous
+        Me.progressbar2.Visible = False
+        '
+        'Lectura
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 20.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.ClientSize = New System.Drawing.Size(896, 748)
+        Me.Controls.Add(Me.ToolStripContainer1)
+        Me.Controls.Add(Me.ToolStripContainer2)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MainMenuStrip = Me.MenuStrip1
+        Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.MinimumSize = New System.Drawing.Size(912, 784)
+        Me.Name = "Lectura"
+        Me.Text = "Lectura"
+        Me.ToolStripContainer1.BottomToolStripPanel.ResumeLayout(False)
+        Me.ToolStripContainer1.BottomToolStripPanel.PerformLayout()
+        Me.ToolStripContainer1.ContentPanel.ResumeLayout(False)
+        Me.ToolStripContainer1.TopToolStripPanel.ResumeLayout(False)
+        Me.ToolStripContainer1.TopToolStripPanel.PerformLayout()
+        Me.ToolStripContainer1.ResumeLayout(False)
+        Me.ToolStripContainer1.PerformLayout()
+        Me.StatusStrip1.ResumeLayout(False)
+        Me.StatusStrip1.PerformLayout()
+        Me.SplitContainer1.Panel1.ResumeLayout(False)
+        Me.SplitContainer1.Panel2.ResumeLayout(False)
+        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitContainer1.ResumeLayout(False)
+        Me.TabTree.ResumeLayout(False)
+        Me.TabPage2.ResumeLayout(False)
+        Me.SplitContainer2.Panel1.ResumeLayout(False)
+        Me.SplitContainer2.Panel2.ResumeLayout(False)
+        CType(Me.SplitContainer2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitContainer2.ResumeLayout(False)
+        Me.TabControl2.ResumeLayout(False)
+        Me.TabPage4.ResumeLayout(False)
+        Me.TabControl1.ResumeLayout(False)
+        Me.TabPage1.ResumeLayout(False)
+        Me.MenuStrip1.ResumeLayout(False)
+        Me.MenuStrip1.PerformLayout()
+        Me.ToolStripContainer2.ResumeLayout(False)
+        Me.ToolStripContainer2.PerformLayout()
+        Me.ResumeLayout(False)
+
     End Sub
 
     Friend WithEvents ToolStripContainer1 As ToolStripContainer
@@ -340,7 +374,6 @@ Partial Class Lectura
     Friend WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
     Friend WithEvents lblversion As ToolStripStatusLabel
-    Friend WithEvents ToolStripStatusLabel3 As ToolStripStatusLabel
     Friend WithEvents SplitContainer2 As SplitContainer
     Friend WithEvents TabControl2 As TabControl
     Friend WithEvents TabControl1 As TabControl
@@ -355,4 +388,6 @@ Partial Class Lectura
     Friend WithEvents RelojesList1 As RelojesList
     Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
     Friend WithEvents progressbar1 As ToolStripProgressBar
+    Friend WithEvents lblmensaje As ToolStripStatusLabel
+    Friend WithEvents progressbar2 As ToolStripProgressBar
 End Class

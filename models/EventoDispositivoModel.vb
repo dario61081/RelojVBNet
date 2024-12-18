@@ -1,6 +1,18 @@
 Imports System
 
 Namespace Models
+
+
+    Public Enum TipoDeEvento
+        Informacion = 1       ' Evento informativo
+        Advertencia = 2       ' Advertencia o precaución
+        IsError = 3           ' Error grave
+        Depuracion = 4        ' Información para depuración
+        Critico = 5           ' Evento crítico que requiere atención inmediata
+    End Enum
+
+
+
     ''' <summary>
     ''' Representa un evento de un dispositivo de registro de tiempo
     ''' </summary>
@@ -23,7 +35,8 @@ Namespace Models
         ''' <summary>
         ''' Tipo de evento (SUCCESS, ERROR, etc.)
         ''' </summary>
-        Public Property TipoEvento As String
+        Public Property TipoDeEvento As TipoDeEvento = TipoDeEvento.Informacion
+        Public Property TipoEvento As Integer
 
         ''' <summary>
         ''' Fecha y hora del evento

@@ -200,10 +200,9 @@ Public Class Lectura
             Try
                 'calcular el progreso del recorrido
                 current += 1
-                progreso = CInt((current / dispositivos.Count) * 100)
 
                 RegistrarLog($"accediendo a {dispositivo.Descripcion }", dispositivo, TipoDeEvento.Informacion)
-                worker.ReportProgress(progreso)
+
                 estado = _device.Connect(dispositivo)
                 If Not estado Then
                     RegistrarLog($"No se pudo conectar al reloj {dispositivo.Descripcion} ({dispositivo.DireccionIp}:{dispositivo.Puerto})", dispositivo, TipoDeEvento.IsError)
@@ -230,6 +229,8 @@ Public Class Lectura
                     parametros.Marcaciones.AddRange(lista)
                 End If
 
+                progreso = CInt((current / dispositivos.Count) * 100)
+                worker.ReportProgress(progreso)
 
             Catch ex As Exception
                 RegistrarLog($"Error al procesar los datos del reloj {dispositivo.Descripcion}: {ex.Message}", dispositivo, TipoDeEvento.IsError)
@@ -303,7 +304,7 @@ Public Class Lectura
         Dim parametros As WorkerParams = CType(e.Result, WorkerParams)
 
         'anunciar finalizado
-        progressbar2.Value = 100
+        'progressbar2.Value = 100
         progressbar2.Visible = False
         progressbar1.Visible = False
 

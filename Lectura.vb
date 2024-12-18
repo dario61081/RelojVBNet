@@ -199,11 +199,11 @@ Public Class Lectura
         For Each dispositivo As DispositivoModel In dispositivos
             Try
                 'calcular el progreso del recorrido
-                'current += 1
-                'progreso = CInt(current / dispositivos.Count)
+                current += 1
+                progreso = CInt((current / dispositivos.Count) * 100)
 
                 RegistrarLog($"accediendo a {dispositivo.Descripcion }", dispositivo, TipoDeEvento.Informacion)
-                'worker.ReportProgress(progreso)
+                worker.ReportProgress(progreso)
                 estado = _device.Connect(dispositivo)
                 If Not estado Then
                     RegistrarLog($"No se pudo conectar al reloj {dispositivo.Descripcion} ({dispositivo.DireccionIp}:{dispositivo.Puerto})", dispositivo, TipoDeEvento.IsError)
@@ -293,9 +293,9 @@ Public Class Lectura
 
     Private Sub BackgroundWorker1_ProgressChanged(sender As Object, e As ProgressChangedEventArgs) Handles BackgroundWorker1.ProgressChanged
         'actualizar progreso
+        'Debug.WriteLine($"progreso {e.ProgressPercentage }")
         progressbar2.Value = e.ProgressPercentage
-        progressbar2.Visible = False
-        progressbar1.Visible = False
+        lblmensaje.Text = $"Procesando marcaciones, aguarde. ({e.ProgressPercentage}%)"
 
     End Sub
 
@@ -322,9 +322,10 @@ Public Class Lectura
 
     Private Sub ResetImportacionProgress()
         lblmensaje.Visible = True
-        progressbar2.Value = 0
+
         progressbar2.Visible = True
         progressbar1.Visible = True
+        progressbar2.Value = 0
     End Sub
 
 End Class

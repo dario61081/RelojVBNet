@@ -29,6 +29,7 @@ Partial Class Lectura
         Me.lblversion = New System.Windows.Forms.ToolStripStatusLabel()
         Me.progressbar1 = New System.Windows.Forms.ToolStripProgressBar()
         Me.lblmensaje = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.progressbar2 = New System.Windows.Forms.ToolStripProgressBar()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.TabTree = New System.Windows.Forms.TabControl()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
@@ -45,7 +46,6 @@ Partial Class Lectura
         Me.CerrarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripContainer2 = New System.Windows.Forms.ToolStripContainer()
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
-        Me.progressbar2 = New System.Windows.Forms.ToolStripProgressBar()
         Me.ToolStripContainer1.BottomToolStripPanel.SuspendLayout()
         Me.ToolStripContainer1.ContentPanel.SuspendLayout()
         Me.ToolStripContainer1.TopToolStripPanel.SuspendLayout()
@@ -133,6 +133,14 @@ Partial Class Lectura
         Me.lblmensaje.Size = New System.Drawing.Size(270, 20)
         Me.lblmensaje.Text = "Procesando marcaciones, aguarde."
         Me.lblmensaje.Visible = False
+        '
+        'progressbar2
+        '
+        Me.progressbar2.ForeColor = System.Drawing.Color.Maroon
+        Me.progressbar2.Name = "progressbar2"
+        Me.progressbar2.Size = New System.Drawing.Size(100, 18)
+        Me.progressbar2.Style = System.Windows.Forms.ProgressBarStyle.Continuous
+        Me.progressbar2.Visible = False
         '
         'SplitContainer1
         '
@@ -312,14 +320,6 @@ Partial Class Lectura
         'BackgroundWorker1
         '
         Me.BackgroundWorker1.WorkerReportsProgress = True
-        '
-        'progressbar2
-        '
-        Me.progressbar2.ForeColor = System.Drawing.Color.Maroon
-        Me.progressbar2.Name = "progressbar2"
-        Me.progressbar2.Size = New System.Drawing.Size(100, 18)
-        Me.progressbar2.Style = System.Windows.Forms.ProgressBarStyle.Continuous
-        Me.progressbar2.Visible = False
         '
         'Lectura
         '

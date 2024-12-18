@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿Imports System.ComponentModel
+Imports System.IO
 Imports RelojVBNET.Models
 
 
@@ -42,32 +43,55 @@ Public Class Lectura
         EventsLogs1.UpdateListView()
     End Sub
 
-    Private Async Sub RelojesList1_LeerDispostivos(Lista As List(Of DispositivoModel), Parametros As LecturaParametros) Handles RelojesList1.LeerDispostivos
-        Me.Invoke(Sub()
-                      progressbar1.Visible = True
-                      progressbar1.Style = ProgressBarStyle.Marquee
-                  End Sub)
+    Class WorkerParams
+        Public Property Dispositivos As List(Of DispositivoModel)
+        Public Property Parametros As LecturaParametros
+        Public Property Eventos As List(Of EventoDispositivoModel)
+        Public Property Marcaciones As List(Of AttendanceRecord)
+    End Class
 
-        MarcacionesLogs1.Clear()
-        Log("Iniciando lectura datos, aguarde...")
+    Private Sub RelojesList1_LeerDispostivos(Lista As List(Of DispositivoModel), Parametros As LecturaParametros) Handles RelojesList1.LeerDispostivos
+        'forma 2
+        If Not BackgroundWorker1.IsBusy Then
+            ResetImportacionProgress()
+            Dim worker_params As New WorkerParams() With {
+                .Dispositivos = Lista,
+                .Parametros = Parametros,
+                .Eventos = New List(Of EventoDispositivoModel),
+                .Marcaciones = New List(Of AttendanceRecord)
+                }
 
-        For Each row As DispositivoModel In Lista
-            'leer marcaciones
-            Await Task.Run(Sub() LeerAttendances(row, Parametros))
-        Next
-        Log("Finalizado lectura de datos")
-        Me.Invoke(Sub()
-                      progressbar1.Visible = False
-                      progressbar1.Style = ProgressBarStyle.Marquee
-                  End Sub)
+            BackgroundWorker1.RunWorkerAsync(worker_params)
 
-        'avisar que la lectura ha terminado con un messagebox
-        Me.Invoke(Sub()
-                      MarcacionesLogs1.UpdateListView()
-                      EventsLogs1.UpdateListView()
+        End If
 
-                      MessageBox.Show("Lectura finalizada", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                  End Sub)
+
+
+        'Me.Invoke(Sub()
+        '              progressbar1.Visible = True
+        '              progressbar1.Style = ProgressBarStyle.Marquee
+        '          End Sub)
+
+        'MarcacionesLogs1.Clear()
+        'Log("Iniciando lectura datos, aguarde...")
+
+        'For Each row As DispositivoModel In Lista
+        '    'leer marcaciones
+        '    Await Task.Run(Sub() LeerAttendances(row, Parametros))
+        'Next
+        'Log("Finalizado lectura de datos")
+        'Me.Invoke(Sub()
+        '              progressbar1.Visible = False
+        '              progressbar1.Style = ProgressBarStyle.Marquee
+        '          End Sub)
+
+        ''avisar que la lectura ha terminado con un messagebox
+        'Me.Invoke(Sub()
+        '              MarcacionesLogs1.UpdateListView()
+        '              EventsLogs1.UpdateListView()
+
+        '              MessageBox.Show("Lectura finalizada", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        '          End Sub)
 
 
     End Sub
@@ -167,7 +191,52 @@ Public Class Lectura
     End Sub
 
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
-        'para exportar los datos al dataset
+        'leer relojes
+        Dim worker As System.ComponentModel.BackgroundWorker = CType(sender, System.ComponentModel.BackgroundWorker)
+        Dim _device As New ZKBiometricDevice()
+        Dim estado As Boolean
+        Dim parametros As WorkerParams = CType(e.Argument, WorkerParams)
+        Dim dispositivos As List(Of DispositivoModel) = parametros.Dispositivos
+        Dim errores As List(Of EventoDispositivoModel) = New List(Of EventoDispositivoModel)
+
+        Dim RegistrarLog As Action(Of String, DispositivoModel) = Sub(message As String, dispositivo As DispositivoModel)
+                                                                      errores.Add(New EventoDispositivoModel() With {
+                                                                .Descripcion = message,
+                                                                .IdEvento = 0,
+                                                                .TipoEvento = 0,
+                                                                .IdDispositivo = dispositivo.IdDispositivo})
+                                                                  End Sub
+        Dim current As Integer = 0
+
+        For Each dispositivo As DispositivoModel In dispositivos
+            Try
+                current += 1
+                worker.ReportProgress(CInt(current / dispositivos.Count))
+                estado = _device.Connect(dispositivo)
+                If Not estado Then
+                    RegistrarLog($"No se pudo conectar al reloj {dispositivo.Descripcion} ({dispositivo.DireccionIp}:{dispositivo.Puerto})", dispositivo)
+                    Return
+                End If
+                'obtener marcaciones
+                Dim lista As List(Of AttendanceRecord) = New List(Of AttendanceRecord)
+                'backup marcaciones
+                lista = _device.GetAttendanceLogs()
+                'si no hay registros
+                If lista Is Nothing OrElse lista.Count = 0 Then
+                    RegistrarLog($"No se encontraron registros en el reloj {dispositivo.Descripcion}", dispositivo)
+                Else
+                    RegistrarLog($"Se recuperaron {lista.Count} registros del reloj {dispositivo.Descripcion}", dispositivo)
+                End If
+
+            Catch ex As Exception
+                RegistrarLog($"Error al procesar los datos del reloj {dispositivo.Descripcion}: {ex.Message}", dispositivo)
+            Finally
+                If estado Then
+                    _device.Disconnect()
+                    RegistrarLog($"Desconectado del reloj {dispositivo.Descripcion}", dispositivo)
+                End If
+            End Try
+        Next
     End Sub
 
     Private Async Sub RelojesList1_BorrarMarcaciones(Lista As List(Of DispositivoModel)) Handles RelojesList1.BorrarMarcaciones
@@ -216,5 +285,20 @@ Public Class Lectura
                   End Sub)
     End Sub
 
+    Private Sub BackgroundWorker1_ProgressChanged(sender As Object, e As ProgressChangedEventArgs) Handles BackgroundWorker1.ProgressChanged
+        'actualizar progreso
+        progressbar1.Value = e.ProgressPercentage
+        progressbar1.Visible = False
+    End Sub
+
+    Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
+        'anunciar finalizado
+        progressbar1.Value = 100
+    End Sub
+
+    Private Sub ResetImportacionProgress()
+        progressbar1.Value = 0
+        progressbar1.Visible = True
+    End Sub
 
 End Class

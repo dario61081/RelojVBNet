@@ -129,15 +129,14 @@ Public Class Lectura
 
     Public Function CargarDispositivosBBDD() As List(Of DispositivoModel)
 
-        Dim ArbolDispositivos As List(Of DispositivoModel) = New List(Of DispositivoModel)
         Dim ConfigFilename As String = Path.Combine(GetCacheDirectory("configuraciones"), "dispositivos.json")
+        Dim ArbolDispositivos As List(Of DispositivoModel) = ObjectReaderWriter(Of DispositivoModel).LoadFromJson(ConfigFilename)
 
-        ArbolDispositivos = ObjectReaderWriter(Of DispositivoModel).LoadFromJson(ConfigFilename)
         If ArbolDispositivos Is Nothing Then
             Log("No se encontraron dispositivos en la base de datos, cargando datos locales")
-            Dim ConfigDemoFilename As String = Path.Combine(GetCacheDirectory("configuraciones"), "dispositivos_demo.json")
-            ArbolDispositivos = ObjectReaderWriter(Of DispositivoModel).LoadFromJson(ConfigDemoFilename)
+            ArbolDispositivos = New List(Of DispositivoModel)
         End If
+
         Return ArbolDispositivos
     End Function
 

@@ -79,7 +79,7 @@ Partial Class MarcacionesLogs
         ' ColumnHeader1
         ' 
         ColumnHeader1.Text = "Fecha/hora"
-        ColumnHeader1.Width = 120
+        ColumnHeader1.Width = 160
         ' 
         ' ColumnHeader2
         ' 

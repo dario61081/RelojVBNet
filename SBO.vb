@@ -35,6 +35,11 @@ Module SBO
         Dim enviados = 0
         If oCompany IsNot Nothing AndAlso oCompany.Connected Then
             'enviar a ocompany
+            Dim oOrder As Documents
+            oOrder = oCompany.GetBusinessObject(BoObjectTypes.oOrders)
+
+
+
 
         End If
         Return enviados
@@ -49,5 +54,13 @@ Module SBO
         End If
     End Sub
 
+
+    Public Sub main()
+
+        Debug.WriteLine("Test conexion")
+
+
+
+    End Sub
 
 End Module

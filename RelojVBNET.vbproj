@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows7.0</TargetFramework>
-    <StartupObject>RelojVBNET.My.MyApplication</StartupObject>
+    <StartupObject>Sub Main</StartupObject>
     <UseWindowsForms>true</UseWindowsForms>
     <MyType>WindowsForms</MyType>
     <ApplicationIcon>clock.ico</ApplicationIcon>
@@ -73,7 +73,6 @@
 
   <ItemGroup>
     <Folder Include="images\interfaces\" />
-    <Folder Include="VersionB\componentes\" />
   </ItemGroup>
 
   <ItemGroup>

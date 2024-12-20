@@ -75,6 +75,8 @@ Public Class Lectura
 
 
 
+
+
     End Sub
 
     ''' <summary>
@@ -319,6 +321,9 @@ Public Class Lectura
         EventsLogs1.UpdateListView()
         MessageBox.Show("Tarea concluida", "Tareas", MessageBoxButtons.OK)
 
+        EnviarABaseDatos(parametros.Marcaciones)
+
+
     End Sub
 
     Private Sub ResetImportacionProgress()
@@ -329,4 +334,48 @@ Public Class Lectura
         progressbar2.Value = 0
     End Sub
 
+    Public Sub EnviarABaseDatos(lista As List(Of AttendanceRecord))
+
+        If Not BackgroundWorker2.IsBusy Then
+            lblmensaje.Visible = True
+            lblmensaje.Text = "Exportando datos (0%)"
+            progressbar2.Visible = True
+            Debug.WriteLine($"Enviado a base de datos {lista.Count }")
+            BackgroundWorker2.RunWorkerAsync(lista) 'lanzar el thread
+        End If
+
+    End Sub
+
+    Private Sub BackgroundWorker2_DoWork(sender As Object, e As DoWorkEventArgs) Handles BackgroundWorker2.DoWork
+        Dim lista As List(Of AttendanceRecord) = CType(e.Argument, List(Of AttendanceRecord))
+        Dim worker As System.ComponentModel.BackgroundWorker = CType(sender, System.ComponentModel.BackgroundWorker)
+
+
+        Dim count = 0
+        Dim progress = 0
+        Dim cantidad = lista.Count
+        'Debug.WriteLine($"a exportar {cantidad} registros")
+        For Each item As AttendanceRecord In lista
+            count += 1
+            progress = CInt((count / cantidad) * 100)
+
+            'Debug.WriteLine($"({progress}%) -> Fecha: {item.DateTime}, {item.EnrollNumber } , {item.InOutMode}, {item.DeviceNumber }, {item.WorkMode }")
+            worker.ReportProgress(progress)
+        Next
+
+
+
+
+    End Sub
+
+    Private Sub BackgroundWorker2_ProgressChanged(sender As Object, e As ProgressChangedEventArgs) Handles BackgroundWorker2.ProgressChanged
+        progressbar2.Value = e.ProgressPercentage
+        lblmensaje.Text = $"Exportando datos ({e.ProgressPercentage}%)"
+    End Sub
+
+    Private Sub BackgroundWorker2_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BackgroundWorker2.RunWorkerCompleted
+        MessageBox.Show("Exportacion finalizada")
+        progressbar2.Visible = False
+        lblmensaje.Visible = False
+    End Sub
 End Class

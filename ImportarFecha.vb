@@ -15,8 +15,6 @@ Public Class ImportarFecha
             Return
         End If
 
-
-
         'guardar info de todos o por fecha
         If rdTodos.Checked Then
             Modo = 0

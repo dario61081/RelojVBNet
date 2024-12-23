@@ -401,6 +401,7 @@ Public Class Lectura
                 'insertar los registros de marcaciones a @RH_MARCACIONES
                 Dim Data As GeneralData
                 Dim c As Integer = 0
+                count = lista.Count
                 For Each row As AttendanceRecord In lista
                     c += 1
                     data = general.GetDataInterface(GeneralServiceDataInterfaces.gsGeneralData)
@@ -409,11 +410,13 @@ Public Class Lectura
                     Data.SetProperty("U_FECHA", row.DateTime)
                     Data.SetProperty("U_ID_DISP", row.DeviceNumber)
                     Data.SetProperty("U_WORK_MODE", row.WorkMode)
+
+                    Data.SetProperty("U_HORA", row.DateTime)
                     Data.SetProperty("U_ID", c)
                     general.Add(data)
-                    'Debug.WriteLine($"{row.DateTime },{row.DeviceNumber }, {row.EnrollNumber }, {row.InOutMode }, {row.VerifyMode },{row.WorkMode}")
+                    Debug.WriteLine($"{row.DateTime },{row.DeviceNumber }, {row.EnrollNumber }, {row.InOutMode }, {row.VerifyMode },{row.WorkMode}")
 
-                    progress = CInt((count / lista.Count) * 100)
+                    progress = CInt((c / count) * 100)
                     worker.ReportProgress(progress)
 
                 Next

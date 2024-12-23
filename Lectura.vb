@@ -1,6 +1,11 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
 Imports RelojVBNET.Models
+Imports RelojVBNET.SBO
+Imports SAPbobsCOM
+Imports RelojVBNET.ModelUtils
+
+
 
 
 Public Class Lectura
@@ -321,7 +326,8 @@ Public Class Lectura
         EventsLogs1.UpdateListView()
         MessageBox.Show("Tarea concluida", "Tareas", MessageBoxButtons.OK)
 
-        EnviarABaseDatos(parametros.Marcaciones)
+        'enviar listado a base de datos
+        EnviarABaseDatos(parametros)
 
 
     End Sub
@@ -334,35 +340,112 @@ Public Class Lectura
         progressbar2.Value = 0
     End Sub
 
-    Public Sub EnviarABaseDatos(lista As List(Of AttendanceRecord))
+    Public Sub EnviarABaseDatos(Parametros As WorkerParams)
 
         If Not BackgroundWorker2.IsBusy Then
+
+            'iniciar migracion
             lblmensaje.Visible = True
             lblmensaje.Text = "Exportando datos (0%)"
             progressbar2.Visible = True
-            Debug.WriteLine($"Enviado a base de datos {lista.Count }")
-            BackgroundWorker2.RunWorkerAsync(lista) 'lanzar el thread
+
+            BackgroundWorker2.RunWorkerAsync(Parametros) 'lanzar el thread
         End If
 
     End Sub
 
     Private Sub BackgroundWorker2_DoWork(sender As Object, e As DoWorkEventArgs) Handles BackgroundWorker2.DoWork
-        Dim lista As List(Of AttendanceRecord) = CType(e.Argument, List(Of AttendanceRecord))
+        Dim parametros As WorkerParams = CType(e.Argument, WorkerParams)
+        Dim lista As List(Of AttendanceRecord) = parametros.Marcaciones
         Dim worker As System.ComponentModel.BackgroundWorker = CType(sender, System.ComponentModel.BackgroundWorker)
-
-
         Dim count = 0
         Dim progress = 0
         Dim cantidad = lista.Count
-        'Debug.WriteLine($"a exportar {cantidad} registros")
 
-        For Each item As AttendanceRecord In lista
-            count += 1
-            progress = CInt((count / cantidad) * 100)
+        'conectar a la base
 
-            'Debug.WriteLine($"({progress}%) -> Fecha: {item.DateTime}, {item.EnrollNumber } , {item.InOutMode}, {item.DeviceNumber }, {item.WorkMode }")
-            worker.ReportProgress(progress)
-        Next
+        Dim SapUser As String = parametros.Parametros.SapUsuario
+        Dim SapPass As String = parametros.Parametros.SapPassword
+        Dim oCompany As Company = Nothing
+
+        'Debug.WriteLine($"SAPUser: {SapUser} SAPPasswrd {SapPass} ")
+        Try
+            ' Configuración de conexión
+            oCompany = New Company() With {
+            .Server = "192.168.2.115:30015",
+            .CompanyDB = "SELTZ29102024",
+            .UserName = "Reloj",
+            .Password = "123456",
+            .LicenseServer = "192.168.2.115:40000",
+            .DbServerType = BoDataServerTypes.dst_HANADB,
+            .language = BoSuppLangs.ln_Spanish_La,
+            .DbUserName = "SYSTEM",
+            .DbPassword = "Seltz2024*",
+            .UseTrusted = False
+            }
+
+            ' Conectar
+            If oCompany.Connect() <> 0 Then
+                e.Cancel = True
+                Throw New Exception("No se pudo establecer conexion con la base de datos")
+            End If
+
+            oCompany.StartTransaction()
+
+            'poblar datos
+            Dim enviados = 0
+            If oCompany IsNot Nothing AndAlso oCompany.Connected Then
+                Dim servicio As CompanyService = oCompany.GetCompanyService()
+                Dim general As GeneralService = servicio.GetGeneralService("RH_MARCACIONES")
+
+                'insertar los registros de marcaciones a @RH_MARCACIONES
+                Dim Data As GeneralData
+                Dim c As Integer = 0
+                For Each row As AttendanceRecord In lista
+                    c += 1
+                    data = general.GetDataInterface(GeneralServiceDataInterfaces.gsGeneralData)
+                    Data.SetProperty("U_LEGAJO", row.EnrollNumber)
+                    Data.SetProperty("U_TIPO_EVENTO", row.InOutMode)
+                    Data.SetProperty("U_FECHA", row.DateTime)
+                    Data.SetProperty("U_ID_DISP", row.DeviceNumber)
+                    Data.SetProperty("U_WORK_MODE", row.WorkMode)
+                    Data.SetProperty("U_ID", c)
+                    general.Add(data)
+                    'Debug.WriteLine($"{row.DateTime },{row.DeviceNumber }, {row.EnrollNumber }, {row.InOutMode }, {row.VerifyMode },{row.WorkMode}")
+
+                    progress = CInt((count / lista.Count) * 100)
+                    worker.ReportProgress(progress)
+
+                Next
+
+            End If
+
+            oCompany.EndTransaction(BoWfTransOpt.wf_Commit)
+            'Debug.WriteLine($"Finalizado, exportado {lista.Count } registros")
+
+
+
+
+
+
+        Catch ex As Exception
+            Console.WriteLine($"Error: {ex.Message}")
+        Finally
+            ' cerrar conexion
+            If oCompany IsNot Nothing AndAlso oCompany.Connected Then
+                'Debug.WriteLine("Cerrando conexion")
+                oCompany.Disconnect()
+            End If
+
+        End Try
+
+
+
+
+
+
+
+
 
 
 
@@ -375,7 +458,17 @@ Public Class Lectura
     End Sub
 
     Private Sub BackgroundWorker2_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BackgroundWorker2.RunWorkerCompleted
-        MessageBox.Show("Exportacion finalizada")
+        'If e.Cancelled Then
+        '    ' Mostrar el mensaje de Result al cancelar
+        '    MessageBox.Show("Operación cancelada. ")
+
+        'ElseIf e.Error IsNot Nothing Then
+        '    MessageBox.Show("Error durante la operación: " & e.Error.Message)
+
+        'End If
+
+        Log("Exportación concluida")
+        MessageBox.Show("Exportacion finalizada", "Exportar", MessageBoxButtons.OK)
         progressbar2.Visible = False
         lblmensaje.Visible = False
     End Sub

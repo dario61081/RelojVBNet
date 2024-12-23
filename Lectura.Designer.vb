@@ -325,6 +325,7 @@ Partial Class Lectura
         'BackgroundWorker2
         '
         Me.BackgroundWorker2.WorkerReportsProgress = True
+        Me.BackgroundWorker2.WorkerSupportsCancellation = True
         '
         'Lectura
         '

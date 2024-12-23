@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
-    <StartupObject>RelojVBNET.SBO</StartupObject>
+    <StartupObject>RelojVBNET.Lectura</StartupObject>
     <UseWindowsForms>true</UseWindowsForms>
     <MyType>WindowsForms</MyType>
     <ApplicationIcon>clock.ico</ApplicationIcon>

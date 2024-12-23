@@ -1,7 +1,8 @@
 ﻿Imports SAPbobsCOM
+Imports RelojVBNET.ModelUtils
 
 Module SBO
-    Property oCompany As Company
+    Private Property oCompany As Company
 
     Public Function ConnectToSAP(SAPUser As String, SAPPasswrd As String) As Boolean
         oCompany = New Company()
@@ -40,18 +41,15 @@ Module SBO
             Dim general As GeneralService = servicio.GetGeneralService("RH_MARCACIONES")
 
             'insertar los registros de marcaciones a @RH_MARCACIONES
-            Dim data As GeneralData = general.GetDataInterface(GeneralServiceDataInterfaces.gsGeneralData)
+            Dim data As GeneralData
+            Dim c As Integer = 0
             For Each row As AttendanceRecord In list
-                data.SetProperty("U_ID", 1)
-                data.SetProperty("U_LEGAJO", row.EnrollNumber)
-                data.SetProperty("U_TIPO_EVENTO", row.InOutMode)
-                data.SetProperty("U_FECHA", row.DateTime)
-                data.SetProperty("U_ID_DISP", row.DeviceNumber)
-                data.SetProperty("U_WORK_MODE", row.WorkMode)
+                c += 1
+                data = BuildDataFromAttendanceRecord(row, general)
+                data.SetProperty("U_ID", c)
                 general.Add(data)
+                Debug.WriteLine($"{row.DateTime },{row.DeviceNumber }, {row.EnrollNumber }, {row.InOutMode }, {row.VerifyMode },{row.WorkMode}")
             Next
-
-
 
         End If
         Return enviados

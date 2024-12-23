@@ -2,14 +2,16 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows7.0</TargetFramework>
-    <StartupObject>Sub Main</StartupObject>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <StartupObject>RelojVBNET.SBO</StartupObject>
     <UseWindowsForms>true</UseWindowsForms>
     <MyType>WindowsForms</MyType>
     <ApplicationIcon>clock.ico</ApplicationIcon>
     <AssemblyVersion></AssemblyVersion>
     <FileVersion>1.0.*</FileVersion>
     <IncludeSymbols>False</IncludeSymbols>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+    <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,7 +30,7 @@
       <VersionMajor>9</VersionMajor>
       <Guid>fc8030be-f5d2-4b8e-8f92-44228fe30090</Guid>
       <Lcid>0</Lcid>
-      <Isolated>false</Isolated>
+      <Isolated>False</Isolated>
       <EmbedInteropTypes>true</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>

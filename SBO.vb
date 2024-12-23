@@ -3,21 +3,23 @@
 Module SBO
     Property oCompany As Company
 
-
-
     Public Function ConnectToSAP(SAPUser As String, SAPPasswrd As String) As Boolean
         oCompany = New Company()
-
+        'Console.WriteLine($"SAPUser: {SAPUser} SAPPasswrd {SAPPasswrd} ")
         Try
             ' Configuración de conexión
-            oCompany.Server = "192.168.2.115:30015"
-            oCompany.CompanyDB = "SELTZ29102024"
-            oCompany.DbUserName = "SYSTEM"
-            oCompany.DbPassword = "Seltz2024*"
-            oCompany.UserName = SAPUser
-            oCompany.Password = SAPPasswrd
-            oCompany.DbServerType = BoDataServerTypes.dst_HANADB
-            oCompany.language = BoSuppLangs.ln_Spanish_La
+            Dim com As Company = New Company() With {
+            .Server = "192.168.2.115:30015",
+            .CompanyDB = "SELTZ29102024",
+            .UserName = "Reloj",
+            .Password = "123456",
+            .LicenseServer = "192.168.2.115:40000",
+            .DbServerType = BoDataServerTypes.dst_HANADB,
+            .language = BoSuppLangs.ln_Spanish_La,
+            .DbUserName = "SYSTEM",
+            .DbPassword = "Seltz2024*",
+            .UseTrusted = False
+            }
 
             ' Conectar
             If oCompany.Connect() <> 0 Then
@@ -34,10 +36,20 @@ Module SBO
     Public Function SendAttendancesRecords(list As List(Of AttendanceRecord)) As Integer
         Dim enviados = 0
         If oCompany IsNot Nothing AndAlso oCompany.Connected Then
-            'enviar a ocompany
-            Dim oOrder As Documents
-            oOrder = oCompany.GetBusinessObject(BoObjectTypes.oOrders)
+            Dim servicio As CompanyService = oCompany.GetCompanyService()
+            Dim general As GeneralService = servicio.GetGeneralService("RH_MARCACIONES")
 
+            'insertar los registros de marcaciones a @RH_MARCACIONES
+            Dim data As GeneralData = general.GetDataInterface(GeneralServiceDataInterfaces.gsGeneralData)
+            For Each row As AttendanceRecord In list
+                data.SetProperty("U_ID", 1)
+                data.SetProperty("U_LEGAJO", row.EnrollNumber)
+                data.SetProperty("U_TIPO_EVENTO", row.InOutMode)
+                data.SetProperty("U_FECHA", row.DateTime)
+                data.SetProperty("U_ID_DISP", row.DeviceNumber)
+                data.SetProperty("U_WORK_MODE", row.WorkMode)
+                general.Add(data)
+            Next
 
 
 
@@ -55,9 +67,37 @@ Module SBO
     End Sub
 
 
-    Public Sub main()
+    Public Sub Main()
 
-        Debug.WriteLine("Test conexion")
+        Dim com As Company = New Company() With {
+        .Server = "192.168.2.115:30015",
+        .CompanyDB = "SELTZ29102024",
+        .UserName = "Reloj",
+        .Password = "123456",
+        .LicenseServer = "192.168.2.115:40000",
+        .DbServerType = BoDataServerTypes.dst_HANADB,
+        .language = BoSuppLangs.ln_Spanish_La,
+        .DbUserName = "SYSTEM",
+        .DbPassword = "Seltz2024*",
+        .UseTrusted = False
+        }
+
+        Try
+            Dim result As Integer = com.Connect()
+            If result = 0 Then
+                Debug.WriteLine("Conectado")
+            Else
+                Debug.WriteLine($"Error de conexion {com.GetLastErrorDescription }")
+            End If
+
+        Catch ex As Exception
+            Debug.WriteLine($"Exception: {ex.Message}")
+        Finally
+            If com.Connected Then
+                com.Disconnect()
+            End If
+
+        End Try
 
 
 

@@ -355,6 +355,7 @@ Public Class Lectura
         Dim progress = 0
         Dim cantidad = lista.Count
         'Debug.WriteLine($"a exportar {cantidad} registros")
+
         For Each item As AttendanceRecord In lista
             count += 1
             progress = CInt((count / cantidad) * 100)

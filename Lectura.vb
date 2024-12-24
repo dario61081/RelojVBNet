@@ -4,6 +4,7 @@ Imports RelojVBNET.Models
 Imports RelojVBNET.SBO
 Imports SAPbobsCOM
 Imports RelojVBNET.ModelUtils
+Imports RelojVBNET.RepositorioSAP
 
 
 
@@ -141,13 +142,52 @@ Public Class Lectura
 
     Public Function CargarDispositivosBBDD() As List(Of DispositivoModel)
 
-        Dim ConfigFilename As String = Path.Combine(GetCacheDirectory("configuraciones"), "dispositivos.json")
-        Dim ArbolDispositivos As List(Of DispositivoModel) = ObjectReaderWriter(Of DispositivoModel).LoadFromJson(ConfigFilename)
+        Dim ocompany As Company = RepositorioSAP.GetInstance(New LocalServerParams())
+        Dim Lista As List(Of DispositivoModel) = New List(Of DispositivoModel)
 
-        If ArbolDispositivos Is Nothing Then
-            Log("No se encontraron dispositivos en la base de datos, cargando datos locales")
-            ArbolDispositivos = New List(Of DispositivoModel)
+        If ocompany.Connect() > 0 Then
+            Throw New Exception("No se pudo establecer conexion con la base de datos")
         End If
+
+        Try
+            Dim recordset As Recordset = CType(ocompany.GetBusinessObject(BoObjectTypes.BoRecordset), Recordset)
+            Dim query = "select * from ""@RH_RELOJES_DISP"""
+            recordset.DoQuery(query)
+
+            While Not recordset.EoF
+
+                Dim row As New DispositivoModel With {
+                    .IdDispositivo = recordset.Fields.Item("U_ID_DISP").Value,
+                    .Descripcion = recordset.Fields.Item("U_DESCRIPCION").Value,
+                    .Puerto = recordset.Fields.Item("U_PUERTO").Value,
+                    .ClaveAdmin = recordset.Fields.Item("U_CLAVE_ADMIN").Value,
+                    .Estado = recordset.Fields.Item("U_ESTADO").Value,
+                    .FechaCreacion = recordset.Fields.Item("U_FECHA_CREACION").Value
+                }
+                Lista.Add(row)
+
+
+            End While
+
+
+        Catch ex As Exception
+
+        End Try
+
+
+
+
+
+
+
+        ' version local
+        'Dim ConfigFilename As String = Path.Combine(GetCacheDirectory("configuraciones"), "dispositivos.json")
+        'Dim ArbolDispositivos As List(Of DispositivoModel) = ObjectReaderWriter(Of DispositivoModel).LoadFromJson(ConfigFilename)
+
+        'If ArbolDispositivos Is Nothing Then
+        '    Log("No se encontraron dispositivos en la base de datos, cargando datos locales")
+        '    ArbolDispositivos = New List(Of DispositivoModel)
+        'End If
 
         Return ArbolDispositivos
     End Function

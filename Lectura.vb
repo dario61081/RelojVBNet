@@ -414,7 +414,7 @@ Public Class Lectura
                     Data.SetProperty("U_HORA", row.DateTime)
                     Data.SetProperty("U_ID", c)
                     general.Add(data)
-                    Debug.WriteLine($"{row.DateTime },{row.DeviceNumber }, {row.EnrollNumber }, {row.InOutMode }, {row.VerifyMode },{row.WorkMode}")
+                    'Debug.WriteLine($"{row.DateTime },{row.DeviceNumber }, {row.EnrollNumber }, {row.InOutMode }, {row.VerifyMode },{row.WorkMode}")
 
                     progress = CInt((c / count) * 100)
                     worker.ReportProgress(progress)

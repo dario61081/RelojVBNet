@@ -4,6 +4,9 @@ Imports RelojVBNET.Models
 Imports RelojVBNET.SBO
 Imports SAPbobsCOM
 Imports RelojVBNET.ModelUtils
+Imports RelojVBNET.SapRepositoryConfig
+Imports RelojVBNET.SapLocalServerConfig
+
 
 
 
@@ -141,19 +144,37 @@ Public Class Lectura
 
     Public Function CargarDispositivosBBDD() As List(Of DispositivoModel)
 
-        Dim company As oCompany = Repository.getinstance(New LocalServerParams())
+        Dim company As Company = SapRepository.GetInstance(New SapLocalServerConfig())
+        company.Connect()
+        Dim recordset As Recordset = CType(company.GetBusinessObject(BoObjectTypes.BoRecordset), Recordset)
+        Dim ArbolDispositivos As List(Of DispositivoModel) = New List(Of DispositivoModel)
 
 
 
+        'lectura de tabla
+        recordset.DoQuery("select * From ""@RH_RELOJES_DISP""")
+        While Not recordset.EoF
+            Dim row As New DispositivoModel With {
+                .IdDispositivo = recordset.Fields.Item("U_ID_DISP").Value,
+                .Descripcion = recordset.Fields.Item("U_DESCRIPCION").Value,
+                .DireccionIp = recordset.Fields.Item("U_IP").Value,
+                .Puerto = recordset.Fields.Item("U_PUERTO").Value,
+                .ClaveAdmin = recordset.Fields.Item("U_CLAVE_ADMIN").Value
+            }
+            ArbolDispositivos.Add(row)
+            recordset.MoveNext()
+        End While
+
+        company.Disconnect()
 
 
-        Dim ConfigFilename As String = Path.Combine(GetCacheDirectory("configuraciones"), "dispositivos.json")
-        Dim ArbolDispositivos As List(Of DispositivoModel) = ObjectReaderWriter(Of DispositivoModel).LoadFromJson(ConfigFilename)
+        'Dim ConfigFilename As String = Path.Combine(GetCacheDirectory("configuraciones"), "dispositivos.json")
+        'Dim ArbolDispositivos As List(Of DispositivoModel) = ObjectReaderWriter(Of DispositivoModel).LoadFromJson(ConfigFilename)
 
-        If ArbolDispositivos Is Nothing Then
-            Log("No se encontraron dispositivos en la base de datos, cargando datos locales")
-            ArbolDispositivos = New List(Of DispositivoModel)
-        End If
+        'If ArbolDispositivos Is Nothing Then
+        '    Log("No se encontraron dispositivos en la base de datos, cargando datos locales")
+        '    ArbolDispositivos = New List(Of DispositivoModel)
+        'End If
 
         Return ArbolDispositivos
     End Function
@@ -360,6 +381,11 @@ Public Class Lectura
 
     End Sub
 
+    ''' <summary>
+    ''' Ejecuta la tarea de escritura de marcaciones a la base de datos
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub BackgroundWorker2_DoWork(sender As Object, e As DoWorkEventArgs) Handles BackgroundWorker2.DoWork
         Dim parametros As WorkerParams = CType(e.Argument, WorkerParams)
         Dim lista As List(Of AttendanceRecord) = parametros.Marcaciones
@@ -372,23 +398,24 @@ Public Class Lectura
 
         Dim SapUser As String = parametros.Parametros.SapUsuario
         Dim SapPass As String = parametros.Parametros.SapPassword
-        Dim oCompany As Company = Nothing
+        Dim oCompany As Company = SapRepository.GetInstance(New SapLocalServerConfig())
+
 
         'Debug.WriteLine($"SAPUser: {SapUser} SAPPasswrd {SapPass} ")
         Try
             ' Configuración de conexión
-            oCompany = New Company() With {
-            .Server = "192.168.2.115:30015",
-            .CompanyDB = "SELTZ29102024",
-            .UserName = "Reloj",
-            .Password = "123456",
-            .LicenseServer = "192.168.2.115:40000",
-            .DbServerType = BoDataServerTypes.dst_HANADB,
-            .language = BoSuppLangs.ln_Spanish_La,
-            .DbUserName = "SYSTEM",
-            .DbPassword = "Seltz2024*",
-            .UseTrusted = False
-            }
+            'oCompany = New Company() With {
+            '.Server = "192.168.2.115:30015",
+            '.CompanyDB = "SELTZ29102024",
+            '.UserName = "Reloj",
+            '.Password = "123456",
+            '.LicenseServer = "192.168.2.115:40000",
+            '.DbServerType = BoDataServerTypes.dst_HANADB,
+            '.language = BoSuppLangs.ln_Spanish_La,
+            '.DbUserName = "SYSTEM",
+            '.DbPassword = "Seltz2024*",
+            '.UseTrusted = False
+            '}
 
             ' Conectar
             If oCompany.Connect() > 0 Then

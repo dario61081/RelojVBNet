@@ -197,7 +197,7 @@ Public Class Lectura
                                                                 .Descripcion = message,
                                                                 .IdEvento = 0,
                                                                 .TipoEvento = CInt(tipodeevento),
-                                                                .TipoDeEvento = tipodeevento,
+                                                                .tipodeevento = tipodeevento,
                                                                 .IdDispositivo = dispositivo.IdDispositivo})
                                                                                 End Sub
         Dim current As Integer = 0
@@ -385,9 +385,11 @@ Public Class Lectura
             }
 
             ' Conectar
-            If oCompany.Connect() <> 0 Then
+            If oCompany.Connect() > 0 Then
+                Debug.WriteLine("Conexion ok")
+                Dim ErrorMessage As String = oCompany.GetLastErrorDescription
                 e.Cancel = True
-                Throw New Exception("No se pudo establecer conexion con la base de datos")
+                Throw New Exception($"{ErrorMessage}")
             End If
 
             oCompany.StartTransaction()
@@ -404,7 +406,7 @@ Public Class Lectura
                 count = lista.Count
                 For Each row As AttendanceRecord In lista
                     c += 1
-                    data = general.GetDataInterface(GeneralServiceDataInterfaces.gsGeneralData)
+                    Data = general.GetDataInterface(GeneralServiceDataInterfaces.gsGeneralData)
                     Data.SetProperty("U_LEGAJO", row.EnrollNumber)
                     Data.SetProperty("U_TIPO_EVENTO", row.InOutMode)
                     Data.SetProperty("U_FECHA", row.DateTime)
@@ -413,7 +415,7 @@ Public Class Lectura
 
                     Data.SetProperty("U_HORA", row.DateTime)
                     Data.SetProperty("U_ID", c)
-                    general.Add(data)
+                    general.Add(Data)
                     Debug.WriteLine($"{row.DateTime },{row.DeviceNumber }, {row.EnrollNumber }, {row.InOutMode }, {row.VerifyMode },{row.WorkMode}")
 
                     progress = CInt((c / count) * 100)
@@ -432,7 +434,7 @@ Public Class Lectura
 
 
         Catch ex As Exception
-            Console.WriteLine($"Error: {ex.Message}")
+            Debug.WriteLine($"Error: {ex.Message}")
         Finally
             ' cerrar conexion
             If oCompany IsNot Nothing AndAlso oCompany.Connected Then

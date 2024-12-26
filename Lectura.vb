@@ -141,18 +141,25 @@ Public Class Lectura
             End If
         End Try
     End Sub
-
+    ''' <summary>
+    ''' Carga la lista de dispositivos desde la base de datos
+    ''' </summary>
+    ''' <returns></returns>
     Public Function CargarDispositivosBBDD() As List(Of DispositivoModel)
-
-        Dim company As Company = SapRepository.GetInstance(New SapLocalServerConfig())
-        company.Connect()
-        Dim recordset As Recordset = CType(company.GetBusinessObject(BoObjectTypes.BoRecordset), Recordset)
         Dim ArbolDispositivos As List(Of DispositivoModel) = New List(Of DispositivoModel)
+        Dim company As Company = SapRepository.GetInstance(New SapLocalServerConfig())
 
+        If company.Connect() <> 0 Then
+            Dim message As String = company.GetLastErrorDescription
+            Throw New Exception($"No se ha establecido conexion con la base de datos: {message}")
+        End If
 
+        'traer recordset
+        Dim recordset As Recordset = CType(company.GetBusinessObject(BoObjectTypes.BoRecordset), Recordset)
 
         'lectura de tabla
         recordset.DoQuery("select * From ""@RH_RELOJES_DISP""")
+        recordset.MoveFirst()
         While Not recordset.EoF
             Dim row As New DispositivoModel With {
                 .IdDispositivo = recordset.Fields.Item("U_ID_DISP").Value,
@@ -165,17 +172,13 @@ Public Class Lectura
             recordset.MoveNext()
         End While
 
-        company.Disconnect()
-
-
-        'Dim ConfigFilename As String = Path.Combine(GetCacheDirectory("configuraciones"), "dispositivos.json")
-        'Dim ArbolDispositivos As List(Of DispositivoModel) = ObjectReaderWriter(Of DispositivoModel).LoadFromJson(ConfigFilename)
-
-        'If ArbolDispositivos Is Nothing Then
-        '    Log("No se encontraron dispositivos en la base de datos, cargando datos locales")
-        '    ArbolDispositivos = New List(Of DispositivoModel)
+        'si no hay conexion cargar ultimo cache
+        'If ArbolDispositivos.Count > 0 Then
+        '    Dim config_filename = Path.Combine(GetCacheDirectory("Configuraciones"), "dispositivos.json")
+        '    ObjectReaderWriter(Of List(Of DispositivoModel)).SaveToJson(ArbolDispositivos, config_filename)
         'End If
-
+        company.Disconnect()
+        company = Nothing
         Return ArbolDispositivos
     End Function
 

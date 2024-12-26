@@ -580,4 +580,8 @@ Public Class Lectura
     Private Sub BackgroundWorker3_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BackgroundWorker3.RunWorkerCompleted
 
     End Sub
+
+    Private Sub EventsLogs1_OnExportarEventos(Lista As List(Of EventoDispositivoModel))
+        Debug.WriteLine($"recibido {Lista.Count}")
+    End Sub
 End Class

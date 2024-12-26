@@ -2,6 +2,7 @@
 Imports RelojVBNET.ModelUtils
 
 Module SBO
+    '@deprecated
     Private Property oCompany As Company
 
     Public Function ConnectToSAP(SAPUser As String, SAPPasswrd As String) As Boolean

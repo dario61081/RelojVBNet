@@ -141,6 +141,12 @@ Public Class Lectura
 
     Public Function CargarDispositivosBBDD() As List(Of DispositivoModel)
 
+        Dim company As oCompany = Repository.getinstance(New LocalServerParams())
+
+
+
+
+
         Dim ConfigFilename As String = Path.Combine(GetCacheDirectory("configuraciones"), "dispositivos.json")
         Dim ArbolDispositivos As List(Of DispositivoModel) = ObjectReaderWriter(Of DispositivoModel).LoadFromJson(ConfigFilename)
 
@@ -197,7 +203,7 @@ Public Class Lectura
                                                                 .Descripcion = message,
                                                                 .IdEvento = 0,
                                                                 .TipoEvento = CInt(tipodeevento),
-                                                                .tipodeevento = tipodeevento,
+                                                                .TipoDeEvento = tipodeevento,
                                                                 .IdDispositivo = dispositivo.IdDispositivo})
                                                                                 End Sub
         Dim current As Integer = 0
@@ -427,11 +433,6 @@ Public Class Lectura
 
             oCompany.EndTransaction(BoWfTransOpt.wf_Commit)
             'Debug.WriteLine($"Finalizado, exportado {lista.Count } registros")
-
-
-
-
-
 
         Catch ex As Exception
             Debug.WriteLine($"Error: {ex.Message}")

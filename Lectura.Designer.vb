@@ -47,6 +47,7 @@ Partial Class Lectura
         Me.ToolStripContainer2 = New System.Windows.Forms.ToolStripContainer()
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundWorker2 = New System.ComponentModel.BackgroundWorker()
+        Me.BackgroundWorker3 = New System.ComponentModel.BackgroundWorker()
         Me.ToolStripContainer1.BottomToolStripPanel.SuspendLayout()
         Me.ToolStripContainer1.ContentPanel.SuspendLayout()
         Me.ToolStripContainer1.TopToolStripPanel.SuspendLayout()
@@ -327,6 +328,11 @@ Partial Class Lectura
         Me.BackgroundWorker2.WorkerReportsProgress = True
         Me.BackgroundWorker2.WorkerSupportsCancellation = True
         '
+        'BackgroundWorker3
+        '
+        Me.BackgroundWorker3.WorkerReportsProgress = True
+        Me.BackgroundWorker3.WorkerSupportsCancellation = True
+        '
         'Lectura
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 20.0!)
@@ -397,4 +403,5 @@ Partial Class Lectura
     Friend WithEvents lblmensaje As ToolStripStatusLabel
     Friend WithEvents progressbar2 As ToolStripProgressBar
     Friend WithEvents BackgroundWorker2 As System.ComponentModel.BackgroundWorker
+    Friend WithEvents BackgroundWorker3 As System.ComponentModel.BackgroundWorker
 End Class

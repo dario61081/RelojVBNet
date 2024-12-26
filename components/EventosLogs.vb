@@ -2,7 +2,7 @@
 
 Public Class EventsLogs
 
-
+    Public Event OnExportarEventos(Lista As List(Of EventoDispositivoModel))
 
     Public Sub New()
 
@@ -26,6 +26,7 @@ Public Class EventsLogs
             row.SubItems.Add(record.IdDispositivo)
             row.SubItems.Add(record.IdEvento)
             row.SubItems.Add(record.Descripcion)
+            row.Tag = record 'registrar el objeto eventodispositivomodel al tag
             Select Case record.TipoDeEvento
                 Case TipoDeEvento.IsError, TipoDeEvento.Critico
                     row.ImageIndex = 2
@@ -104,5 +105,26 @@ Public Class EventsLogs
             lvLog.Items.Clear()
         End If
         ContarEncontrados()
+    End Sub
+
+    Private Function getEventos() As List(Of EventoDispositivoModel)
+        Dim lista As List(Of EventoDispositivoModel) = New List(Of EventoDispositivoModel)
+        For Each row In lvLog.Items
+            lista.Add(CType(row.tag, EventoDispositivoModel))
+        Next
+        Return lista
+    End Function
+
+    Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
+        Dim resultado As DialogResult
+        resultado = MessageBox.Show("¿Deseas continuar con esta acción?", "Confirmación", MessageBoxButtons.OKCancel, MessageBoxIcon.Question)
+
+        If resultado = DialogResult.OK Then
+            ' El usuario presionó Aceptar
+            RaiseEvent OnExportarEventos(getEventos())
+        Else
+            ' El usuario presionó Cancelar
+            MessageBox.Show("Acción cancelada.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
     End Sub
 End Class

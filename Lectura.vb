@@ -143,16 +143,21 @@ Public Class Lectura
     Public Function CargarDispositivosBBDD() As List(Of DispositivoModel)
 
         Dim ocompany As Company = RepositorioSAP.GetInstance(New LocalServerParams())
+
+        Debug.WriteLine($"configurado para : {ocompany.CompanyDB }")
+
         Dim Lista As List(Of DispositivoModel) = New List(Of DispositivoModel)
 
         If ocompany.Connect() > 0 Then
             Throw New Exception("No se pudo establecer conexion con la base de datos")
         End If
 
+        Debug.WriteLine("Conectado")
         Try
             Dim recordset As Recordset = CType(ocompany.GetBusinessObject(BoObjectTypes.BoRecordset), Recordset)
             Dim query = "select * from ""@RH_RELOJES_DISP"""
             recordset.DoQuery(query)
+            recordset.MoveFirst()
 
             While Not recordset.EoF
 
@@ -160,25 +165,25 @@ Public Class Lectura
                     .IdDispositivo = recordset.Fields.Item("U_ID_DISP").Value,
                     .Descripcion = recordset.Fields.Item("U_DESCRIPCION").Value,
                     .Puerto = recordset.Fields.Item("U_PUERTO").Value,
-                    .ClaveAdmin = recordset.Fields.Item("U_CLAVE_ADMIN").Value,
-                    .Estado = recordset.Fields.Item("U_ESTADO").Value,
-                    .FechaCreacion = recordset.Fields.Item("U_FECHA_CREACION").Value
+                    .DireccionIp = recordset.Fields.Item("U_IP").Value,
+                    .ClaveAdmin = recordset.Fields.Item("U_CLAVE_ADMIN").Value
                 }
+                Debug.WriteLine($"{row.IdDispositivo }, {row.Descripcion }, {row.DireccionIp}")
                 Lista.Add(row)
 
+                recordset.MoveNext()
 
             End While
 
 
         Catch ex As Exception
-
+            Debug.WriteLine($"(!) {ex.Message } ")
+        Finally
+            If ocompany.Connected Then
+                Debug.WriteLine("Desconectado")
+                ocompany.Disconnect()
+            End If
         End Try
-
-
-
-
-
-
 
         ' version local
         'Dim ConfigFilename As String = Path.Combine(GetCacheDirectory("configuraciones"), "dispositivos.json")
@@ -189,7 +194,7 @@ Public Class Lectura
         '    ArbolDispositivos = New List(Of DispositivoModel)
         'End If
 
-        Return ArbolDispositivos
+        Return Lista
     End Function
 
     ''' <summary>
@@ -406,26 +411,12 @@ Public Class Lectura
 
         Dim SapUser As String = parametros.Parametros.SapUsuario
         Dim SapPass As String = parametros.Parametros.SapPassword
-        Dim oCompany As Company = Nothing
+        Dim oCompany As Company = RepositorioSAP.GetInstance(New LocalServerParams())
 
-        'Debug.WriteLine($"SAPUser: {SapUser} SAPPasswrd {SapPass} ")
         Try
-            ' Configuración de conexión
-            oCompany = New Company() With {
-            .Server = "192.168.2.115:30015",
-            .CompanyDB = "SELTZ29102024",
-            .UserName = "Reloj",
-            .Password = "123456",
-            .LicenseServer = "192.168.2.115:40000",
-            .DbServerType = BoDataServerTypes.dst_HANADB,
-            .language = BoSuppLangs.ln_Spanish_La,
-            .DbUserName = "SYSTEM",
-            .DbPassword = "Seltz2024*",
-            .UseTrusted = False
-            }
-
             ' Conectar
             If oCompany.Connect() <> 0 Then
+                Debug.WriteLine("Conexion ok")
                 e.Cancel = True
                 Throw New Exception("No se pudo establecer conexion con la base de datos")
             End If
@@ -444,7 +435,7 @@ Public Class Lectura
                 count = lista.Count
                 For Each row As AttendanceRecord In lista
                     c += 1
-                    data = general.GetDataInterface(GeneralServiceDataInterfaces.gsGeneralData)
+                    Data = general.GetDataInterface(GeneralServiceDataInterfaces.gsGeneralData)
                     Data.SetProperty("U_LEGAJO", row.EnrollNumber)
                     Data.SetProperty("U_TIPO_EVENTO", row.InOutMode)
                     Data.SetProperty("U_FECHA", row.DateTime)
@@ -453,7 +444,7 @@ Public Class Lectura
 
                     Data.SetProperty("U_HORA", row.DateTime)
                     Data.SetProperty("U_ID", c)
-                    general.Add(data)
+                    general.Add(Data)
                     'Debug.WriteLine($"{row.DateTime },{row.DeviceNumber }, {row.EnrollNumber }, {row.InOutMode }, {row.VerifyMode },{row.WorkMode}")
 
                     progress = CInt((c / count) * 100)
@@ -480,6 +471,7 @@ Public Class Lectura
                 oCompany.Disconnect()
             End If
 
+
         End Try
 
 
@@ -501,18 +493,91 @@ Public Class Lectura
     End Sub
 
     Private Sub BackgroundWorker2_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BackgroundWorker2.RunWorkerCompleted
-        'If e.Cancelled Then
-        '    ' Mostrar el mensaje de Result al cancelar
-        '    MessageBox.Show("Operación cancelada. ")
+        If e.Cancelled Then
+            ' Mostrar el mensaje de Result al cancelar
+            MessageBox.Show("Operación cancelada. ")
+            Return
+        ElseIf e.Error IsNot Nothing Then
+            MessageBox.Show("Error durante la operación: " & e.Error.Message)
+            Return
+        ElseIf e.result Is Nothing Then
+            MessageBox.Show("No se obtuvo el resultado esperado")
+            Return
 
-        'ElseIf e.Error IsNot Nothing Then
-        '    MessageBox.Show("Error durante la operación: " & e.Error.Message)
-
-        'End If
+        End If
 
         Log("Exportación concluida")
         MessageBox.Show("Exportacion finalizada", "Exportar", MessageBoxButtons.OK)
         progressbar2.Visible = False
         lblmensaje.Visible = False
+
+        ' Convertir el resultado de manera segura
+        Dim lista As List(Of EventoDispositivoModel) = TryCast(e.Result, List(Of EventoDispositivoModel))
+        If lista Is Nothing Then
+            MessageBox.Show("El resultado no es del tipo esperado.")
+            Return
+        End If
+
+        ' Iniciar BackgroundWorker3 con la lista obtenida
+        BackgroundWorker3.RunWorkerAsync(lista)
+
+
+    End Sub
+
+    Private Sub BackgroundWorker3_DoWork(sender As Object, e As DoWorkEventArgs) Handles BackgroundWorker3.DoWork
+        Dim Worker As System.ComponentModel.BackgroundWorker = CType(sender, System.ComponentModel.BackgroundWorker)
+        Dim Lista As List(Of EventoDispositivoModel) = CType(e.Argument, List(Of EventoDispositivoModel))
+
+        Dim ocompany As Company = RepositorioSAP.GetInstance(New LocalServerParams())
+        ocompany.StartTransaction()
+        Try
+            If ocompany.Connect() <> 0 Then
+                e.Cancel = True
+                Throw New Exception("No se pudo establecer conexion con la base de datos")
+            End If
+
+            Dim EventsTable As SAPbobsCOM.UserTable
+
+            For Each row As EventoDispositivoModel In Lista
+                EventsTable = CType(ocompany.UserTables.Item("RH_EVENTOS_DISP"), SAPbobsCOM.UserTable)
+                EventsTable.UserFields.Fields.Item("U_ID_EVENTO").Value = row.IdEvento
+                EventsTable.UserFields.Fields.Item("U_ID_DISP").Value = row.IdDispositivo
+                EventsTable.UserFields.Fields.Item("U_DESCRIPCION").Value = row.Descripcion
+                EventsTable.UserFields.Fields.Item("U_TIPO").Value = row.TipoEvento
+                EventsTable.UserFields.Fields.Item("U_FECHA_EVENTO").Value = row.FechaEvento
+
+                If EventsTable.Add() <> 0 Then
+                    Throw New Exception("No se puede insertar registros en tabla eventos")
+                End If
+
+
+            Next
+
+
+
+
+
+
+
+
+
+
+        Catch ex As Exception
+            ocompany.EndTransaction(BoWfTransOpt.wf_RollBack)
+            Debug.WriteLine($"(!) {ex.Message } ")
+        Finally
+            ocompany.EndTransaction(BoWfTransOpt.wf_Commit)
+            If ocompany.Connected Then
+                Debug.WriteLine("Desconectado")
+                ocompany.Disconnect()
+            End If
+        End Try
+
+
+
+    End Sub
+
+    Private Sub BackgroundWorker3_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BackgroundWorker3.RunWorkerCompleted
+
     End Sub
 End Class

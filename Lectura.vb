@@ -521,7 +521,7 @@ Public Class Lectura
         End If
 
         'guardar eventos en la base de datos
-        Dim company As Company = SapRepository.GetInstance(New SapRepositoryConfig())
+        Dim company As Company = SapRepository.GetInstance(New SapLocalServerConfig())
         Dim eventos As SAPbobsCOM.UserTable = Nothing
         Try
 

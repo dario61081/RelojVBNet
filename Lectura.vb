@@ -500,13 +500,61 @@ Public Class Lectura
 
 
     Private Sub Lectura_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        AjustarViewPortFormulario()
+    End Sub
 
-
+    Private Sub AjustarViewPortFormulario()
         Dim anchoFormulario As Integer = Me.ClientSize.Height
         'redimencionar el panel2 para que quede al 50%
         Me.SplitContainer2.SplitterDistance = anchoFormulario \ 2
+    End Sub
+
+    Private Sub Lectura_ResizeEnd(sender As Object, e As EventArgs) Handles MyBase.ResizeEnd
+        AjustarViewPortFormulario()
+    End Sub
+
+    Private Sub EventsLogs1_OnGuardarEventos(lista As List(Of EventoDispositivoModel)) Handles EventsLogs1.OnGuardarEventos
+        Debug.WriteLine("Exportando eventos")
+
+        If lista Is Nothing Then
+            Throw New Exception("No hay eventos para exportar")
+        End If
+
+        'guardar eventos en la base de datos
+        Dim company As Company = SapRepository.GetInstance(New SapRepositoryConfig())
+        Try
+
+            If company.Connect() > 0 Then
+                Dim message As String = company.GetLastErrorDescription
+                Throw New Exception($"Error: {message}")
+            End If
+
+            Dim eventos As SAPbobsCOM.UserTable
 
 
+            Dim c As Integer = 0
+            For Each row As EventoDispositivoModel In lista
+                c += 1
+                eventos = CType(company.UserTables.Item("RH_EVENTOS_DISP"), SAPbobsCOM.UserTable)
+                eventos.UserFields.item("U_ID_EVENTO").value = c
+                eventos.UserFields.item("U_DISP").value = row.IdDispositivo
+                eventos.UserFields.item("U_DESCRIPCION").value = row.Descripcion
+                eventos.UserFields.item("U_TIPO").value = row.TipoEvento
+                eventos.UserFields.item("U_FECHA_EVENTO").value = row.FechaEvento
 
+                If eventos.Add() <> 0 Then
+                    Throw New Exception($"Error al agregar el registro {company.GetLastErrorDescription }")
+                End If
+
+            Next
+
+        Catch ex As Exception
+            Debug.WriteLine($"Ha ocurrido una excepción: {ex.Message }")
+        Finally
+            If company.Connected() Then
+                company.Disconnect()
+            End If
+            MessageBox.Show("La exportación ha finalizado")
+        End Try
     End Sub
 End Class

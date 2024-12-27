@@ -110,21 +110,33 @@ Public Class EventsLogs
     Private Function GetEventos() As List(Of EventoDispositivoModel)
         Dim l As List(Of EventoDispositivoModel) = New List(Of EventoDispositivoModel)
         For Each row As ListViewItem In lvLog.Items
+            Dim record As EventoDispositivoModel = CType(row.Tag, EventoDispositivoModel)
+            'si no existe el registro, crear 
+            If record Is Nothing Then
 
-            l.Add(CType(row.Tag, EventoDispositivoModel))
+                record = New EventoDispositivoModel() With {
+                    .FechaEvento = row.Text,
+                    .IdDispositivo = CInt(row.SubItems[0]),
+                    .TipoEvento = CInt(row.SubItems[1]),
+                    .Descripcion = row.SubItems[2]
+                }
 
 
+            End If
+
+            'agregar a lista
+            l.Add(record)
         Next
 
-
+        Return l
     End Function
 
     Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
 
-        Dim lista As List(Of EventoDispositivoModel) = New List(Of EventoDispositivoModel)
+        'Dim lista As List(Of EventoDispositivoModel) = New List(Of EventoDispositivoModel)
 
 
-        RaiseEvent OnGuardarEventos(lista)
+        RaiseEvent OnGuardarEventos(GetEventos)
 
 
 

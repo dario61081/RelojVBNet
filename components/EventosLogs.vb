@@ -113,19 +113,24 @@ Public Class EventsLogs
             Dim record As EventoDispositivoModel = CType(row.Tag, EventoDispositivoModel)
             'si no existe el registro, crear 
             If record Is Nothing Then
-
+                Debug.WriteLine($"{row.Text}, {row.SubItems(0).Text}, {row.SubItems(1).Text},{row.SubItems(2).Text}, {row.SubItems(3).Text}")
                 record = New EventoDispositivoModel() With {
-                    .FechaEvento = row.Text,
-                    .IdDispositivo = CInt(row.SubItems(0).Text),
-                    .TipoEvento = CInt(row.SubItems(1).Text),
-                    .Descripcion = row.SubItems(2).Text
+                    .IdDispositivo = CInt(row.SubItems(1).Text),
+                    .TipoEvento = CInt(row.SubItems(2).Text),
+                    .Descripcion = row.SubItems(3).Text
                 }
 
+                If Not DateTime.TryParse(row.SubItems(0).Text, record.FechaEvento) Then
+                    Throw New Exception($"Formato invalido")
+                End If
 
             End If
 
             'agregar a lista
-            l.Add(record)
+            If record IsNot Nothing Then
+                l.Add(record)
+            End If
+
         Next
 
         Return l

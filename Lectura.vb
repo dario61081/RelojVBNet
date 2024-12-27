@@ -514,7 +514,7 @@ Public Class Lectura
     End Sub
 
     Private Sub EventsLogs1_OnGuardarEventos(lista As List(Of EventoDispositivoModel)) Handles EventsLogs1.OnGuardarEventos
-        Debug.WriteLine("Exportando eventos")
+        Debug.WriteLine($"Exportando eventos {lista.Count}")
 
         If lista Is Nothing Then
             Throw New Exception("No hay eventos para exportar")
@@ -522,6 +522,7 @@ Public Class Lectura
 
         'guardar eventos en la base de datos
         Dim company As Company = SapRepository.GetInstance(New SapRepositoryConfig())
+        Dim eventos As SAPbobsCOM.UserTable = Nothing
         Try
 
             If company.Connect() > 0 Then
@@ -529,28 +530,46 @@ Public Class Lectura
                 Throw New Exception($"Error: {message}")
             End If
 
-            Dim eventos As SAPbobsCOM.UserTable
+
 
 
             Dim c As Integer = 0
             For Each row As EventoDispositivoModel In lista
                 c += 1
-                eventos = CType(company.UserTables.Item("RH_EVENTOS_DISP"), SAPbobsCOM.UserTable)
+                eventos = company.UserTables.Item("RH_EVENTOS_DISP")
+                Debug.WriteLine("U_ID_EVENTO")
                 eventos.UserFields.item("U_ID_EVENTO").value = c
-                eventos.UserFields.item("U_DISP").value = row.IdDispositivo
+                Debug.WriteLine("U_ID_DISP")
+                eventos.UserFields.item("U_ID_DISP").value = row.IdDispositivo
+                Debug.WriteLine("U_DESCRIPCION")
                 eventos.UserFields.item("U_DESCRIPCION").value = row.Descripcion
+                Debug.WriteLine("U_TIPO")
                 eventos.UserFields.item("U_TIPO").value = row.TipoEvento
+                Debug.WriteLine("U_FECHA_EVENTO")
                 eventos.UserFields.item("U_FECHA_EVENTO").value = row.FechaEvento
+
+                'U_ID_EVENTO
+                'U_ID_DISP
+                'U_DESCRIPCION
+                'U_TIPO
+                'U_FECHA_EVENTO
 
                 If eventos.Add() <> 0 Then
                     Throw New Exception($"Error al agregar el registro {company.GetLastErrorDescription }")
                 End If
 
+                Debug.WriteLine($"Insertado {c}")
             Next
 
         Catch ex As Exception
-            Debug.WriteLine($"Ha ocurrido una excepción: {ex.Message }")
+            Debug.WriteLine($"Ha ocurrido una excepción: {ex.Message } {ex.StackTrace }")
         Finally
+            If eventos IsNot Nothing Then
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(eventos)
+                eventos = Nothing
+            End If
+
+
             If company.Connected() Then
                 company.Disconnect()
             End If

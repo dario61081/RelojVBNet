@@ -6,6 +6,7 @@ Public Class SapLocalServerConfig
     Inherits SapRepositoryConfig
 
     Public Sub New()
+
         ' parametros de conexion al servidor local
         Server = "192.168.2.115:30015"
         CompanyDB = "SELTZ29102024"

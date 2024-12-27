@@ -178,7 +178,6 @@ Public Class Lectura
         '    ObjectReaderWriter(Of List(Of DispositivoModel)).SaveToJson(ArbolDispositivos, config_filename)
         'End If
         company.Disconnect()
-        company = Nothing
         Return ArbolDispositivos
     End Function
 
@@ -399,42 +398,30 @@ Public Class Lectura
 
         'conectar a la base
 
-        Dim SapUser As String = parametros.Parametros.SapUsuario
-        Dim SapPass As String = parametros.Parametros.SapPassword
-        Dim oCompany As Company = SapRepository.GetInstance(New SapLocalServerConfig())
+        Dim company As Company = SapRepository.GetInstance(New SapLocalServerConfig())
+        'company.UserName = parametros.Parametros.SapUsuario
+        'company.Password = parametros.Parametros.SapPassword
 
+        Debug.WriteLine($"params: {company.Server }, {company.LicenseServer}, {company.DbUserName}, {company.DbPassword}")
 
-        'Debug.WriteLine($"SAPUser: {SapUser} SAPPasswrd {SapPass} ")
+        If company.Connect() <> 0 Then
+            Dim message As String = company.GetLastErrorDescription
+            Throw New Exception($"No se ha establecido conexion con la base de datos: {message}")
+        End If
+
+        Debug.WriteLine($"{company.Server},{company.CompanyDB }")
+
         Try
-            ' Configuración de conexión
-            'oCompany = New Company() With {
-            '.Server = "192.168.2.115:30015",
-            '.CompanyDB = "SELTZ29102024",
-            '.UserName = "Reloj",
-            '.Password = "123456",
-            '.LicenseServer = "192.168.2.115:40000",
-            '.DbServerType = BoDataServerTypes.dst_HANADB,
-            '.language = BoSuppLangs.ln_Spanish_La,
-            '.DbUserName = "SYSTEM",
-            '.DbPassword = "Seltz2024*",
-            '.UseTrusted = False
-            '}
 
-            ' Conectar
-            If oCompany.Connect() > 0 Then
-                Debug.WriteLine("Conexion ok")
-                Dim ErrorMessage As String = oCompany.GetLastErrorDescription
-                e.Cancel = True
-                Throw New Exception($"{ErrorMessage}")
-            End If
+            Debug.WriteLine($"estado: {company.Connected }")
 
-            oCompany.StartTransaction()
+            company.StartTransaction()
 
             'poblar datos
             Dim enviados = 0
-            If oCompany IsNot Nothing AndAlso oCompany.Connected Then
-                Dim servicio As CompanyService = oCompany.GetCompanyService()
-                Dim general As GeneralService = servicio.GetGeneralService("RH_MARCACIONES")
+
+            Dim servicio As CompanyService = company.GetCompanyService()
+            Dim general As GeneralService = servicio.GetGeneralService("RH_MARCACIONES")
 
                 'insertar los registros de marcaciones a @RH_MARCACIONES
                 Dim Data As GeneralData
@@ -448,29 +435,29 @@ Public Class Lectura
                     Data.SetProperty("U_FECHA", row.DateTime)
                     Data.SetProperty("U_ID_DISP", row.DeviceNumber)
                     Data.SetProperty("U_WORK_MODE", row.WorkMode)
-
                     Data.SetProperty("U_HORA", row.DateTime)
                     Data.SetProperty("U_ID", c)
                     general.Add(Data)
-                    Debug.WriteLine($"{row.DateTime },{row.DeviceNumber }, {row.EnrollNumber }, {row.InOutMode }, {row.VerifyMode },{row.WorkMode}")
+                    'Debug.WriteLine($"{row.DateTime },{row.DeviceNumber }, {row.EnrollNumber }, {row.InOutMode }, {row.VerifyMode },{row.WorkMode}")
 
                     progress = CInt((c / count) * 100)
                     worker.ReportProgress(progress)
-
                 Next
 
-            End If
 
-            oCompany.EndTransaction(BoWfTransOpt.wf_Commit)
+            company.EndTransaction(BoWfTransOpt.wf_Commit)
             'Debug.WriteLine($"Finalizado, exportado {lista.Count } registros")
 
         Catch ex As Exception
+            If company.InTransaction Then
+                company.EndTransaction(BoWfTransOpt.wf_RollBack)
+            End If
             Debug.WriteLine($"Error: {ex.Message}")
         Finally
             ' cerrar conexion
-            If oCompany IsNot Nothing AndAlso oCompany.Connected Then
-                'Debug.WriteLine("Cerrando conexion")
-                oCompany.Disconnect()
+            If company IsNot Nothing AndAlso company.Connected Then
+                Debug.WriteLine("Cerrando conexion")
+                company.Disconnect()
             End If
 
         End Try

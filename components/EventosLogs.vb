@@ -2,7 +2,7 @@
 
 Public Class EventsLogs
 
-
+    Public Event OnGuardarEventos(lista As List(Of EventoDispositivoModel))
 
     Public Sub New()
 
@@ -26,6 +26,7 @@ Public Class EventsLogs
             row.SubItems.Add(record.IdDispositivo)
             row.SubItems.Add(record.IdEvento)
             row.SubItems.Add(record.Descripcion)
+            row.Tag = record
             Select Case record.TipoDeEvento
                 Case TipoDeEvento.IsError, TipoDeEvento.Critico
                     row.ImageIndex = 2
@@ -104,5 +105,29 @@ Public Class EventsLogs
             lvLog.Items.Clear()
         End If
         ContarEncontrados()
+    End Sub
+
+    Private Function GetEventos() As List(Of EventoDispositivoModel)
+        Dim l As List(Of EventoDispositivoModel) = New List(Of EventoDispositivoModel)
+        For Each row As ListViewItem In lvLog.Items
+
+            l.Add(CType(row.Tag, EventoDispositivoModel))
+
+
+        Next
+
+
+    End Function
+
+    Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
+
+        Dim lista As List(Of EventoDispositivoModel) = New List(Of EventoDispositivoModel)
+
+
+        RaiseEvent OnGuardarEventos(lista)
+
+
+
+
     End Sub
 End Class

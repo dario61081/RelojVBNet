@@ -116,9 +116,9 @@ Public Class EventsLogs
 
                 record = New EventoDispositivoModel() With {
                     .FechaEvento = row.Text,
-                    .IdDispositivo = CInt(row.SubItems[0]),
-                    .TipoEvento = CInt(row.SubItems[1]),
-                    .Descripcion = row.SubItems[2]
+                    .IdDispositivo = CInt(row.SubItems(0).Text),
+                    .TipoEvento = CInt(row.SubItems(1).Text),
+                    .Descripcion = row.SubItems(2).Text
                 }
 
 

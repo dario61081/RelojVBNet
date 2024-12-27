@@ -29,6 +29,7 @@ Public Class Lectura
     End Sub
 
 
+
     Private Sub MarcacionesLogs1_Load(sender As Object, e As EventArgs) Handles MarcacionesLogs1.Load
         Dim numeroBuild As String = AppInfo.ObtenerNumeroBuild()
         'leer relojes de la base de datos 
@@ -494,5 +495,18 @@ Public Class Lectura
         MessageBox.Show("Exportacion finalizada", "Exportar", MessageBoxButtons.OK)
         progressbar2.Visible = False
         lblmensaje.Visible = False
+    End Sub
+
+
+
+    Private Sub Lectura_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+
+        Dim anchoFormulario As Integer = Me.ClientSize.Height
+        'redimencionar el panel2 para que quede al 50%
+        Me.SplitContainer2.SplitterDistance = anchoFormulario \ 2
+
+
+
     End Sub
 End Class

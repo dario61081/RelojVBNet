@@ -522,31 +522,34 @@ Public Class Lectura
 
         'guardar eventos en la base de datos
         Dim company As Company = SapRepository.GetInstance(New SapLocalServerConfig())
-        Dim eventos As SAPbobsCOM.UserTable = Nothing
+        If company.Connect() > 0 Then
+            Dim message As String = company.GetLastErrorDescription
+            Throw New Exception($"Error: {message}")
+        End If
+        Dim servicio As CompanyService = company.GetCompanyService()
+        Dim general As GeneralService = servicio.GetGeneralService("RH_EVENTOS_DISP")
+
+
         Try
 
-            If company.Connect() > 0 Then
-                Dim message As String = company.GetLastErrorDescription
-                Throw New Exception($"Error: {message}")
-            End If
 
 
 
 
+            Dim Data As GeneralData
             Dim c As Integer = 0
+
             For Each row As EventoDispositivoModel In lista
                 c += 1
-                eventos = company.UserTables.Item("RH_EVENTOS_DISP")
-                Debug.WriteLine("U_ID_EVENTO")
-                eventos.UserFields.item("U_ID_EVENTO").value = c
-                Debug.WriteLine("U_ID_DISP")
-                eventos.UserFields.item("U_ID_DISP").value = row.IdDispositivo
-                Debug.WriteLine("U_DESCRIPCION")
-                eventos.UserFields.item("U_DESCRIPCION").value = row.Descripcion
-                Debug.WriteLine("U_TIPO")
-                eventos.UserFields.item("U_TIPO").value = row.TipoEvento
-                Debug.WriteLine("U_FECHA_EVENTO")
-                eventos.UserFields.item("U_FECHA_EVENTO").value = row.FechaEvento
+                Data = general.GetDataInterface(GeneralServiceDataInterfaces.gsGeneralData)
+                Data.SetProperty("U_ID_EVENTO", c)
+                Data.SetProperty("U_ID_DISP", row.IdDispositivo)
+                Data.SetProperty("U_DESCRIPCION", row.Descripcion)
+                Data.SetProperty("U_TIPO", CStr(row.TipoEvento))
+                Data.SetProperty("U_FECHA_EVENTO", row.FechaEvento)
+                Data.SetProperty("U_HORA_EVENTO", row.FechaEvento)
+
+                general.Add(Data)
 
                 'U_ID_EVENTO
                 'U_ID_DISP
@@ -554,9 +557,6 @@ Public Class Lectura
                 'U_TIPO
                 'U_FECHA_EVENTO
 
-                If eventos.Add() <> 0 Then
-                    Throw New Exception($"Error al agregar el registro {company.GetLastErrorDescription }")
-                End If
 
                 Debug.WriteLine($"Insertado {c}")
             Next
@@ -564,10 +564,7 @@ Public Class Lectura
         Catch ex As Exception
             Debug.WriteLine($"Ha ocurrido una excepción: {ex.Message } {ex.StackTrace }")
         Finally
-            If eventos IsNot Nothing Then
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(eventos)
-                eventos = Nothing
-            End If
+
 
 
             If company.Connected() Then

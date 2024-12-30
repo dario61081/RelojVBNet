@@ -159,7 +159,7 @@ Public Class Lectura
         Dim recordset As Recordset = CType(company.GetBusinessObject(BoObjectTypes.BoRecordset), Recordset)
 
         'lectura de tabla
-        recordset.DoQuery("select * From ""@RH_RELOJES_DISP""")
+        recordset.DoQuery("select * From ""@RH_RELOJES_DISP"" where U_ESTADO = 'T'")
         recordset.MoveFirst()
         While Not recordset.EoF
             Dim row As New DispositivoModel With {
@@ -357,7 +357,9 @@ Public Class Lectura
         MessageBox.Show("Tarea concluida", "Tareas", MessageBoxButtons.OK)
 
         'enviar listado a base de datos
+
         EnviarABaseDatos(parametros)
+        EnviarEventosABaseDatos(EventsLogs1.GetEventos())
 
 
     End Sub
@@ -369,6 +371,16 @@ Public Class Lectura
         progressbar1.Visible = True
         progressbar2.Value = 0
     End Sub
+
+    Public Sub EnviarEventosABaseDatos(lista As List(Of EventoDispositivoModel))
+        'enviar eventos a base de datos
+        EventsLogs1_OnGuardarEventos(lista)
+
+
+
+    End Sub
+
+
 
     Public Sub EnviarABaseDatos(Parametros As WorkerParams)
 
@@ -570,7 +582,7 @@ Public Class Lectura
             If company.Connected() Then
                 company.Disconnect()
             End If
-            MessageBox.Show("La exportación ha finalizado")
+            'MessageBox.Show("La exportación ha finalizado")
         End Try
     End Sub
 End Class

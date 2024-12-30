@@ -107,7 +107,7 @@ Public Class EventsLogs
         ContarEncontrados()
     End Sub
 
-    Private Function GetEventos() As List(Of EventoDispositivoModel)
+    Public Function GetEventos() As List(Of EventoDispositivoModel)
         Dim l As List(Of EventoDispositivoModel) = New List(Of EventoDispositivoModel)
         For Each row As ListViewItem In lvLog.Items
             Dim record As EventoDispositivoModel = CType(row.Tag, EventoDispositivoModel)

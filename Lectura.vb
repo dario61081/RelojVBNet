@@ -62,7 +62,7 @@ Public Class Lectura
         'If Not valido Then
         '    Return
         'End If
-
+        Refresh()
 
         'iniciar la lectura si el hilo esta liberado
         If Not BackgroundWorker1.IsBusy Then
@@ -396,6 +396,67 @@ Public Class Lectura
 
     End Sub
 
+
+    Function QuitarDuplicados(Origen As List(Of AttendanceRecord), Parametros As LecturaParametros) As List(Of AttendanceRecord)
+
+        If Origen Is Nothing OrElse Origen.Count = 0 Then
+            Return New List(Of AttendanceRecord)
+        End If
+
+
+        ' Create a new list to hold the filtered attendance records
+        Dim Destino = New List(Of AttendanceRecord)()
+
+        ' Establish SAP connection
+        Dim Company As Company = SapRepository.GetInstance(New SapLocalServerConfig())
+        Company.Connect()
+
+        Try
+
+            ' Create and execute the query
+            Dim recordset As SAPbobsCOM.Recordset = Company.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
+            Dim query As String = $"SELECT U_FECHA, U_HORA, U_LEGAJO, U_TIPO_EVENTO FROM SELTZ29102024.""@RH_MARCACIONES"" " &
+                              $"WHERE ""U_FECHA"" BETWEEN '{Parametros.FechaDesde:yyyy-MM-dd}' AND '{Parametros.FechaHasta:yyyy-MM-dd}'"
+
+            recordset.DoQuery(query)
+
+            ' HashSet for faster lookup
+            Dim origenSet As HashSet(Of AttendanceRecord) = New HashSet(Of AttendanceRecord)(Origen)
+
+            ' Process the results
+            While Not recordset.EoF
+                Dim row_eval As New AttendanceRecord With {
+                .DateTime = recordset.Fields.Item("U_FECHA").Value,
+                .EnrollNumber = recordset.Fields.Item("U_LEGAJO").Value,
+                .DeviceNumber = If(recordset.Fields.Count > 2, recordset.Fields.Item("U_ID_DISP").Value, Nothing),
+                .InOutMode = recordset.Fields.Item("U_TIPO_EVENTO").Value
+            }
+
+                ' Check if the record is not in the original list
+                If Not origenSet.Contains(row_eval) Then
+                    Destino.Add(row_eval)
+                End If
+
+                recordset.MoveNext()
+            End While
+
+        Catch ex As Exception
+            ' Handle exceptions appropriately
+            Throw New ApplicationException("Error while removing duplicates.", ex)
+        Finally
+            ' Ensure the connection is closed
+            If Company.Connected Then
+                Company.Disconnect()
+            End If
+        End Try
+
+        Return Destino
+    End Function
+
+
+
+
+
     ''' <summary>
     ''' Ejecuta la tarea de escritura de marcaciones a la base de datos
     ''' </summary>
@@ -435,6 +496,13 @@ Public Class Lectura
 
             Dim servicio As CompanyService = company.GetCompanyService()
             Dim general As GeneralService = servicio.GetGeneralService("RH_MARCACIONES")
+
+
+            'quitar los duplicados
+            Debug.WriteLine($"Origen: {lista.Count}")
+            lista = QuitarDuplicados(lista, parametros.Parametros)
+            Debug.WriteLine($"Destino: {lista.Count}")
+
 
             'insertar los registros de marcaciones a @RH_MARCACIONES
             Dim Data As GeneralData

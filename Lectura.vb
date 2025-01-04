@@ -436,26 +436,26 @@ Public Class Lectura
             Dim servicio As CompanyService = company.GetCompanyService()
             Dim general As GeneralService = servicio.GetGeneralService("RH_MARCACIONES")
 
-                'insertar los registros de marcaciones a @RH_MARCACIONES
-                Dim Data As GeneralData
-                Dim c As Integer = 0
-                count = lista.Count
-                For Each row As AttendanceRecord In lista
-                    c += 1
-                    Data = general.GetDataInterface(GeneralServiceDataInterfaces.gsGeneralData)
-                    Data.SetProperty("U_LEGAJO", row.EnrollNumber)
-                    Data.SetProperty("U_TIPO_EVENTO", row.InOutMode)
-                    Data.SetProperty("U_FECHA", row.DateTime)
-                    Data.SetProperty("U_ID_DISP", row.DeviceNumber)
-                    Data.SetProperty("U_WORK_MODE", row.WorkMode)
-                    Data.SetProperty("U_HORA", row.DateTime)
-                    Data.SetProperty("U_ID", c)
-                    general.Add(Data)
-                    'Debug.WriteLine($"{row.DateTime },{row.DeviceNumber }, {row.EnrollNumber }, {row.InOutMode }, {row.VerifyMode },{row.WorkMode}")
+            'insertar los registros de marcaciones a @RH_MARCACIONES
+            Dim Data As GeneralData
+            Dim c As Integer = 0
+            count = lista.Count
+            For Each row As AttendanceRecord In lista
+                c += 1
+                Data = general.GetDataInterface(GeneralServiceDataInterfaces.gsGeneralData)
+                Data.SetProperty("U_LEGAJO", row.EnrollNumber)
+                Data.SetProperty("U_TIPO_EVENTO", row.InOutMode)
+                Data.SetProperty("U_FECHA", row.DateTime)
+                Data.SetProperty("U_ID_DISP", row.DeviceNumber)
+                Data.SetProperty("U_WORK_MODE", row.WorkMode)
+                Data.SetProperty("U_HORA", row.DateTime)
+                Data.SetProperty("U_ID", c)
+                general.Add(Data)
+                'Debug.WriteLine($"{row.DateTime },{row.DeviceNumber }, {row.EnrollNumber }, {row.InOutMode }, {row.VerifyMode },{row.WorkMode}")
 
-                    progress = CInt((c / count) * 100)
-                    worker.ReportProgress(progress)
-                Next
+                progress = CInt((c / count) * 100)
+                worker.ReportProgress(progress)
+            Next
 
 
             company.EndTransaction(BoWfTransOpt.wf_Commit)

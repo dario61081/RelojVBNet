@@ -360,9 +360,9 @@ Public Class Lectura
 
         'enviar listado a base de datos
 
+
         EnviarABaseDatos(parametros)
         EnviarEventosABaseDatos(EventsLogs1.GetEventos())
-
 
     End Sub
 
@@ -521,6 +521,7 @@ Public Class Lectura
             'poblar datos
             Dim enviados = 0
 
+            'servivioc
             Dim servicio As CompanyService = company.GetCompanyService()
             Dim general As GeneralService = servicio.GetGeneralService("RH_MARCACIONES")
 

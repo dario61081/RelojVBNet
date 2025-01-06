@@ -29,4 +29,11 @@ Public Class SapRepository
         Return OCompany
     End Function
 
+    Public Shared Sub ReleaseObject(ByRef obj As Object)
+        If obj IsNot Nothing Then
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(obj)
+            obj = Nothing
+        End If
+    End Sub
+
 End Class

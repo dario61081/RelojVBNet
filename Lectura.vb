@@ -148,6 +148,7 @@ Public Class Lectura
     ''' <returns></returns>
     Public Function CargarDispositivosBBDD() As List(Of DispositivoModel)
         Dim ArbolDispositivos As List(Of DispositivoModel) = New List(Of DispositivoModel)
+
         Dim company As Company = SapRepository.GetInstance(New SapLocalServerConfig())
 
         If company.Connect() <> 0 Then
@@ -179,6 +180,7 @@ Public Class Lectura
         '    ObjectReaderWriter(Of List(Of DispositivoModel)).SaveToJson(ArbolDispositivos, config_filename)
         'End If
         company.Disconnect()
+        SapRepository.ReleaseObject(company)
         Return ArbolDispositivos
     End Function
 
@@ -410,15 +412,15 @@ Public Class Lectura
         ' Establish SAP connection
         Dim Company As Company = SapRepository.GetInstance(New SapLocalServerConfig())
         Company.Connect()
+        ' Create and execute the query
+        Dim recordset As SAPbobsCOM.Recordset = Company.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
+        Dim query As String = $"SELECT U_FECHA, U_HORA, U_LEGAJO, U_TIPO_EVENTO FROM SELTZ29102024.""@RH_MARCACIONES"" " &
+                              $"WHERE ""U_FECHA"" BETWEEN '{Parametros.FechaDesde:yyyy-MM-dd}' AND '{Parametros.FechaHasta:yyyy-MM-dd}'"
 
         Try
 
-            ' Create and execute the query
-            Dim recordset As SAPbobsCOM.Recordset = Company.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-            Dim query As String = $"SELECT U_FECHA, U_HORA, U_LEGAJO, U_TIPO_EVENTO FROM SELTZ29102024.""@RH_MARCACIONES"" " &
-                              $"WHERE ""U_FECHA"" BETWEEN '{Parametros.FechaDesde:yyyy-MM-dd}' AND '{Parametros.FechaHasta:yyyy-MM-dd}'"
 
-            recordset.DoQuery(query)
+            Recordset.DoQuery(query)
 
             ' HashSet for faster lookup
             Dim origenSet As HashSet(Of AttendanceRecord) = New HashSet(Of AttendanceRecord)(Origen)
@@ -428,26 +430,31 @@ Public Class Lectura
                 Dim row_eval As New AttendanceRecord With {
                 .DateTime = recordset.Fields.Item("U_FECHA").Value,
                 .EnrollNumber = recordset.Fields.Item("U_LEGAJO").Value,
-                .DeviceNumber = If(recordset.Fields.Count > 2, recordset.Fields.Item("U_ID_DISP").Value, Nothing),
+                .DeviceNumber = recordset.Fields.Item("U_ID_DISP").Value,
                 .InOutMode = recordset.Fields.Item("U_TIPO_EVENTO").Value
             }
 
                 ' Check if the record is not in the original list
                 If Not origenSet.Contains(row_eval) Then
+                    Debug.WriteLine($"{origenSet.Count } agregado {row_eval.DateTime }")
                     Destino.Add(row_eval)
                 End If
 
                 recordset.MoveNext()
             End While
 
+
         Catch ex As Exception
             ' Handle exceptions appropriately
             Throw New ApplicationException("Error while removing duplicates.", ex)
         Finally
+            SapRepository.ReleaseObject(recordset)
             ' Ensure the connection is closed
             If Company.Connected Then
                 Company.Disconnect()
+                SapRepository.ReleaseObject(Company)
             End If
+
         End Try
 
         Return Destino

@@ -10,4 +10,14 @@ Public Class AttendanceRecord
     Public Property DateTime As DateTime
     Public Property WorkMode As Integer
 
+
+    Public Function GetFirma() As String
+        '(U_FECHA || U_HORA || U_LEGAJO || U_TIPO_EVENTO) AS hash
+        '2025-01-02 00:00:00.000000035928
+        Dim fecha As String = DateTime.ToString("yyyy-MM-dd 00:00:00.000")
+        Dim hora As String = DateTime.ToString("HHmm")
+        Return $"{fecha}{hora}{EnrollNumber}{InOutMode}"
+
+    End Function
+
 End Class

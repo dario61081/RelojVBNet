@@ -8,4 +8,6 @@ Public Class LecturaParametros
     Public Property SapUsuario As String
     Public Property SapPassword As String
 
+    Public Property VerificarDuplicados As Boolean
+
 End Class

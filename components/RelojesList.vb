@@ -92,7 +92,8 @@ Public Class RelojesList
                 .FechaHasta = panel.FechaHasta,
                 .SapUsuario = panel.SapUsername,
                 .SapPassword = panel.SapPassword,
-                .Modo = panel.Modo
+                .Modo = panel.Modo,
+                .VerificarDuplicados = panel.VerificarDuplicados
             }
             'filtrar los checkeados
             Dim relojesSeleccionados As New List(Of DispositivoModel)

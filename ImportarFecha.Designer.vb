@@ -23,187 +23,215 @@ Partial Class ImportarFecha
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ImportarFecha))
-        Button1 = New Button()
-        Button2 = New Button()
-        GroupBox1 = New GroupBox()
-        rdTodos = New RadioButton()
-        rdRango = New RadioButton()
-        dtpFechaHasta = New DateTimePicker()
-        Label2 = New Label()
-        Label1 = New Label()
-        dtpFechaDesde = New DateTimePicker()
-        GroupBox2 = New GroupBox()
-        edtSapPassword = New TextBox()
-        edtSapUsername = New TextBox()
-        Label4 = New Label()
-        Label3 = New Label()
-        GroupBox1.SuspendLayout()
-        GroupBox2.SuspendLayout()
-        SuspendLayout()
-        ' 
-        ' Button1
-        ' 
-        Button1.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
-        Button1.Location = New Point(258, 246)
-        Button1.Name = "Button1"
-        Button1.Size = New Size(75, 33)
-        Button1.TabIndex = 6
-        Button1.Text = "Aceptar"
-        Button1.UseVisualStyleBackColor = True
-        ' 
-        ' Button2
-        ' 
-        Button2.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
-        Button2.Location = New Point(179, 246)
-        Button2.Name = "Button2"
-        Button2.Size = New Size(75, 33)
-        Button2.TabIndex = 7
-        Button2.Text = "Cancelar"
-        Button2.UseVisualStyleBackColor = True
-        ' 
-        ' GroupBox1
-        ' 
-        GroupBox1.Controls.Add(rdTodos)
-        GroupBox1.Controls.Add(rdRango)
-        GroupBox1.Controls.Add(dtpFechaHasta)
-        GroupBox1.Controls.Add(Label2)
-        GroupBox1.Controls.Add(Label1)
-        GroupBox1.Controls.Add(dtpFechaDesde)
-        GroupBox1.Dock = DockStyle.Top
-        GroupBox1.Location = New Point(6, 6)
-        GroupBox1.Name = "GroupBox1"
-        GroupBox1.Size = New Size(327, 144)
-        GroupBox1.TabIndex = 8
-        GroupBox1.TabStop = False
-        GroupBox1.Text = "Periodo"
-        ' 
-        ' rdTodos
-        ' 
-        rdTodos.AutoSize = True
-        rdTodos.Checked = True
-        rdTodos.Location = New Point(16, 24)
-        rdTodos.Name = "rdTodos"
-        rdTodos.Size = New Size(56, 19)
-        rdTodos.TabIndex = 11
-        rdTodos.TabStop = True
-        rdTodos.Text = "Todos"
-        rdTodos.UseVisualStyleBackColor = True
-        ' 
-        ' rdRango
-        ' 
-        rdRango.AutoSize = True
-        rdRango.Location = New Point(16, 48)
-        rdRango.Name = "rdRango"
-        rdRango.Size = New Size(125, 19)
-        rdRango.TabIndex = 10
-        rdRango.Text = "Por rango de fecha"
-        rdRango.UseVisualStyleBackColor = True
-        ' 
-        ' dtpFechaHasta
-        ' 
-        dtpFechaHasta.Format = DateTimePickerFormat.Custom
-        dtpFechaHasta.Location = New Point(136, 112)
-        dtpFechaHasta.Name = "dtpFechaHasta"
-        dtpFechaHasta.Size = New Size(144, 23)
-        dtpFechaHasta.TabIndex = 9
-        ' 
-        ' Label2
-        ' 
-        Label2.AutoSize = True
-        Label2.Location = New Point(56, 112)
-        Label2.Name = "Label2"
-        Label2.Size = New Size(69, 15)
-        Label2.TabIndex = 8
-        Label2.Text = "Fecha hasta"
-        ' 
-        ' Label1
-        ' 
-        Label1.AutoSize = True
-        Label1.Location = New Point(56, 80)
-        Label1.Name = "Label1"
-        Label1.Size = New Size(72, 15)
-        Label1.TabIndex = 7
-        Label1.Text = "Fecha desde"
-        ' 
-        ' dtpFechaDesde
-        ' 
-        dtpFechaDesde.Format = DateTimePickerFormat.Custom
-        dtpFechaDesde.Location = New Point(136, 80)
-        dtpFechaDesde.Name = "dtpFechaDesde"
-        dtpFechaDesde.Size = New Size(144, 23)
-        dtpFechaDesde.TabIndex = 6
-        ' 
-        ' GroupBox2
-        ' 
-        GroupBox2.Controls.Add(edtSapPassword)
-        GroupBox2.Controls.Add(edtSapUsername)
-        GroupBox2.Controls.Add(Label4)
-        GroupBox2.Controls.Add(Label3)
-        GroupBox2.Dock = DockStyle.Top
-        GroupBox2.Location = New Point(6, 150)
-        GroupBox2.Name = "GroupBox2"
-        GroupBox2.Size = New Size(327, 90)
-        GroupBox2.TabIndex = 9
-        GroupBox2.TabStop = False
-        GroupBox2.Text = "SAP Credenciales"
-        ' 
-        ' edtSapPassword
-        ' 
-        edtSapPassword.Location = New Point(136, 56)
-        edtSapPassword.Name = "edtSapPassword"
-        edtSapPassword.PasswordChar = "*"c
-        edtSapPassword.PlaceholderText = "Password"
-        edtSapPassword.Size = New Size(144, 23)
-        edtSapPassword.TabIndex = 3
-        ' 
-        ' edtSapUsername
-        ' 
-        edtSapUsername.Location = New Point(136, 24)
-        edtSapUsername.Name = "edtSapUsername"
-        edtSapUsername.PlaceholderText = "Usuario"
-        edtSapUsername.Size = New Size(144, 23)
-        edtSapUsername.TabIndex = 2
-        ' 
-        ' Label4
-        ' 
-        Label4.AutoSize = True
-        Label4.Location = New Point(16, 56)
-        Label4.Name = "Label4"
-        Label4.Size = New Size(57, 15)
-        Label4.TabIndex = 1
-        Label4.Text = "Password"
-        ' 
-        ' Label3
-        ' 
-        Label3.AutoSize = True
-        Label3.Location = New Point(16, 24)
-        Label3.Name = "Label3"
-        Label3.Size = New Size(47, 15)
-        Label3.TabIndex = 0
-        Label3.Text = "Usuario"
-        ' 
-        ' ImportarFecha
-        ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
-        AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(339, 284)
-        Controls.Add(GroupBox2)
-        Controls.Add(GroupBox1)
-        Controls.Add(Button2)
-        Controls.Add(Button1)
-        FormBorderStyle = FormBorderStyle.FixedSingle
-        Icon = CType(resources.GetObject("$this.Icon"), Icon)
-        MaximizeBox = False
-        MinimizeBox = False
-        Name = "ImportarFecha"
-        Padding = New Padding(6)
-        StartPosition = FormStartPosition.CenterParent
-        Text = "Parametros de descarga"
-        GroupBox1.ResumeLayout(False)
-        GroupBox1.PerformLayout()
-        GroupBox2.ResumeLayout(False)
-        GroupBox2.PerformLayout()
-        ResumeLayout(False)
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.rdTodos = New System.Windows.Forms.RadioButton()
+        Me.rdRango = New System.Windows.Forms.RadioButton()
+        Me.dtpFechaHasta = New System.Windows.Forms.DateTimePicker()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.dtpFechaDesde = New System.Windows.Forms.DateTimePicker()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.edtSapPassword = New System.Windows.Forms.TextBox()
+        Me.edtSapUsername = New System.Windows.Forms.TextBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.chk_duplicados = New System.Windows.Forms.CheckBox()
+        Me.GroupBox1.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
+        Me.SuspendLayout()
+        '
+        'Button1
+        '
+        Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button1.Location = New System.Drawing.Point(295, 379)
+        Me.Button1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(86, 44)
+        Me.Button1.TabIndex = 6
+        Me.Button1.Text = "Aceptar"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'Button2
+        '
+        Me.Button2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button2.Location = New System.Drawing.Point(205, 379)
+        Me.Button2.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(86, 44)
+        Me.Button2.TabIndex = 7
+        Me.Button2.Text = "Cancelar"
+        Me.Button2.UseVisualStyleBackColor = True
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.chk_duplicados)
+        Me.GroupBox1.Controls.Add(Me.rdTodos)
+        Me.GroupBox1.Controls.Add(Me.rdRango)
+        Me.GroupBox1.Controls.Add(Me.dtpFechaHasta)
+        Me.GroupBox1.Controls.Add(Me.Label2)
+        Me.GroupBox1.Controls.Add(Me.Label1)
+        Me.GroupBox1.Controls.Add(Me.dtpFechaDesde)
+        Me.GroupBox1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.GroupBox1.Location = New System.Drawing.Point(7, 8)
+        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.GroupBox1.Size = New System.Drawing.Size(373, 244)
+        Me.GroupBox1.TabIndex = 8
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Periodo"
+        '
+        'rdTodos
+        '
+        Me.rdTodos.AutoSize = True
+        Me.rdTodos.Checked = True
+        Me.rdTodos.Location = New System.Drawing.Point(18, 32)
+        Me.rdTodos.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.rdTodos.Name = "rdTodos"
+        Me.rdTodos.Size = New System.Drawing.Size(70, 24)
+        Me.rdTodos.TabIndex = 11
+        Me.rdTodos.TabStop = True
+        Me.rdTodos.Text = "Todos"
+        Me.rdTodos.UseVisualStyleBackColor = True
+        '
+        'rdRango
+        '
+        Me.rdRango.AutoSize = True
+        Me.rdRango.Location = New System.Drawing.Point(18, 64)
+        Me.rdRango.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.rdRango.Name = "rdRango"
+        Me.rdRango.Size = New System.Drawing.Size(155, 24)
+        Me.rdRango.TabIndex = 10
+        Me.rdRango.Text = "Por rango de fecha"
+        Me.rdRango.UseVisualStyleBackColor = True
+        '
+        'dtpFechaHasta
+        '
+        Me.dtpFechaHasta.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dtpFechaHasta.Location = New System.Drawing.Point(155, 149)
+        Me.dtpFechaHasta.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.dtpFechaHasta.Name = "dtpFechaHasta"
+        Me.dtpFechaHasta.Size = New System.Drawing.Size(164, 27)
+        Me.dtpFechaHasta.TabIndex = 9
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(64, 149)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(86, 20)
+        Me.Label2.TabIndex = 8
+        Me.Label2.Text = "Fecha hasta"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(64, 107)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(91, 20)
+        Me.Label1.TabIndex = 7
+        Me.Label1.Text = "Fecha desde"
+        '
+        'dtpFechaDesde
+        '
+        Me.dtpFechaDesde.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dtpFechaDesde.Location = New System.Drawing.Point(155, 107)
+        Me.dtpFechaDesde.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.dtpFechaDesde.Name = "dtpFechaDesde"
+        Me.dtpFechaDesde.Size = New System.Drawing.Size(164, 27)
+        Me.dtpFechaDesde.TabIndex = 6
+        '
+        'GroupBox2
+        '
+        Me.GroupBox2.Controls.Add(Me.edtSapPassword)
+        Me.GroupBox2.Controls.Add(Me.edtSapUsername)
+        Me.GroupBox2.Controls.Add(Me.Label4)
+        Me.GroupBox2.Controls.Add(Me.Label3)
+        Me.GroupBox2.Dock = System.Windows.Forms.DockStyle.Top
+        Me.GroupBox2.Location = New System.Drawing.Point(7, 252)
+        Me.GroupBox2.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.GroupBox2.Size = New System.Drawing.Size(373, 120)
+        Me.GroupBox2.TabIndex = 9
+        Me.GroupBox2.TabStop = False
+        Me.GroupBox2.Text = "SAP Credenciales"
+        '
+        'edtSapPassword
+        '
+        Me.edtSapPassword.Location = New System.Drawing.Point(155, 75)
+        Me.edtSapPassword.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.edtSapPassword.Name = "edtSapPassword"
+        Me.edtSapPassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
+        Me.edtSapPassword.PlaceholderText = "Password"
+        Me.edtSapPassword.Size = New System.Drawing.Size(164, 27)
+        Me.edtSapPassword.TabIndex = 3
+        '
+        'edtSapUsername
+        '
+        Me.edtSapUsername.Location = New System.Drawing.Point(155, 32)
+        Me.edtSapUsername.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.edtSapUsername.Name = "edtSapUsername"
+        Me.edtSapUsername.PlaceholderText = "Usuario"
+        Me.edtSapUsername.Size = New System.Drawing.Size(164, 27)
+        Me.edtSapUsername.TabIndex = 2
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(18, 75)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(70, 20)
+        Me.Label4.TabIndex = 1
+        Me.Label4.Text = "Password"
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(18, 32)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(59, 20)
+        Me.Label3.TabIndex = 0
+        Me.Label3.Text = "Usuario"
+        '
+        'chk_duplicados
+        '
+        Me.chk_duplicados.AutoSize = True
+        Me.chk_duplicados.Checked = True
+        Me.chk_duplicados.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chk_duplicados.Location = New System.Drawing.Point(18, 200)
+        Me.chk_duplicados.Name = "chk_duplicados"
+        Me.chk_duplicados.Size = New System.Drawing.Size(340, 24)
+        Me.chk_duplicados.TabIndex = 12
+        Me.chk_duplicados.Text = "Verificar registros duplicados en base de datos"
+        Me.chk_duplicados.UseVisualStyleBackColor = True
+        '
+        'ImportarFecha
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 20.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.ClientSize = New System.Drawing.Size(387, 437)
+        Me.Controls.Add(Me.GroupBox2)
+        Me.Controls.Add(Me.GroupBox1)
+        Me.Controls.Add(Me.Button2)
+        Me.Controls.Add(Me.Button1)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
+        Me.Name = "ImportarFecha"
+        Me.Padding = New System.Windows.Forms.Padding(7, 8, 7, 8)
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
+        Me.Text = "Parametros de descarga"
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
+        Me.GroupBox2.ResumeLayout(False)
+        Me.GroupBox2.PerformLayout()
+        Me.ResumeLayout(False)
+
     End Sub
     Friend WithEvents Button1 As Button
     Friend WithEvents Button2 As Button
@@ -219,4 +247,5 @@ Partial Class ImportarFecha
     Friend WithEvents edtSapUsername As TextBox
     Friend WithEvents Label4 As Label
     Friend WithEvents Label3 As Label
+    Friend WithEvents chk_duplicados As CheckBox
 End Class

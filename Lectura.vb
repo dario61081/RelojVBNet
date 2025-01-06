@@ -400,62 +400,82 @@ Public Class Lectura
 
 
     Function QuitarDuplicados(Origen As List(Of AttendanceRecord), Parametros As LecturaParametros) As List(Of AttendanceRecord)
-
+        'controlar la existencia de registros
         If Origen Is Nothing OrElse Origen.Count = 0 Then
             Return New List(Of AttendanceRecord)
         End If
 
 
+
+
         ' Create a new list to hold the filtered attendance records
-        Dim Destino = New List(Of AttendanceRecord)()
+        Dim Destino = New List(Of AttendanceRecord)
 
         ' Establish SAP connection
         Dim Company As Company = SapRepository.GetInstance(New SapLocalServerConfig())
         Company.Connect()
         ' Create and execute the query
         Dim recordset As SAPbobsCOM.Recordset = Company.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-        Dim query As String = $"SELECT U_FECHA, U_HORA, U_LEGAJO, U_TIPO_EVENTO FROM SELTZ29102024.""@RH_MARCACIONES"" " &
+        Dim query As String = $"SELECT  CAST((U_FECHA || U_HORA || U_LEGAJO || U_TIPO_EVENTO) AS varchar(100)) AS firma " &
+                              $"FROM SELTZ29102024.""@RH_MARCACIONES"" " &
                               $"WHERE ""U_FECHA"" BETWEEN '{Parametros.FechaDesde:yyyy-MM-dd}' AND '{Parametros.FechaHasta:yyyy-MM-dd}'"
-
-        Try
-
-
-            Recordset.DoQuery(query)
-
-            ' HashSet for faster lookup
-            Dim origenSet As HashSet(Of AttendanceRecord) = New HashSet(Of AttendanceRecord)(Origen)
-
-            ' Process the results
-            While Not recordset.EoF
-                Dim row_eval As New AttendanceRecord With {
-                .DateTime = recordset.Fields.Item("U_FECHA").Value,
-                .EnrollNumber = recordset.Fields.Item("U_LEGAJO").Value,
-                .DeviceNumber = recordset.Fields.Item("U_ID_DISP").Value,
-                .InOutMode = recordset.Fields.Item("U_TIPO_EVENTO").Value
-            }
-
-                ' Check if the record is not in the original list
-                If Not origenSet.Contains(row_eval) Then
-                    Debug.WriteLine($"{origenSet.Count } agregado {row_eval.DateTime }")
-                    Destino.Add(row_eval)
-                End If
-
-                recordset.MoveNext()
-            End While
+        'Dim HistoricoCache = New HashSet(Of String)
 
 
-        Catch ex As Exception
-            ' Handle exceptions appropriately
-            Throw New ApplicationException("Error while removing duplicates.", ex)
-        Finally
-            SapRepository.ReleaseObject(recordset)
-            ' Ensure the connection is closed
-            If Company.Connected Then
-                Company.Disconnect()
-                SapRepository.ReleaseObject(Company)
-            End If
+        recordset.DoQuery(query)
 
-        End Try
+
+
+
+        ' Process the results
+        While Not recordset.EoF
+            'Dim r As String = If(recordset.Fields.Item("hash").Value Is DBNull.Value, String.Empty, recordset.Fields.Item("hash").Value)
+            'HistoricoCache.Add(r)
+            WriteLine($"{recordset.Fields.Item("firma")}")
+            recordset.MoveNext()
+        End While
+
+        'Try
+
+
+
+
+        '    ' Process the results
+        '    While Not recordset.EoF
+        '        'Dim r As String = If(recordset.Fields.Item("hash").Value Is DBNull.Value, String.Empty, recordset.Fields.Item("hash").Value)
+        '        'HistoricoCache.Add(r)
+        '        WriteLine($"{recordset.Fields.Item("hash")}")
+        '        recordset.MoveNext()
+        '    End While
+
+        'Catch ex As Exception
+        '    ' Handle exceptions appropriately
+        '    Dim message As String = Company.GetLastErrorDescription
+        '    Throw New ApplicationException($"Error while removing duplicates.({message})", ex)
+
+        'End Try
+
+
+
+
+        'For Each row In Origen
+        '    Debug.WriteLine($"buscando: {row.GetHash }")
+        '    If Not HistoricoCache.Any(Function(item) item.Equals(row.GetHash())) Then
+        '        Debug.WriteLine($"no encontrado, agregando { row.GetHash }")
+        '        Destino.Add(row)
+        '    End If
+        'Next
+        If recordset.RecordCount = 0 Then
+            Destino.AddRange(Origen)
+        End If
+
+        'liberar recursos
+        SapRepository.ReleaseObject(recordset)
+        ' Ensure the connection is closed
+        If Company.Connected Then
+            Company.Disconnect()
+            SapRepository.ReleaseObject(Company)
+        End If
 
         Return Destino
     End Function

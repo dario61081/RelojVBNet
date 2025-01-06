@@ -12,6 +12,7 @@
     <IncludeSymbols>False</IncludeSymbols>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
     <Platforms>AnyCPU;x86</Platforms>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
   <ItemGroup>

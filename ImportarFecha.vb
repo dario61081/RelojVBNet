@@ -3,11 +3,12 @@
 
 
 Public Class ImportarFecha
-    Public FechaDesde As Date
+    Public Property FechaDesde As Date
     Public Property FechaHasta As Date
     Public Property Modo As Integer = 0
     Public Property SapUsername As String
     Public Property SapPassword As String
+    Public Property VerificarDuplicados As Boolean
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If String.IsNullOrEmpty(edtSapPassword.Text) Or String.IsNullOrEmpty(edtSapPassword.Text) Then
@@ -26,6 +27,8 @@ Public Class ImportarFecha
         FechaHasta = dtpFechaHasta.Value
         SapUsername = edtSapUsername.Text
         SapPassword = edtSapPassword.Text
+        VerificarDuplicados = chk_duplicados.Checked
+
         DialogResult = DialogResult.OK
         Close()
 

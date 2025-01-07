@@ -341,7 +341,9 @@ Public Class Lectura
         MessageBox.Show("Tarea concluida", "Tareas", MessageBoxButtons.OK)
 
         'enviar listado a base de datos
-        RelojesList1.Ocupado = False
+        If RelojesList1.Ocupado Then
+            RelojesList1.Ocupado = False
+        End If
 
         EnviarABaseDatos(parametros)
         EnviarEventosABaseDatos(EventsLogs1.GetEventos())

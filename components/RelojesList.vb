@@ -44,12 +44,15 @@ Public Class RelojesList
     ''' Registrar la lista de dispositivos
     ''' </summary>
     ''' <param name="data"></param>
-    Public Sub RegistrarTodo(data As List(Of DispositivoModel))
-        For Each row As DispositivoModel In data
-            RegisterDevice(row)
-        Next
-
-    End Sub
+    Public Async Function RegistrarTodo(data As List(Of DispositivoModel)) As Task
+        Await Task.Run(Sub()
+                           Me.Invoke(Sub()
+                                         For Each row As DispositivoModel In data
+                                             RegisterDevice(row)
+                                         Next
+                                     End Sub)
+                       End Sub)
+    End Function
 
     Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
         SeleccionarTodo()

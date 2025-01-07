@@ -32,8 +32,8 @@ Public Class Lectura
         lblversion.Text = $"Ver: 1.0.{numeroBuild}"
         Dim relojes As List(Of DispositivoModel) = Await Task.Run(Function() CargarDispositivosBBDD())
 
-        RelojesList1.RegistrarTodo(relojes)
-        RelojesList1.VerificarRelojes()
+        Await RelojesList1.RegistrarTodo(relojes)
+        Await RelojesList1.VerificarRelojes()
         Log("Listo")
 
     End Sub

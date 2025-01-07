@@ -26,6 +26,7 @@ Partial Class ImportarFecha
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.chk_duplicados = New System.Windows.Forms.CheckBox()
         Me.rdTodos = New System.Windows.Forms.RadioButton()
         Me.rdRango = New System.Windows.Forms.RadioButton()
         Me.dtpFechaHasta = New System.Windows.Forms.DateTimePicker()
@@ -37,7 +38,7 @@ Partial Class ImportarFecha
         Me.edtSapUsername = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.chk_duplicados = New System.Windows.Forms.CheckBox()
+        Me.Label5 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.SuspendLayout()
@@ -45,7 +46,7 @@ Partial Class ImportarFecha
         'Button1
         '
         Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button1.Location = New System.Drawing.Point(295, 379)
+        Me.Button1.Location = New System.Drawing.Point(371, 428)
         Me.Button1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(86, 44)
@@ -56,7 +57,7 @@ Partial Class ImportarFecha
         'Button2
         '
         Me.Button2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button2.Location = New System.Drawing.Point(205, 379)
+        Me.Button2.Location = New System.Drawing.Point(288, 428)
         Me.Button2.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(86, 44)
@@ -66,6 +67,7 @@ Partial Class ImportarFecha
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.Label5)
         Me.GroupBox1.Controls.Add(Me.chk_duplicados)
         Me.GroupBox1.Controls.Add(Me.rdTodos)
         Me.GroupBox1.Controls.Add(Me.rdRango)
@@ -78,10 +80,20 @@ Partial Class ImportarFecha
         Me.GroupBox1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.GroupBox1.Size = New System.Drawing.Size(373, 244)
+        Me.GroupBox1.Size = New System.Drawing.Size(456, 296)
         Me.GroupBox1.TabIndex = 8
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Periodo"
+        '
+        'chk_duplicados
+        '
+        Me.chk_duplicados.AutoSize = True
+        Me.chk_duplicados.Location = New System.Drawing.Point(18, 200)
+        Me.chk_duplicados.Name = "chk_duplicados"
+        Me.chk_duplicados.Size = New System.Drawing.Size(340, 24)
+        Me.chk_duplicados.TabIndex = 12
+        Me.chk_duplicados.Text = "Verificar registros duplicados en base de datos"
+        Me.chk_duplicados.UseVisualStyleBackColor = True
         '
         'rdTodos
         '
@@ -150,11 +162,11 @@ Partial Class ImportarFecha
         Me.GroupBox2.Controls.Add(Me.Label4)
         Me.GroupBox2.Controls.Add(Me.Label3)
         Me.GroupBox2.Dock = System.Windows.Forms.DockStyle.Top
-        Me.GroupBox2.Location = New System.Drawing.Point(7, 252)
+        Me.GroupBox2.Location = New System.Drawing.Point(7, 304)
         Me.GroupBox2.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.GroupBox2.Size = New System.Drawing.Size(373, 120)
+        Me.GroupBox2.Size = New System.Drawing.Size(456, 120)
         Me.GroupBox2.TabIndex = 9
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "SAP Credenciales"
@@ -196,23 +208,22 @@ Partial Class ImportarFecha
         Me.Label3.TabIndex = 0
         Me.Label3.Text = "Usuario"
         '
-        'chk_duplicados
+        'Label5
         '
-        Me.chk_duplicados.AutoSize = True
-        Me.chk_duplicados.Checked = True
-        Me.chk_duplicados.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chk_duplicados.Location = New System.Drawing.Point(18, 200)
-        Me.chk_duplicados.Name = "chk_duplicados"
-        Me.chk_duplicados.Size = New System.Drawing.Size(340, 24)
-        Me.chk_duplicados.TabIndex = 12
-        Me.chk_duplicados.Text = "Verificar registros duplicados en base de datos"
-        Me.chk_duplicados.UseVisualStyleBackColor = True
+        Me.Label5.AutoSize = True
+        Me.Label5.ForeColor = System.Drawing.Color.Maroon
+        Me.Label5.Location = New System.Drawing.Point(64, 227)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(336, 60)
+        Me.Label5.TabIndex = 13
+        Me.Label5.Text = "Atención: Esta acción puede tomar mas tiempo" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & " de procesamiento, ademas de ocupar" &
+    " el servidor" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & " para consultas"
         '
         'ImportarFecha
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(387, 437)
+        Me.ClientSize = New System.Drawing.Size(470, 486)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.Button2)
@@ -248,4 +259,5 @@ Partial Class ImportarFecha
     Friend WithEvents Label4 As Label
     Friend WithEvents Label3 As Label
     Friend WithEvents chk_duplicados As CheckBox
+    Friend WithEvents Label5 As Label
 End Class

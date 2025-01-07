@@ -439,7 +439,6 @@ Public Class Lectura
 
 
 
-
         '    ' Process the results
         '    While Not recordset.EoF
         '        'Dim r As String = If(recordset.Fields.Item("hash").Value Is DBNull.Value, String.Empty, recordset.Fields.Item("hash").Value)
@@ -528,7 +527,11 @@ Public Class Lectura
 
             'quitar los duplicados
             Debug.WriteLine($"Origen: {lista.Count}")
-            lista = QuitarDuplicados(lista, parametros.Parametros)
+            If parametros.Parametros.VerificarDuplicados Then
+                Debug.WriteLine("Verificando dupicados")
+                lista = QuitarDuplicados(lista, parametros.Parametros)
+            End If
+
             Debug.WriteLine($"Destino: {lista.Count}")
 
 

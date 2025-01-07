@@ -27,29 +27,40 @@ Public Class Lectura
 
 
 
-    Private Sub MarcacionesLogs1_Load(sender As Object, e As EventArgs) Handles MarcacionesLogs1.Load
+    Private Async Sub MarcacionesLogs1_Load(sender As Object, e As EventArgs) Handles MarcacionesLogs1.Load
         Dim numeroBuild As String = AppInfo.ObtenerNumeroBuild()
-        'leer relojes de la base de datos 
-        Dim relojes As List(Of DispositivoModel) = CargarDispositivosBBDD()
-        Log("Cargando relojes de la base de datos")
-        For Each row As DispositivoModel In relojes
-            Dim _reloj As New Reloj()
-            _reloj.Dispositivo = row
-            Dispositivos.RegistrarReloj(_reloj)
-        Next
-
         lblversion.Text = $"Ver: 1.0.{numeroBuild}"
-
+        Dim relojes As List(Of DispositivoModel) = Task.Run(Function()
+                                                                Return CargarDispositivosBBDD()
+                                                            End Function).Result
 
         RelojesList1.RegistrarTodo(relojes)
         RelojesList1.VerificarRelojes()
         Log("Listo")
-
-        MarcacionesLogs1.UpdateListView()
-        EventsLogs1.UpdateListView()
+        'Await Task.WhenAll(
+        '    Task.Run(Sub() MarcacionesLogs1.UpdateListView()),
+        '    Task.Run(Sub() EventsLogs1.UpdateListView())
+        ')
     End Sub
 
+    Private Function LeerRelojes() As List(Of DispositivoModel)
+        'leer relojes de la base de datos 
+        Dim relojes As List(Of DispositivoModel) = CargarDispositivosBBDD()
+        'Dim l As List(Of Reloj)
+        'Log("Cargando relojes de la base de datos")
+        'For Each row As DispositivoModel In relojes
+        '    Dim _reloj As New Reloj()
+        '    _reloj.Dispositivo = row
+        '    l.Add(_reloj)
+        '    'Dispositivos.RegistrarReloj(_reloj)
 
+        'Next
+
+        Return relojes
+
+
+
+    End Function
 
     Private Sub RelojesList1_LeerDispostivos(Lista As List(Of DispositivoModel), Parametros As LecturaParametros) Handles RelojesList1.LeerDispostivos
 
@@ -145,6 +156,7 @@ Public Class Lectura
     ''' <returns></returns>
     Public Function CargarDispositivosBBDD() As List(Of DispositivoModel)
         Dim ArbolDispositivos As List(Of DispositivoModel) = New List(Of DispositivoModel)
+        logger.Debug("Iniciando carga de datos de relojes")
 
         Dim company As Company = SapRepository.GetInstance(New SapLocalServerConfig())
 
@@ -176,6 +188,7 @@ Public Class Lectura
         '    Dim config_filename = Path.Combine(GetCacheDirectory("Configuraciones"), "dispositivos.json")
         '    ObjectReaderWriter(Of List(Of DispositivoModel)).SaveToJson(ArbolDispositivos, config_filename)
         'End If
+        SapRepository.ReleaseObject(recordset)
         company.Disconnect()
         SapRepository.ReleaseObject(company)
         Return ArbolDispositivos

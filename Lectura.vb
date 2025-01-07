@@ -59,7 +59,7 @@ Public Class Lectura
                 .Eventos = New List(Of EventoDispositivoModel),
                 .Marcaciones = New List(Of AttendanceRecord)
                 }
-
+            Log($"iniciando lectura de {Lista.Count} reloj(es) ")
             BackgroundWorker1.RunWorkerAsync(worker_params)
 
         End If
@@ -622,7 +622,8 @@ Public Class Lectura
         logger.Debug($"Exportando eventos {lista.Count}")
 
         If lista Is Nothing Then
-            Throw New Exception("No hay eventos para exportar")
+            logger.Error($"No hay eventos para exportar")
+            Return
         End If
 
         'guardar eventos en la base de datos

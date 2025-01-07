@@ -6,15 +6,12 @@ Imports SAPbobsCOM
 Imports RelojVBNET.ModelUtils
 Imports RelojVBNET.SapRepositoryConfig
 Imports RelojVBNET.SapLocalServerConfig
-
-
-
-
+Imports NLog
 
 Public Class Lectura
     Private Dispositivos As Relojes
     Private WithEvents Device As New ZKBiometricDevice()
-
+    Private logger As Logger = LogManager.GetCurrentClassLogger()
 
 
 
@@ -189,7 +186,7 @@ Public Class Lectura
     ''' </summary>
     ''' <param name="message"></param>
     Public Sub Log(message As String, Optional Dispositivo As DispositivoModel = Nothing)
-        Debug.WriteLine($"Log: {message}")
+        logger.Debug($"Log: {message}")
         Me.Invoke(
             Sub()
                 EventsLogs1.RegistrarEvento(message, Dispositivo)
@@ -198,7 +195,7 @@ Public Class Lectura
 
     End Sub
     Public Sub LogError(message As String, Optional Dispositivo As DispositivoModel = Nothing)
-        Debug.WriteLine($"Error: {message}")
+        logger.Error($"Error: {message}")
         Me.Invoke(
             Sub()
                 EventsLogs1.RegistrarError(message, Dispositivo)
@@ -333,7 +330,7 @@ Public Class Lectura
 
     Private Sub BackgroundWorker1_ProgressChanged(sender As Object, e As ProgressChangedEventArgs) Handles BackgroundWorker1.ProgressChanged
         'actualizar progreso
-        'Debug.WriteLine($"progreso {e.ProgressPercentage }")
+        'logger.debug($"progreso {e.ProgressPercentage }")
         progressbar2.Value = e.ProgressPercentage
         lblmensaje.Text = $"Procesando marcaciones, aguarde. ({e.ProgressPercentage}%)"
 
@@ -424,7 +421,7 @@ Public Class Lectura
 
         recordset.DoQuery(query)
 
-
+        logger.Debug($"encontrados en consulta {recordset.RecordCount } registros")
 
 
         ' Process the results
@@ -458,9 +455,9 @@ Public Class Lectura
 
 
         'For Each row In Origen
-        '    Debug.WriteLine($"buscando: {row.GetHash }")
+        '    logger.debug($"buscando: {row.GetHash }")
         '    If Not HistoricoCache.Any(Function(item) item.Equals(row.GetHash())) Then
-        '        Debug.WriteLine($"no encontrado, agregando { row.GetHash }")
+        '        logger.debug($"no encontrado, agregando { row.GetHash }")
         '        Destino.Add(row)
         '    End If
         'Next
@@ -502,18 +499,18 @@ Public Class Lectura
         'company.UserName = parametros.Parametros.SapUsuario
         'company.Password = parametros.Parametros.SapPassword
 
-        Debug.WriteLine($"params: {company.Server }, {company.LicenseServer}, {company.DbUserName}, {company.DbPassword}")
+        logger.Debug($"params: {company.Server }, {company.LicenseServer}, {company.DbUserName}, {company.DbPassword}")
 
         If company.Connect() <> 0 Then
             Dim message As String = company.GetLastErrorDescription
             Throw New Exception($"No se ha establecido conexion con la base de datos: {message}")
         End If
 
-        Debug.WriteLine($"{company.Server},{company.CompanyDB }")
+        logger.Debug($"{company.Server},{company.CompanyDB }")
 
         Try
 
-            Debug.WriteLine($"estado: {company.Connected }")
+            logger.Debug($"estado: {company.Connected }")
 
             company.StartTransaction()
 
@@ -526,13 +523,13 @@ Public Class Lectura
 
 
             'quitar los duplicados
-            Debug.WriteLine($"Origen: {lista.Count}")
+            logger.Debug($"Origen: {lista.Count}")
             If parametros.Parametros.VerificarDuplicados Then
-                Debug.WriteLine("Verificando dupicados")
+                logger.Debug("Verificando dupicados")
                 lista = QuitarDuplicados(lista, parametros.Parametros)
             End If
 
-            Debug.WriteLine($"Destino: {lista.Count}")
+            logger.Debug($"Destino: {lista.Count}")
 
 
             'insertar los registros de marcaciones a @RH_MARCACIONES
@@ -550,7 +547,7 @@ Public Class Lectura
                 Data.SetProperty("U_HORA", row.DateTime)
                 Data.SetProperty("U_ID", c)
                 general.Add(Data)
-                'Debug.WriteLine($"{row.DateTime },{row.DeviceNumber }, {row.EnrollNumber }, {row.InOutMode }, {row.VerifyMode },{row.WorkMode}")
+                'logger.debug($"{row.DateTime },{row.DeviceNumber }, {row.EnrollNumber }, {row.InOutMode }, {row.VerifyMode },{row.WorkMode}")
 
                 progress = CInt((c / count) * 100)
                 worker.ReportProgress(progress)
@@ -558,17 +555,17 @@ Public Class Lectura
 
 
             company.EndTransaction(BoWfTransOpt.wf_Commit)
-            'Debug.WriteLine($"Finalizado, exportado {lista.Count } registros")
+            'logger.debug($"Finalizado, exportado {lista.Count } registros")
 
         Catch ex As Exception
             If company.InTransaction Then
                 company.EndTransaction(BoWfTransOpt.wf_RollBack)
             End If
-            Debug.WriteLine($"Error: {ex.Message}")
+            logger.Debug($"Error: {ex.Message}")
         Finally
             ' cerrar conexion
             If company IsNot Nothing AndAlso company.Connected Then
-                Debug.WriteLine("Cerrando conexion")
+                logger.Debug("Cerrando conexion")
                 company.Disconnect()
             End If
 
@@ -625,7 +622,7 @@ Public Class Lectura
     End Sub
 
     Private Sub EventsLogs1_OnGuardarEventos(lista As List(Of EventoDispositivoModel)) Handles EventsLogs1.OnGuardarEventos
-        Debug.WriteLine($"Exportando eventos {lista.Count}")
+        logger.Debug($"Exportando eventos {lista.Count}")
 
         If lista Is Nothing Then
             Throw New Exception("No hay eventos para exportar")
@@ -669,11 +666,11 @@ Public Class Lectura
                 'U_FECHA_EVENTO
 
 
-                Debug.WriteLine($"Insertado {c}")
+                logger.Debug($"Insertado {c}")
             Next
 
         Catch ex As Exception
-            Debug.WriteLine($"Ha ocurrido una excepción: {ex.Message } {ex.StackTrace }")
+            logger.Debug($"Ha ocurrido una excepción: {ex.Message } {ex.StackTrace }")
         Finally
 
 

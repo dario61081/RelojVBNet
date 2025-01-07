@@ -1,7 +1,14 @@
 ﻿Imports RelojVBNET.Models
 
 Public Class RelojesList
-
+    Public Property Ocupado As Boolean
+        Get
+            Return Loading1.Visible
+        End Get
+        Set(value As Boolean)
+            Loading1.Visible = value
+        End Set
+    End Property
     Public Dispositivos As List(Of DispositivoModel)
 
     Public Event LeerDispostivos(Lista As List(Of DispositivoModel), Parametros As LecturaParametros)
@@ -107,13 +114,9 @@ Public Class RelojesList
         End If
     End Sub
 
-    Private Sub LecturaSeleccionados()
 
-    End Sub
 
-    Private Sub ContextMenuStrip1_Opening(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles ContextMenuStrip1.Opening
 
-    End Sub
 
     Private Sub LeerEventosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LeerEventosToolStripMenuItem.Click
         LecturaMarcaciones()
@@ -153,26 +156,28 @@ Public Class RelojesList
     End Sub
 
     Private Async Sub ToolStripButton4_Click(sender As Object, e As EventArgs) Handles ToolStripButton4.Click
-        Await Task.Run(Sub() VerificarRelojes())
+        Await VerificarRelojes()
     End Sub
 
-    Public Sub VerificarRelojes()
-        'check ping de los relojes
-        Me.Invoke(Sub()
-                      For Each row As ListViewItem In LvDispositivos.Items
-                          Dim dispositivo As DispositivoModel = DirectCast(row.Tag, DispositivoModel)
-                          Dim resultado = Utiles.Ping(dispositivo.DireccionIp)
+    Public Async Function VerificarRelojes() As Task
 
-                          If resultado Then
-                              row.ImageIndex = 6
-                              row.ForeColor = Color.DarkGreen
-                              row.SubItems(3).Text = "Detectado"
-                          Else
-                              row.ImageIndex = 7
-                              row.ForeColor = Color.DarkRed
-                              row.SubItems(3).Text = "No detectado"
-                          End If
-                      Next
-                  End Sub)
-    End Sub
+        Await Task.Run(Sub()
+                           Me.Invoke(Sub()
+                                         For Each row As ListViewItem In LvDispositivos.Items
+                                             Dim dispositivo As DispositivoModel = DirectCast(row.Tag, DispositivoModel)
+                                             Dim resultado = Utiles.Ping(dispositivo.DireccionIp)
+
+                                             If resultado Then
+                                                 row.ImageIndex = 6
+                                                 row.ForeColor = Color.DarkGreen
+                                                 row.SubItems(3).Text = "Detectado"
+                                             Else
+                                                 row.ImageIndex = 7
+                                                 row.ForeColor = Color.DarkRed
+                                                 row.SubItems(3).Text = "No detectado"
+                                             End If
+                                         Next
+                                     End Sub)
+                       End Sub)
+    End Function
 End Class

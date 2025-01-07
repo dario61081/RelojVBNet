@@ -191,6 +191,7 @@ Partial Class Lectura
         Me.RelojesList1.Location = New System.Drawing.Point(3, 4)
         Me.RelojesList1.Margin = New System.Windows.Forms.Padding(3, 5, 3, 5)
         Me.RelojesList1.Name = "RelojesList1"
+        Me.RelojesList1.Ocupado = False
         Me.RelojesList1.Size = New System.Drawing.Size(248, 653)
         Me.RelojesList1.TabIndex = 1
         '

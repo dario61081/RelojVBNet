@@ -30,50 +30,22 @@ Public Class Lectura
     Private Async Sub MarcacionesLogs1_Load(sender As Object, e As EventArgs) Handles MarcacionesLogs1.Load
         Dim numeroBuild As String = AppInfo.ObtenerNumeroBuild()
         lblversion.Text = $"Ver: 1.0.{numeroBuild}"
-        Dim relojes As List(Of DispositivoModel) = Task.Run(Function()
-                                                                Return CargarDispositivosBBDD()
-                                                            End Function).Result
+        Dim relojes As List(Of DispositivoModel) = Await Task.Run(Function() CargarDispositivosBBDD())
 
         RelojesList1.RegistrarTodo(relojes)
         RelojesList1.VerificarRelojes()
         Log("Listo")
-        'Await Task.WhenAll(
-        '    Task.Run(Sub() MarcacionesLogs1.UpdateListView()),
-        '    Task.Run(Sub() EventsLogs1.UpdateListView())
-        ')
+
     End Sub
 
-    Private Function LeerRelojes() As List(Of DispositivoModel)
-        'leer relojes de la base de datos 
-        Dim relojes As List(Of DispositivoModel) = CargarDispositivosBBDD()
-        'Dim l As List(Of Reloj)
-        'Log("Cargando relojes de la base de datos")
-        'For Each row As DispositivoModel In relojes
-        '    Dim _reloj As New Reloj()
-        '    _reloj.Dispositivo = row
-        '    l.Add(_reloj)
-        '    'Dispositivos.RegistrarReloj(_reloj)
 
-        'Next
-
-        Return relojes
-
-
-
-    End Function
 
     Private Sub RelojesList1_LeerDispostivos(Lista As List(Of DispositivoModel), Parametros As LecturaParametros) Handles RelojesList1.LeerDispostivos
 
-        'validar la conexion
-        'Parametros.SapUsuario 
-        'Parametros.SapPassword
-        'If Not valido Then
-        '    Return
-        'End If
-        Refresh()
 
         'iniciar la lectura si el hilo esta liberado
         If Not BackgroundWorker1.IsBusy Then
+            RelojesList1.Ocupado = True
             MarcacionesLogs1.Clear()
 
             ResetImportacionProgress()
@@ -369,7 +341,7 @@ Public Class Lectura
         MessageBox.Show("Tarea concluida", "Tareas", MessageBoxButtons.OK)
 
         'enviar listado a base de datos
-
+        RelojesList1.Ocupado = False
 
         EnviarABaseDatos(parametros)
         EnviarEventosABaseDatos(EventsLogs1.GetEventos())

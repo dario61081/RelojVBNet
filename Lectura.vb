@@ -9,24 +9,28 @@ Imports RelojVBNET.SapLocalServerConfig
 Imports NLog
 
 Public Class Lectura
-    Private Dispositivos As Relojes
-    Private WithEvents Device As New ZKBiometricDevice()
+
+
+    Public Property Cargando As Boolean
+        Get
+            Return status_loading.Visible
+        End Get
+        Set(value As Boolean)
+            status_loading.Visible = value
+        End Set
+    End Property
+
     Private logger As Logger = LogManager.GetCurrentClassLogger()
 
 
 
-    Public Sub New()
-
-        ' Esta llamada es exigida por el diseñador.
-        InitializeComponent()
-
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
-        Device = New ZKBiometricDevice()
-        Dispositivos = New Relojes()
-    End Sub
 
 
-
+    ''' <summary>
+    ''' Cargar los elementos del formulario
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Async Sub MarcacionesLogs1_Load(sender As Object, e As EventArgs) Handles MarcacionesLogs1.Load
         Dim numeroBuild As String = AppInfo.ObtenerNumeroBuild()
         lblversion.Text = $"Ver: 1.0.{numeroBuild}"
@@ -35,7 +39,7 @@ Public Class Lectura
         Await RelojesList1.RegistrarTodo(relojes)
         Await RelojesList1.VerificarRelojes()
         Log("Listo")
-
+        Cargando = False
     End Sub
 
 
@@ -321,7 +325,7 @@ Public Class Lectura
 
     End Sub
 
-    Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
+    Private Async Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
         Dim parametros As WorkerParams = CType(e.Result, WorkerParams)
 
         'anunciar finalizado
@@ -358,9 +362,10 @@ Public Class Lectura
         progressbar2.Value = 0
     End Sub
 
-    Public Sub EnviarEventosABaseDatos(lista As List(Of EventoDispositivoModel))
+    Public Async Sub EnviarEventosABaseDatos(lista As List(Of EventoDispositivoModel))
         'enviar eventos a base de datos
-        EventsLogs1_OnGuardarEventos(lista)
+        Await Task.Run(Sub() EventsLogs1_OnGuardarEventos(lista))
+
 
 
 
@@ -623,18 +628,13 @@ Public Class Lectura
         'guardar eventos en la base de datos
         Dim company As Company = SapRepository.GetInstance(New SapLocalServerConfig())
         If company.Connect() > 0 Then
-            Dim message As String = company.GetLastErrorDescription
-            Throw New Exception($"Error: {message}")
+            Throw New Exception($"Error: {company.GetLastErrorDescription}")
         End If
         Dim servicio As CompanyService = company.GetCompanyService()
         Dim general As GeneralService = servicio.GetGeneralService("RH_EVENTOS_DISP")
 
 
         Try
-
-
-
-
 
             Dim Data As GeneralData
             Dim c As Integer = 0
@@ -664,11 +664,9 @@ Public Class Lectura
         Catch ex As Exception
             logger.Debug($"Ha ocurrido una excepción: {ex.Message } {ex.StackTrace }")
         Finally
-
-
-
             If company.Connected() Then
                 company.Disconnect()
+                SapRepository.ReleaseObject(company)
             End If
             'MessageBox.Show("La exportación ha finalizado")
         End Try

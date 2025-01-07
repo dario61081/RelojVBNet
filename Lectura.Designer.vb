@@ -30,6 +30,7 @@ Partial Class Lectura
         Me.progressbar1 = New System.Windows.Forms.ToolStripProgressBar()
         Me.lblmensaje = New System.Windows.Forms.ToolStripStatusLabel()
         Me.progressbar2 = New System.Windows.Forms.ToolStripProgressBar()
+        Me.status_loading = New System.Windows.Forms.ToolStripStatusLabel()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.TabTree = New System.Windows.Forms.TabControl()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
@@ -98,7 +99,7 @@ Partial Class Lectura
         '
         Me.StatusStrip1.Dock = System.Windows.Forms.DockStyle.None
         Me.StatusStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1, Me.lblversion, Me.progressbar1, Me.lblmensaje, Me.progressbar2})
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1, Me.lblversion, Me.progressbar1, Me.lblmensaje, Me.progressbar2, Me.status_loading})
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 0)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
@@ -142,6 +143,14 @@ Partial Class Lectura
         Me.progressbar2.Size = New System.Drawing.Size(100, 18)
         Me.progressbar2.Style = System.Windows.Forms.ProgressBarStyle.Continuous
         Me.progressbar2.Visible = False
+        '
+        'status_loading
+        '
+        Me.status_loading.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point)
+        Me.status_loading.ForeColor = System.Drawing.Color.Maroon
+        Me.status_loading.Name = "status_loading"
+        Me.status_loading.Size = New System.Drawing.Size(196, 20)
+        Me.status_loading.Text = "Cargando datos, aguarde..."
         '
         'SplitContainer1
         '
@@ -399,4 +408,5 @@ Partial Class Lectura
     Friend WithEvents lblmensaje As ToolStripStatusLabel
     Friend WithEvents progressbar2 As ToolStripProgressBar
     Friend WithEvents BackgroundWorker2 As System.ComponentModel.BackgroundWorker
+    Friend WithEvents status_loading As ToolStripStatusLabel
 End Class

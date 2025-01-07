@@ -386,6 +386,7 @@ Public Class Lectura
     Function QuitarDuplicados(Origen As List(Of AttendanceRecord), Parametros As LecturaParametros) As List(Of AttendanceRecord)
         'controlar la existencia de registros
         If Origen Is Nothing OrElse Origen.Count = 0 Then
+            logger.Error("No hay registros que comparar en origen")
             Return New List(Of AttendanceRecord)
         End If
 
@@ -397,7 +398,11 @@ Public Class Lectura
 
         ' Establish SAP connection
         Dim Company As Company = SapRepository.GetInstance(New SapLocalServerConfig())
-        Company.Connect()
+        If Company.Connect() <> 0 Then
+            logger.Error($"Conexion: {Company.GetLastErrorDescription }")
+            SapRepository.ReleaseObject(Company)
+            Return New List(Of AttendanceRecord)
+        End If
         ' Create and execute the query
         Dim recordset As SAPbobsCOM.Recordset = Company.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
         Dim query As String = $"SELECT  CAST((U_FECHA || U_HORA || U_LEGAJO || U_TIPO_EVENTO) AS varchar(100)) AS firma " &

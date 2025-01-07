@@ -340,6 +340,7 @@ Partial Class Lectura
         Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.MinimumSize = New System.Drawing.Size(912, 784)
         Me.Name = "Lectura"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Lectura"
         Me.ToolStripContainer1.BottomToolStripPanel.ResumeLayout(False)
         Me.ToolStripContainer1.BottomToolStripPanel.PerformLayout()

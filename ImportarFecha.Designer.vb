@@ -111,24 +111,24 @@ Partial Class ImportarFecha
         'rdTodos
         '
         Me.rdTodos.AutoSize = True
-        Me.rdTodos.Checked = True
         Me.rdTodos.Location = New System.Drawing.Point(18, 32)
         Me.rdTodos.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.rdTodos.Name = "rdTodos"
         Me.rdTodos.Size = New System.Drawing.Size(70, 24)
         Me.rdTodos.TabIndex = 11
-        Me.rdTodos.TabStop = True
         Me.rdTodos.Text = "Todos"
         Me.rdTodos.UseVisualStyleBackColor = True
         '
         'rdRango
         '
         Me.rdRango.AutoSize = True
+        Me.rdRango.Checked = True
         Me.rdRango.Location = New System.Drawing.Point(18, 64)
         Me.rdRango.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.rdRango.Name = "rdRango"
         Me.rdRango.Size = New System.Drawing.Size(155, 24)
         Me.rdRango.TabIndex = 10
+        Me.rdRango.TabStop = True
         Me.rdRango.Text = "Por rango de fecha"
         Me.rdRango.UseVisualStyleBackColor = True
         '

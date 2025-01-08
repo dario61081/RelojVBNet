@@ -7,6 +7,7 @@ Imports SAPbobsCOM
 Public Class Lectura
 
 
+
     Public Property Cargando As Boolean
         Get
             Return status_loading.Visible

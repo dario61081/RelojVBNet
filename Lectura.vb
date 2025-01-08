@@ -1,12 +1,8 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
-Imports RelojVBNET.Models
-Imports RelojVBNET.SBO
-Imports SAPbobsCOM
-Imports RelojVBNET.ModelUtils
-Imports RelojVBNET.SapRepositoryConfig
-Imports RelojVBNET.SapLocalServerConfig
 Imports NLog
+Imports RelojVBNET.Models
+Imports SAPbobsCOM
 
 Public Class Lectura
 
@@ -325,7 +321,7 @@ Public Class Lectura
 
     End Sub
 
-    Private Async Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
+    Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
         Dim parametros As WorkerParams = CType(e.Result, WorkerParams)
 
         'anunciar finalizado
@@ -396,78 +392,63 @@ Public Class Lectura
         End If
 
 
-
+        logger.Info($"A comparar {Origen.Count } elementos")
 
         ' Create a new list to hold the filtered attendance records
         Dim Destino = New List(Of AttendanceRecord)
 
         ' Establish SAP connection
-        Dim Company As Company = SapRepository.GetInstance(New SapLocalServerConfig())
-        If Company.Connect() <> 0 Then
-            logger.Error($"Conexion: {Company.GetLastErrorDescription }")
-            SapRepository.ReleaseObject(Company)
+        Dim company As Company = SapRepository.GetInstance(New SapLocalServerConfig())
+        If company.Connect() <> 0 Then
+            logger.Error($"Conexion: {company.GetLastErrorDescription }")
+            SapRepository.ReleaseObject(company)
             Return New List(Of AttendanceRecord)
         End If
         ' Create and execute the query
-        Dim recordset As SAPbobsCOM.Recordset = Company.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-        Dim query As String = $"SELECT  CAST((U_FECHA || U_HORA || U_LEGAJO || U_TIPO_EVENTO) AS varchar(100)) AS firma " &
+        Dim recordset As SAPbobsCOM.Recordset = company.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
+        Dim query As String = $"SELECT   CAST((TO_VARCHAR(U_FECHA, 'yyyy-MM-dd') || lpad(U_HORA,4,'0') || lpad(U_LEGAJO,6,'0') || lpad(U_TIPO_EVENTO,2,'0')) AS varchar(100)) AS firma " &
                               $"FROM SELTZ29102024.""@RH_MARCACIONES"" " &
                               $"WHERE ""U_FECHA"" BETWEEN '{Parametros.FechaDesde:yyyy-MM-dd}' AND '{Parametros.FechaHasta:yyyy-MM-dd}'"
-        'Dim HistoricoCache = New HashSet(Of String)
+
+        Dim HistoricoCache = New HashSet(Of String)
 
 
         recordset.DoQuery(query)
-
-        logger.Debug($"encontrados en consulta {recordset.RecordCount } registros")
-
-
-        ' Process the results
+        Dim counter As Int32 = 1
         While Not recordset.EoF
-            'Dim r As String = If(recordset.Fields.Item("hash").Value Is DBNull.Value, String.Empty, recordset.Fields.Item("hash").Value)
-            'HistoricoCache.Add(r)
-            WriteLine($"{recordset.Fields.Item("firma")}")
+            Dim firma As String = recordset.Fields.Item("firma").Value
+            HistoricoCache.Add(firma)
+
+            logger.Debug($"firma {counter:0000}: {firma}")
             recordset.MoveNext()
+            counter += 1
         End While
 
-        'Try
+        logger.Info($"Base de datos reporta {HistoricoCache.Count } registros")
+        counter = 1
+        For Each row In Origen
+            Dim firma = row.GetFirma()
+            If HistoricoCache.Contains(firma) Then
+                logger.Debug($"row {counter:0000}: {firma} duplicado")
+            Else
+                logger.Info($"row {counter:0000}: {firma} agregado")
+                Destino.Add(row)
+            End If
+            counter += 1
+        Next
 
+        logger.Info($"{HistoricoCache.Count} analizados, {Destino.Count} agregados")
 
-
-        '    ' Process the results
-        '    While Not recordset.EoF
-        '        'Dim r As String = If(recordset.Fields.Item("hash").Value Is DBNull.Value, String.Empty, recordset.Fields.Item("hash").Value)
-        '        'HistoricoCache.Add(r)
-        '        WriteLine($"{recordset.Fields.Item("hash")}")
-        '        recordset.MoveNext()
-        '    End While
-
-        'Catch ex As Exception
-        '    ' Handle exceptions appropriately
-        '    Dim message As String = Company.GetLastErrorDescription
-        '    Throw New ApplicationException($"Error while removing duplicates.({message})", ex)
-
-        'End Try
-
-
-
-
-        'For Each row In Origen
-        '    logger.debug($"buscando: {row.GetHash }")
-        '    If Not HistoricoCache.Any(Function(item) item.Equals(row.GetHash())) Then
-        '        logger.debug($"no encontrado, agregando { row.GetHash }")
-        '        Destino.Add(row)
-        '    End If
-        'Next
-        If recordset.RecordCount = 0 Then
-            Destino.AddRange(Origen)
-        End If
+        'If recordset.RecordCount = 0 Then
+        '    Destino.AddRange(Origen)
+        'End If
 
         'liberar recursos
         SapRepository.ReleaseObject(recordset)
         ' Ensure the connection is closed
-        If Company.Connected Then
-            Company.Disconnect()
-            SapRepository.ReleaseObject(Company)
+        If company.Connected Then
+            company.Disconnect()
+            SapRepository.ReleaseObject(company)
         End If
 
         Return Destino
@@ -522,7 +503,7 @@ Public Class Lectura
             'quitar los duplicados
             logger.Debug($"Origen: {lista.Count}")
             If parametros.Parametros.VerificarDuplicados Then
-                logger.Debug("Verificando dupicados")
+                logger.Debug("Verificando duplicados")
                 lista = QuitarDuplicados(lista, parametros.Parametros)
             End If
 

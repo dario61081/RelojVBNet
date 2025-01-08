@@ -1,7 +1,6 @@
 ﻿''' <summary>
 ''' Representa un registro de marcación
 ''' </summary>
-
 Public Class AttendanceRecord
     Public Property DeviceNumber As Integer
     Public Property EnrollNumber As String
@@ -14,10 +13,14 @@ Public Class AttendanceRecord
     Public Function GetFirma() As String
         '(U_FECHA || U_HORA || U_LEGAJO || U_TIPO_EVENTO) AS hash
         '2025-01-02 00:00:00.000000035928
-        Dim fecha As String = DateTime.ToString("yyyy-MM-dd 00:00:00.000")
-        Dim hora As String = DateTime.ToString("HHmm")
-        Return $"{fecha}{hora}{EnrollNumber}{InOutMode}"
 
+        Dim fecha As String = DateTime.ToString("yyyy-MM-dd")
+        Dim hora As String = DateTime.ToString("HHmm")
+        Dim legajo As String = $"{EnrollNumber:000000}"
+        Dim evento As String = InOutMode.ToString("00")
+        Return $"{fecha}{hora}{legajo}{evento}"
     End Function
+
+
 
 End Class

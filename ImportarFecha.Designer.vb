@@ -99,6 +99,8 @@ Partial Class ImportarFecha
         'chk_duplicados
         '
         Me.chk_duplicados.AutoSize = True
+        Me.chk_duplicados.Checked = True
+        Me.chk_duplicados.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chk_duplicados.Location = New System.Drawing.Point(18, 200)
         Me.chk_duplicados.Name = "chk_duplicados"
         Me.chk_duplicados.Size = New System.Drawing.Size(340, 24)

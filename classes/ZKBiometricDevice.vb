@@ -1,12 +1,10 @@
-﻿
-
-Imports System.IO
+﻿Imports NLog
 Imports RelojVBNET.Models
 Imports zkemkeeper
 
 Public Class ZKBiometricDevice
     Private WithEvents Zkem As CZKEM
-
+    Private logger As Logger = LogManager.GetCurrentClassLogger()
     Private IsConnected As Boolean
     Private DeviceNumber As Integer
     Public SerialNumber As String
@@ -33,9 +31,9 @@ Public Class ZKBiometricDevice
 
             Try
                 Dim status = Zkem.SetCommPassword(Password)
-                LogError($"Set communication password: {status}")
+                logger.Info($"Set communication password: {status}")
             Catch ex As Exception
-                LogError($"Error setting communication password: {ex.Message}")
+                logger.Error($"Error setting communication password: {ex.Message}")
                 Return False
             End Try
         End If
@@ -51,6 +49,7 @@ Public Class ZKBiometricDevice
             Return True
         Else
             IsConnected = False
+            logger.Error($"No se pudo establecer conexion con {Dispositivo.DireccionIp}")
             Return False
         End If
     End Function
@@ -72,7 +71,7 @@ Public Class ZKBiometricDevice
     ''' <returns>Lista de registros de asistencia.</returns>
     Public Function GetAttendanceLogs() As List(Of AttendanceRecord)
         Dim records As New List(Of AttendanceRecord)()
-
+        logger.Info("Iniciando lectura de marcaciones")
         Try
             If IsConnected Then
                 Dim dwEnrollNumber As String = ""
@@ -99,13 +98,15 @@ Public Class ZKBiometricDevice
                         records.Add(record)
                     End While
                 Else
-                    LogError("Failed to read general log data from the device.")
+                    logger.Error("Failed to read general log data from the device.")
                 End If
             Else
-                LogError("Device is not connected.")
+                logger.Error("Device is not connected.")
             End If
         Catch ex As Exception
-            LogError($"Error retrieving attendance logs: {ex.Message}")
+            logger.Error($"Error retrieving attendance logs: {ex.Message}")
+        Finally
+            logger.Info($"Finalizado lectura de marcaciones")
         End Try
 
         Return records
@@ -116,15 +117,8 @@ Public Class ZKBiometricDevice
         Return Await Task.Run(Function() GetAttendanceLogs())
     End Function
 
-    ' Helper Method for Logging
-    Private Sub LogError(message As String)
-        Try
-            Dim logFilePath As String = "AttendanceLogErrors.txt"
-            File.AppendAllText(logFilePath, $"{DateTime.Now}: {message}{Environment.NewLine}")
-        Catch
-            ' If logging fails, suppress errors to avoid cascading failures.
-        End Try
-    End Sub
+
+
 
     ''' <summary>
     ''' Comprueba si el dispositivo está conectado.
@@ -137,7 +131,7 @@ Public Class ZKBiometricDevice
 
     'clear logs
     Public Function ClearLogs() As Boolean
-
+        logger.Info("ejecutando limpieza de logs")
         Return Zkem.ClearGLog(DeviceNumber)
 
     End Function

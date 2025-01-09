@@ -109,8 +109,8 @@ Partial Class RelojesList
         '
         'ToolStripContainer1.ContentPanel
         '
-        Me.ToolStripContainer1.ContentPanel.Controls.Add(Me.Loading1)
         Me.ToolStripContainer1.ContentPanel.Controls.Add(Me.LvDispositivos)
+        Me.ToolStripContainer1.ContentPanel.Controls.Add(Me.Loading1)
         Me.ToolStripContainer1.ContentPanel.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.ToolStripContainer1.ContentPanel.Size = New System.Drawing.Size(256, 542)
         Me.ToolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill

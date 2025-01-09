@@ -1,6 +1,17 @@
-﻿Imports RelojVBNET.Models
+﻿Imports System.Timers
+Imports NLog
+Imports RelojVBNET.Models
 
 Public Class RelojesList
+    Public Property TimerOn As Boolean
+        Get
+            Return Timer.Enabled
+        End Get
+        Set(value As Boolean)
+            Timer.Enabled = value
+            ToolStripButton4.Checked = Timer.Enabled
+        End Set
+    End Property
     Public Property Ocupado As Boolean
         Get
             Return Loading1.Visible
@@ -10,9 +21,11 @@ Public Class RelojesList
         End Set
     End Property
     Public Dispositivos As List(Of DispositivoModel)
-
+    Private logger As Logger = LogManager.GetCurrentClassLogger()
     Public Event LeerDispostivos(Lista As List(Of DispositivoModel), Parametros As LecturaParametros)
     Public Event BorrarMarcaciones(Lista As List(Of DispositivoModel))
+    Public WithEvents ThreadPing As PingThread
+    Public WithEvents Timer As New Timers.Timer(10000)
 
     ''' <summary>
     ''' Representa un arbol de relojes
@@ -21,6 +34,8 @@ Public Class RelojesList
         InitializeComponent()
 
         Dispositivos = New List(Of DispositivoModel)
+
+        Timer.Enabled = True
 
     End Sub
 
@@ -108,9 +123,17 @@ Public Class RelojesList
             'filtrar los checkeados
             Dim relojesSeleccionados As New List(Of DispositivoModel)
             For Each row As ListViewItem In LvDispositivos.CheckedItems
-                relojesSeleccionados.Add(DirectCast(row.Tag, DispositivoModel))
+                Dim dispo As DispositivoModel = DirectCast(row.Tag, DispositivoModel)
+                Dim response = Utiles.Ping(dispo.DireccionIp)
+                If response.IsSuccess Then
+                    logger.Info($"{dispo.DireccionIp } {response.Value }")
+                    relojesSeleccionados.Add(dispo)
+                Else
+                    logger.Error($"{dispo.DireccionIp } {response.ErrorMessage}")
+                End If
 
             Next
+            logger.Info($"iniciando lectura para {relojesSeleccionados.Count} relojes")
             'enviar listado a lectura
             RaiseEvent LeerDispostivos(relojesSeleccionados, result)
 
@@ -170,17 +193,28 @@ Public Class RelojesList
                                              Dim dispositivo As DispositivoModel = DirectCast(row.Tag, DispositivoModel)
                                              Dim resultado = Utiles.Ping(dispositivo.DireccionIp)
 
-                                             If resultado Then
+                                             If resultado.IsSuccess Then
                                                  row.ImageIndex = 6
                                                  row.ForeColor = Color.DarkGreen
-                                                 row.SubItems(3).Text = "Detectado"
+                                                 row.SubItems(3).Text = resultado.Value
                                              Else
                                                  row.ImageIndex = 7
                                                  row.ForeColor = Color.DarkRed
-                                                 row.SubItems(3).Text = "No detectado"
+                                                 row.SubItems(3).Text = resultado.ErrorMessage
                                              End If
+                                             row.ToolTipText = row.SubItems(3).Text
+
                                          Next
                                      End Sub)
                        End Sub)
     End Function
+
+    Private Async Sub Timer_Elapsed(sender As Object, e As ElapsedEventArgs) Handles Timer.Elapsed
+
+        Await VerificarRelojes()
+
+
+
+
+    End Sub
 End Class

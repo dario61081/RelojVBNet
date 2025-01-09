@@ -44,6 +44,7 @@ Public Class Lectura
     Private Sub RelojesList1_LeerDispostivos(Lista As List(Of DispositivoModel), Parametros As LecturaParametros) Handles RelojesList1.LeerDispostivos
 
 
+
         'iniciar la lectura si el hilo esta liberado
         If Not BackgroundWorker1.IsBusy Then
             RelojesList1.Ocupado = True
@@ -57,6 +58,8 @@ Public Class Lectura
                 .Marcaciones = New List(Of AttendanceRecord)
                 }
             Log($"iniciando lectura de {Lista.Count} reloj(es) ")
+
+            'ejecutar lectura
             BackgroundWorker1.RunWorkerAsync(worker_params)
 
         End If
@@ -91,15 +94,22 @@ Public Class Lectura
         Log($"Leyendo datos del reloj {dispositivo.Descripcion} ({dispositivo.DireccionIp}:{dispositivo.Puerto})")
         Log($"Parametros: Modo={params.Modo}, FechaDesde={params.FechaDesde}, FechaHasta={params.FechaHasta}")
 
-        Dim _device As New ZKBiometricDevice()
+        'Dim _device As New ZKBiometricDevice()
         Dim estado As Boolean
 
+        Dim Timeout As Task = Task.Delay(1000)
+
+
+
         Try
+            Dim _device = New ZKBiometricDevice()
             estado = _device.Connect(dispositivo)
             If Not estado Then
                 LogError($"No se pudo conectar al reloj {dispositivo.Descripcion} ({dispositivo.DireccionIp}:{dispositivo.Puerto})", dispositivo)
                 Return
             End If
+
+            Await Timeout
             'obtener marcaciones
             Dim lista As List(Of AttendanceRecord) = Await _device.GetAttendanceLogsAsync()
             'backup marcaciones
@@ -113,14 +123,15 @@ Public Class Lectura
                               MarcacionesLogs1.RegistrasMarcaciones(lista, dispositivo)
                           End Sub)
             End If
-
-        Catch ex As Exception
-            LogError($"Error al procesar los datos del reloj {dispositivo.Descripcion}: {ex.Message}", dispositivo)
-        Finally
             If estado Then
                 _device.Disconnect()
+
                 Log($"Desconectado del reloj {dispositivo.Descripcion}", dispositivo)
             End If
+        Catch ex As Exception
+            LogError($"Error al procesar los datos del reloj {dispositivo.Descripcion}: {ex.Message}", dispositivo)
+
+
         End Try
     End Sub
     ''' <summary>
@@ -142,7 +153,7 @@ Public Class Lectura
         Dim recordset As Recordset = CType(company.GetBusinessObject(BoObjectTypes.BoRecordset), Recordset)
 
         'lectura de tabla
-        recordset.DoQuery("select * From ""@RH_RELOJES_DISP"" where U_ESTADO = 'T'")
+        recordset.DoQuery("select * From ""@RH_RELOJES_DISP"" where U_ESTADO = 'T' order by U_ID_DISP")
         recordset.MoveFirst()
         While Not recordset.EoF
             Dim row As New DispositivoModel With {

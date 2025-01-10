@@ -95,44 +95,56 @@ Public Class Lectura
         Log($"Parametros: Modo={params.Modo}, FechaDesde={params.FechaDesde}, FechaHasta={params.FechaHasta}")
 
         'Dim _device As New ZKBiometricDevice()
-        Dim estado As Boolean
+        'Dim estado As Boolean
 
-        Dim Timeout As Task = Task.Delay(1000)
+        'Dim Timeout As Task = Task.Delay(1000)
+        Dim lista As List(Of AttendanceRecord) = New List(Of AttendanceRecord)()
 
+        Dim response = Await ConectorReloj.GetAttendances(dispositivo, params)
+        If response.IsSuccess Then
+            Me.Invoke(Sub()
+                          MarcacionesLogs1.RegistrasMarcaciones(lista, dispositivo)
+                      End Sub)
+        Else
+            logger.Error(response.ErrorMessage)
 
-
-        Try
-            Dim _device = New ZKBiometricDevice()
-            estado = _device.Connect(dispositivo)
-            If Not estado Then
-                LogError($"No se pudo conectar al reloj {dispositivo.Descripcion} ({dispositivo.DireccionIp}:{dispositivo.Puerto})", dispositivo)
-                Return
-            End If
-
-            Await Timeout
-            'obtener marcaciones
-            Dim lista As List(Of AttendanceRecord) = Await _device.GetAttendanceLogsAsync()
-            'backup marcaciones
-            Await Task.Run(Sub() BackupLecturas(dispositivo, lista))
-            'si no hay registros
-            If lista Is Nothing OrElse lista.Count = 0 Then
-                Log($"No se encontraron registros en el reloj {dispositivo.Descripcion}", dispositivo)
-            Else
-                Log($"Se recuperaron {lista.Count} registros del reloj {dispositivo.Descripcion}", dispositivo)
-                Me.Invoke(Sub()
-                              MarcacionesLogs1.RegistrasMarcaciones(lista, dispositivo)
-                          End Sub)
-            End If
-            If estado Then
-                _device.Disconnect()
-
-                Log($"Desconectado del reloj {dispositivo.Descripcion}", dispositivo)
-            End If
-        Catch ex As Exception
-            LogError($"Error al procesar los datos del reloj {dispositivo.Descripcion}: {ex.Message}", dispositivo)
+        End If
 
 
-        End Try
+
+        'Try
+        '    Dim _device = New ZKBiometricDevice()
+        '    estado = _device.Connect(dispositivo)
+        '    If Not estado Then
+        '        LogError($"No se pudo conectar al reloj {dispositivo.Descripcion} ({dispositivo.DireccionIp}:{dispositivo.Puerto})", dispositivo)
+        '        Return
+        '    End If
+
+        '    Await Timeout
+        '    'obtener marcaciones
+        '    'Dim lista As List(Of AttendanceRecord) = Await _device.GetAttendanceLogsAsync()
+        '    Dim lista As List(Of AttendanceRecord) = Await _device.GetAttendanceLogsAsync()
+        '    'backup marcaciones
+        '    Await Task.Run(Sub() BackupLecturas(dispositivo, lista))
+        '    'si no hay registros
+        '    If lista Is Nothing OrElse lista.Count = 0 Then
+        '        Log($"No se encontraron registros en el reloj {dispositivo.Descripcion}", dispositivo)
+        '    Else
+        '        Log($"Se recuperaron {lista.Count} registros del reloj {dispositivo.Descripcion}", dispositivo)
+        '        Me.Invoke(Sub()
+        '                      MarcacionesLogs1.RegistrasMarcaciones(lista, dispositivo)
+        '                  End Sub)
+        '    End If
+        '    If estado Then
+        '        _device.Disconnect()
+
+        '        Log($"Desconectado del reloj {dispositivo.Descripcion}", dispositivo)
+        '    End If
+        'Catch ex As Exception
+        '    LogError($"Error al procesar los datos del reloj {dispositivo.Descripcion}: {ex.Message}", dispositivo)
+
+
+        'End Try
     End Sub
     ''' <summary>
     ''' Carga la lista de dispositivos desde la base de datos
@@ -207,8 +219,8 @@ Public Class Lectura
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
         'leer relojes
         Dim worker As System.ComponentModel.BackgroundWorker = CType(sender, System.ComponentModel.BackgroundWorker)
-        Dim _device As New ZKBiometricDevice()
-        Dim estado As Boolean
+        'Dim _device As New ZKBiometricDevice()
+        'Dim estado As Boolean
 
         'parametros de la tarea
         Dim parametros As WorkerParams = CType(e.Argument, WorkerParams)
@@ -236,16 +248,22 @@ Public Class Lectura
 
                 RegistrarLog($"accediendo a {dispositivo.Descripcion }", dispositivo, TipoDeEvento.Informacion)
 
-                estado = _device.Connect(dispositivo)
-                If Not estado Then
-                    RegistrarLog($"No se pudo conectar al reloj {dispositivo.Descripcion} ({dispositivo.DireccionIp}:{dispositivo.Puerto})", dispositivo, TipoDeEvento.IsError)
-                    Continue For
+                'estado = _device.Connect(dispositivo)
+                'If Not estado Then
+                '    RegistrarLog($"No se pudo conectar al reloj {dispositivo.Descripcion} ({dispositivo.DireccionIp}:{dispositivo.Puerto})", dispositivo, TipoDeEvento.IsError)
+                '    Continue For
 
-                End If
+                'End If
                 'obtener marcaciones
                 Dim lista As List(Of AttendanceRecord) = New List(Of AttendanceRecord)
                 'backup marcaciones
-                lista = _device.GetAttendanceLogs()
+                'lista = _device.GetAttendanceLogs()
+                Dim response = ConectorReloj.GetAttendances(dispositivo, parametros.Parametros).Result
+
+                If response.IsSuccess Then
+                    logger.Info($"Lectura a {dispositivo.Descripcion } ({dispositivo.DireccionIp }) completada")
+                    lista = response.Value
+                End If
                 'si no hay registros
                 If lista Is Nothing OrElse lista.Count = 0 Then
                     RegistrarLog($"No se encontraron registros en el reloj {dispositivo.Descripcion}", dispositivo, TipoDeEvento.IsError)
@@ -267,11 +285,11 @@ Public Class Lectura
 
             Catch ex As Exception
                 RegistrarLog($"Error al procesar los datos del reloj {dispositivo.Descripcion}: {ex.Message}", dispositivo, TipoDeEvento.IsError)
-            Finally
-                If estado Then
-                    _device.Disconnect()
-                    RegistrarLog($"Desconectado del reloj {dispositivo.Descripcion}", dispositivo, TipoDeEvento.Informacion)
-                End If
+                'Finally
+                '    If estado Then
+                '        _device.Disconnect()
+                '        RegistrarLog($"Desconectado del reloj {dispositivo.Descripcion}", dispositivo, TipoDeEvento.Informacion)
+                '    End If
             End Try
         Next
 
@@ -329,7 +347,7 @@ Public Class Lectura
         'actualizar progreso
         'logger.debug($"progreso {e.ProgressPercentage }")
         progressbar2.Value = e.ProgressPercentage
-        lblmensaje.Text = $"Procesando marcaciones, aguarde. ({e.ProgressPercentage}%)"
+        lblmensaje.Text = $"(Paso 1 de 2) Procesando marcaciones, aguarde. ({e.ProgressPercentage}%)"
 
     End Sub
 
@@ -348,9 +366,10 @@ Public Class Lectura
         'poblas los eventos ocurridos
         EventsLogs1.RegistrarEventos(parametros.Eventos)
         lblmensaje.Visible = False
+        progressbar2.Value = 0
         MarcacionesLogs1.UpdateListView()
         EventsLogs1.UpdateListView()
-        MessageBox.Show("Tarea concluida", "Tareas", MessageBoxButtons.OK)
+        MessageBox.Show("Tarea concluida (Paso 1 de 2)", "Tareas", MessageBoxButtons.OK)
 
         'enviar listado a base de datos
         If RelojesList1.Ocupado Then
@@ -387,7 +406,7 @@ Public Class Lectura
 
             'iniciar migracion
             lblmensaje.Visible = True
-            lblmensaje.Text = "Exportando datos (0%)"
+            lblmensaje.Text = "(Paso 2 de 2) Exportando datos (0%)"
             progressbar2.Visible = True
 
             BackgroundWorker2.RunWorkerAsync(Parametros) 'lanzar el thread
@@ -418,10 +437,10 @@ Public Class Lectura
         End If
         ' Create and execute the query
         Dim recordset As SAPbobsCOM.Recordset = company.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-        Dim query As String = $"SELECT   CAST((TO_VARCHAR(U_FECHA, 'yyyy-MM-dd') || lpad(U_HORA,4,'0') || lpad(U_LEGAJO,6,'0') || lpad(U_TIPO_EVENTO,2,'0')) AS varchar(100)) AS firma " &
-                              $"FROM SELTZ29102024.""@RH_MARCACIONES"" " &
+        Dim query As String = $"SELECT  TO_VARCHAR(U_FECHA, 'yyyy-MM-dd')|| '_' || lpad(U_HORA,4,'0') || '_' ||U_LEGAJO || '_' || U_TIPO_EVENTO firma " &
+                              $"FROM ""@RH_MARCACIONES"" " &
                               $"WHERE ""U_FECHA"" BETWEEN '{Parametros.FechaDesde:yyyy-MM-dd}' AND '{Parametros.FechaHasta:yyyy-MM-dd}'"
-
+        logger.Debug($"{query}")
         Dim HistoricoCache = New HashSet(Of String)
 
 
@@ -575,8 +594,17 @@ Public Class Lectura
     End Sub
 
     Private Sub BackgroundWorker2_ProgressChanged(sender As Object, e As ProgressChangedEventArgs) Handles BackgroundWorker2.ProgressChanged
-        progressbar2.Value = e.ProgressPercentage
-        lblmensaje.Text = $"Exportando datos ({e.ProgressPercentage}%)"
+
+        If e.ProgressPercentage = 100 Then
+            progressbar2.Value = 99
+            lblmensaje.Text = $"(Paso 2 de 2) Exportando datos ({99 }%)"
+        Else
+            progressbar2.Value = e.ProgressPercentage
+            lblmensaje.Text = $"(Paso 2 de 2) Exportando datos ({e.ProgressPercentage }%)"
+        End If
+
+        'progressbar2.Value = If e.ProgressPercentage = 100 then 99
+
     End Sub
 
     Private Sub BackgroundWorker2_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BackgroundWorker2.RunWorkerCompleted
@@ -590,7 +618,7 @@ Public Class Lectura
         'End If
 
         Log("Exportación concluida")
-        MessageBox.Show("Exportacion finalizada", "Exportar", MessageBoxButtons.OK)
+        MessageBox.Show("Exportacion finalizada (Paso 2 de 2)", "Exportar", MessageBoxButtons.OK)
         progressbar2.Visible = False
         lblmensaje.Visible = False
     End Sub
@@ -644,13 +672,6 @@ Public Class Lectura
                 Data.SetProperty("U_HORA_EVENTO", row.FechaEvento)
 
                 general.Add(Data)
-
-                'U_ID_EVENTO
-                'U_ID_DISP
-                'U_DESCRIPCION
-                'U_TIPO
-                'U_FECHA_EVENTO
-
 
                 logger.Debug($"Insertado {c}")
             Next

@@ -16,9 +16,9 @@ Public Class AttendanceRecord
 
         Dim fecha As String = DateTime.ToString("yyyy-MM-dd")
         Dim hora As String = DateTime.ToString("HHmm")
-        Dim legajo As String = $"{EnrollNumber:000000}"
-        Dim evento As String = InOutMode.ToString("00")
-        Return $"{fecha}{hora}{legajo}{evento}"
+        Dim legajo As String = $"{EnrollNumber}"
+        Dim evento As String = $"{InOutMode}"
+        Return $"{fecha}_{hora}_{legajo}_{evento}"
     End Function
 
 

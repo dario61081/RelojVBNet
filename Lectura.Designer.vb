@@ -82,7 +82,7 @@ Partial Class Lectura
         '
         Me.ToolStripContainer1.ContentPanel.Controls.Add(Me.SplitContainer1)
         Me.ToolStripContainer1.ContentPanel.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.ToolStripContainer1.ContentPanel.Size = New System.Drawing.Size(896, 697)
+        Me.ToolStripContainer1.ContentPanel.Size = New System.Drawing.Size(896, 694)
         Me.ToolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.ToolStripContainer1.Location = New System.Drawing.Point(0, 0)
         Me.ToolStripContainer1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
@@ -110,13 +110,13 @@ Partial Class Lectura
         'ToolStripStatusLabel1
         '
         Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
-        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(57, 20)
+        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(65, 20)
         Me.ToolStripStatusLabel1.Text = "NexTech"
         '
         'lblversion
         '
         Me.lblversion.Name = "lblversion"
-        Me.lblversion.Size = New System.Drawing.Size(58, 20)
+        Me.lblversion.Size = New System.Drawing.Size(64, 20)
         Me.lblversion.Text = "Ver: 1.01"
         '
         'progressbar1
@@ -132,8 +132,8 @@ Partial Class Lectura
         Me.lblmensaje.ForeColor = System.Drawing.Color.DarkRed
         Me.lblmensaje.Image = Global.RelojVBNET.My.Resources.Resources.icons8_descargar_16
         Me.lblmensaje.Name = "lblmensaje"
-        Me.lblmensaje.Size = New System.Drawing.Size(270, 20)
-        Me.lblmensaje.Text = "Procesando marcaciones, aguarde."
+        Me.lblmensaje.Size = New System.Drawing.Size(366, 20)
+        Me.lblmensaje.Text = "(Paso 1 de 2) Procesando marcaciones, aguarde."
         Me.lblmensaje.Visible = False
         '
         'progressbar2
@@ -166,7 +166,7 @@ Partial Class Lectura
         'SplitContainer1.Panel2
         '
         Me.SplitContainer1.Panel2.Controls.Add(Me.SplitContainer2)
-        Me.SplitContainer1.Size = New System.Drawing.Size(896, 697)
+        Me.SplitContainer1.Size = New System.Drawing.Size(896, 694)
         Me.SplitContainer1.SplitterDistance = 262
         Me.SplitContainer1.SplitterWidth = 5
         Me.SplitContainer1.TabIndex = 0
@@ -179,7 +179,7 @@ Partial Class Lectura
         Me.TabTree.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.TabTree.Name = "TabTree"
         Me.TabTree.SelectedIndex = 0
-        Me.TabTree.Size = New System.Drawing.Size(262, 697)
+        Me.TabTree.Size = New System.Drawing.Size(262, 694)
         Me.TabTree.TabIndex = 0
         '
         'TabPage2
@@ -189,7 +189,7 @@ Partial Class Lectura
         Me.TabPage2.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.TabPage2.Size = New System.Drawing.Size(254, 664)
+        Me.TabPage2.Size = New System.Drawing.Size(254, 661)
         Me.TabPage2.TabIndex = 0
         Me.TabPage2.Text = "Relojes"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -201,8 +201,10 @@ Partial Class Lectura
         Me.RelojesList1.Margin = New System.Windows.Forms.Padding(3, 5, 3, 5)
         Me.RelojesList1.Name = "RelojesList1"
         Me.RelojesList1.Ocupado = False
-        Me.RelojesList1.Size = New System.Drawing.Size(248, 656)
+        Me.RelojesList1.Size = New System.Drawing.Size(248, 653)
         Me.RelojesList1.TabIndex = 1
+        Me.RelojesList1.ThreadPing = Nothing
+        Me.RelojesList1.TimerOn = True
         '
         'SplitContainer2
         '
@@ -219,8 +221,8 @@ Partial Class Lectura
         'SplitContainer2.Panel2
         '
         Me.SplitContainer2.Panel2.Controls.Add(Me.TabControl1)
-        Me.SplitContainer2.Size = New System.Drawing.Size(629, 697)
-        Me.SplitContainer2.SplitterDistance = 412
+        Me.SplitContainer2.Size = New System.Drawing.Size(629, 694)
+        Me.SplitContainer2.SplitterDistance = 410
         Me.SplitContainer2.SplitterWidth = 5
         Me.SplitContainer2.TabIndex = 0
         '
@@ -232,7 +234,7 @@ Partial Class Lectura
         Me.TabControl2.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.TabControl2.Name = "TabControl2"
         Me.TabControl2.SelectedIndex = 0
-        Me.TabControl2.Size = New System.Drawing.Size(629, 412)
+        Me.TabControl2.Size = New System.Drawing.Size(629, 410)
         Me.TabControl2.TabIndex = 0
         '
         'TabPage4
@@ -242,7 +244,7 @@ Partial Class Lectura
         Me.TabPage4.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.TabPage4.Size = New System.Drawing.Size(621, 379)
+        Me.TabPage4.Size = New System.Drawing.Size(621, 377)
         Me.TabPage4.TabIndex = 2
         Me.TabPage4.Text = "Marcaciones"
         Me.TabPage4.UseVisualStyleBackColor = True
@@ -253,7 +255,7 @@ Partial Class Lectura
         Me.MarcacionesLogs1.Location = New System.Drawing.Point(3, 4)
         Me.MarcacionesLogs1.Margin = New System.Windows.Forms.Padding(3, 5, 3, 5)
         Me.MarcacionesLogs1.Name = "MarcacionesLogs1"
-        Me.MarcacionesLogs1.Size = New System.Drawing.Size(615, 371)
+        Me.MarcacionesLogs1.Size = New System.Drawing.Size(615, 369)
         Me.MarcacionesLogs1.TabIndex = 0
         '
         'TabControl1
@@ -264,7 +266,7 @@ Partial Class Lectura
         Me.TabControl1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(629, 280)
+        Me.TabControl1.Size = New System.Drawing.Size(629, 279)
         Me.TabControl1.TabIndex = 0
         '
         'TabPage1
@@ -274,7 +276,7 @@ Partial Class Lectura
         Me.TabPage1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3, 4, 3, 4)
-        Me.TabPage1.Size = New System.Drawing.Size(621, 247)
+        Me.TabPage1.Size = New System.Drawing.Size(621, 246)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Eventos del sistema"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -285,7 +287,7 @@ Partial Class Lectura
         Me.EventsLogs1.Location = New System.Drawing.Point(3, 4)
         Me.EventsLogs1.Margin = New System.Windows.Forms.Padding(3, 5, 3, 5)
         Me.EventsLogs1.Name = "EventsLogs1"
-        Me.EventsLogs1.Size = New System.Drawing.Size(615, 239)
+        Me.EventsLogs1.Size = New System.Drawing.Size(615, 238)
         Me.EventsLogs1.TabIndex = 0
         '
         'MenuStrip1
@@ -295,7 +297,7 @@ Partial Class Lectura
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SistemaToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(896, 25)
+        Me.MenuStrip1.Size = New System.Drawing.Size(896, 28)
         Me.MenuStrip1.TabIndex = 0
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -303,14 +305,14 @@ Partial Class Lectura
         '
         Me.SistemaToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CerrarToolStripMenuItem})
         Me.SistemaToolStripMenuItem.Name = "SistemaToolStripMenuItem"
-        Me.SistemaToolStripMenuItem.Size = New System.Drawing.Size(67, 21)
+        Me.SistemaToolStripMenuItem.Size = New System.Drawing.Size(75, 24)
         Me.SistemaToolStripMenuItem.Text = "&Sistema"
         '
         'CerrarToolStripMenuItem
         '
         Me.CerrarToolStripMenuItem.Name = "CerrarToolStripMenuItem"
         Me.CerrarToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.F4), System.Windows.Forms.Keys)
-        Me.CerrarToolStripMenuItem.Size = New System.Drawing.Size(172, 26)
+        Me.CerrarToolStripMenuItem.Size = New System.Drawing.Size(185, 26)
         Me.CerrarToolStripMenuItem.Text = "&Cerrar"
         '
         'ToolStripContainer2

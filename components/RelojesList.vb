@@ -140,10 +140,6 @@ Public Class RelojesList
         End If
     End Sub
 
-
-
-
-
     Private Sub LeerEventosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LeerEventosToolStripMenuItem.Click
         LecturaMarcaciones()
     End Sub
